@@ -1,0 +1,237 @@
+#include "resource.pas"
+#include "f:\SoftDev\ResEdit\include\windows.h"
+#include "f:\SoftDev\ResEdit\include\commctrl.h"
+#include "f:\SoftDev\ResEdit\include\richedit.h"
+
+
+//
+// Dialog resources
+//
+About_Box DIALOG 0, 0, 202, 231
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "关于 minipad2"
+FONT 9, "Arial"
+{
+ GROUPBOX "", IDC_STATIC, 11, 9, 180, 191
+ DEFPUSHBUTTON "确    定", IDOK, 75, 209, 50, 14, BS_DEFPUSHBUTTON
+ LTEXT "minipad2   3.2.0", st_program, 24, 26, 124, 16
+ LTEXT "build 101003", -1, 96, 43, 60, 8, SS_LEFT
+ LTEXT "作者:", st_author, 26, 61, 47, 8, SS_LEFT
+ LTEXT "徐梁", st_authorname, 76, 61, 103, 8, SS_LEFT
+ LTEXT "Email:", st_email, 26, 75, 47, 8, SS_LEFT
+ LTEXT "xiaodiega@gmail.com", st_emaillink, 76, 75, 103, 8, SS_LEFT
+ LTEXT "主页:", st_homepage, 26, 89, 47, 8, SS_LEFT
+ LTEXT "http://www.nebulasoft.cn", st_homepagelink, 76, 89, 103, 8, SS_LEFT
+ LTEXT "论坛:", st_forum, 26, 103, 47, 8, SS_LEFT
+ LTEXT "http://www.nebulasoft.cn/bbs", st_forumlink, 76, 103, 103, 8, SS_LEFT
+ LTEXT "版权所有:", st_copyright, 26, 117, 47, 8, SS_LEFT
+ LTEXT "(c) 2007-2010 NebulaSoft", st_copyrightinfo, 76, 117, 103, 8, SS_LEFT
+ LTEXT "发布日期:", st_releasedate, 26, 131, 47, 8, SS_LEFT
+ LTEXT "2010-10-3", IDC_STATIC, 76, 131, 103, 8, SS_LEFT
+ LTEXT "本软件为免费软件，无任何使用限制。", st_freeware, 26, 167, 132, 8, SS_LEFT
+ ICON "", ProgramIcon, 158, 25, 18, 17, SS_ICON
+ LTEXT "如果您愿意资助软件的长期发展，请点击：", st_pleasedonate, 26, 181, 132, 8, SS_LEFT
+ LTEXT "捐助", st_donate, 159, 181, 25, 8
+ LTEXT " ", st_translator, 26, 146, 146, 8, SS_LEFT
+}
+
+
+
+Property_List DIALOG 0, 0, 208, 183
+STYLE DS_3DLOOK | DS_CENTER | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ CONTROL "", lv_columns, WC_LISTVIEW, 8 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 12, 9, 108, 133
+ AUTOCHECKBOX "全选", chk_selectall, 12, 147, 73, 17, BS_MULTILINE
+ PUSHBUTTON "∧", cb_up, 89, 150, 13, 12, WS_DISABLED | BS_PUSHBUTTON
+ PUSHBUTTON "∨", cb_down, 108, 150, 12, 12, WS_DISABLED | BS_PUSHBUTTON
+ AUTOCHECKBOX "整行选中", chk_fullrowselect, 131, 50, 76, 12, BS_AUTOCHECKBOX | BS_MULTILINE
+ AUTOCHECKBOX "显示网格线", chk_gridlines, 131, 79, 76, 12, BS_AUTOCHECKBOX | BS_MULTILINE
+ PUSHBUTTON "存为默认", cb_saveasdefault, 148, 106, 47, 16, BS_PUSHBUTTON | BS_MULTILINE
+ PUSHBUTTON "恢复默认", cb_loaddefault, 148, 126, 47, 16, BS_PUSHBUTTON | BS_MULTILINE
+ LTEXT "显示风格：", st_liststyle, 131, 12, 68, 11
+ COMBOBOX cmb_style, 135, 28, 61, 62, CBS_DROPDOWNLIST | WS_TABSTOP
+ AUTOCHECKBOX "显示勾选框", chk_checkboxes, 131, 65, 73, 12
+ PUSHBUTTON "应用到全部", cb_applytoall, 148, 146, 47, 16
+}
+
+
+
+
+
+Property_General DIALOG 0, 0, 208, 196
+STYLE DS_3DLOOK | DS_CENTER | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ LTEXT "标题：", st_title, 13, 13, 41, 17
+ EDITTEXT sle_title, 57, 13, 120, 14, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ LTEXT "状态：", st_status, 13, 35, 41, 17
+ COMBOBOX cmb_status, 57, 35, 49, 53, CBS_DROPDOWNLIST | WS_TABSTOP
+ LTEXT "创建时间：", st_createtime, 13, 57, 41, 17
+ LTEXT "修改时间：", st_modifytime, 13, 78, 41, 17
+ LTEXT "备注：", st_remark, 13, 141, 41, 17
+ EDITTEXT mle_remark, 57, 142, 139, 44, ES_MULTILINE | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+ PUSHBUTTON "", cb_icon, 182, 13, 15, 14
+ LTEXT "访问时间：", st_visittime, 13, 99, 41, 17
+ LTEXT "路径：", st_path, 13, 121, 41, 17
+ EDITTEXT sle_createtime, 57, 57, 80, 13, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ EDITTEXT sle_modifytime, 57, 78, 80, 13, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ EDITTEXT sle_visittime, 57, 99, 80, 13, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ EDITTEXT sle_path, 57, 121, 139, 13, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+}
+
+
+Property_Edit DIALOG 0, 0, 208, 202
+STYLE DS_3DLOOK | DS_CENTER | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "数据保存于外部文件：", chk_externalsave, 13, 11, 182, 12
+ EDITTEXT sle_exportfile, 33, 30, 144, 12, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ PUSHBUTTON "...", cb_browse, 182, 29, 15, 14
+}
+
+
+Property_Box DIALOG 0, 0, 242, 264
+STYLE DS_MODALFRAME | DS_SETFONT | WS_VISIBLE | WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "页的属性"
+FONT 9, "Arial"
+{
+ DEFPUSHBUTTON "确    定", IDOK, 137, 241, 42, 14
+ PUSHBUTTON "取    消", IDCANCEL, 187, 241, 42, 14
+ CONTROL "", tab_switch, WC_TABCONTROL, 0 | WS_CHILD | WS_VISIBLE, 10, 11, 218, 217
+}
+
+
+Search_Box DIALOG 26, 45, 238, 114
+STYLE DS_MODALFRAME | DS_SETFONT | WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "搜索"
+FONT 9, "Arial"
+{
+ DEFPUSHBUTTON "确    定", IDOK, 132, 90, 42, 14
+ PUSHBUTTON "取    消", IDCANCEL, 182, 90, 42, 14
+ LTEXT "类别：", st_pagetype, 10, 12, 46, 15
+ COMBOBOX cmb_pagetype, 58, 11, 61, 78, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+ LTEXT "搜索条件：", st_searchcrit, 10, 31, 214, 8
+ COMBOBOX cmb_col, 19, 47, 49, 76, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+ COMBOBOX cmb_opr, 79, 47, 40, 54, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+ EDITTEXT sle_value, 131, 47, 93, 12, WS_BORDER | WS_TABSTOP
+ AUTOCHECKBOX "区分大小写", chk_matchcase, 19, 67, 184, 12
+}
+
+DefineToolbar_Box DIALOG 6, 15, 304, 235
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "自定义工具栏"
+FONT 9, "Arial"
+{
+ CONTROL "", lv_available, WC_LISTVIEW, 8 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 11, 11, 124, 184
+ PUSHBUTTON ">>", cb_add, 144, 26, 16, 14, WS_DISABLED | BS_PUSHBUTTON
+ PUSHBUTTON "<<", cb_remove, 144, 48, 16, 14, WS_DISABLED | BS_PUSHBUTTON
+ PUSHBUTTON "∧", cb_up, 144, 145, 16, 14, WS_DISABLED | BS_PUSHBUTTON
+ PUSHBUTTON "∨", cb_down, 144, 166, 16, 14, WS_DISABLED | BS_PUSHBUTTON
+ CONTROL "", lv_current, WC_LISTVIEW, 8 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 169, 11, 124, 184
+ DEFPUSHBUTTON "确    定", IDOK, 148, 212, 42, 14, BS_DEFPUSHBUTTON
+ PUSHBUTTON "重    置", cb_reset, 200, 212, 42, 14, BS_PUSHBUTTON
+ PUSHBUTTON "取    消", IDCANCEL, 251, 212, 42, 14, BS_PUSHBUTTON
+}
+
+
+
+Find_Box DIALOG 24, 26, 266, 125
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "查找／替换"
+FONT 9, "Arial"
+{
+ COMBOBOX cmb_findtext, 87, 11, 169, 89, WS_TABSTOP | WS_TABSTOP | CBS_DROPDOWN | CBS_AUTOHSCROLL
+ AUTOCHECKBOX "替换为：", chk_allowreplace, 8, 30, 75, 12, BS_MULTILINE
+ COMBOBOX cmb_replacetext, 87, 32, 169, 80, WS_TABSTOP | WS_TABSTOP | CBS_DROPDOWN | CBS_AUTOHSCROLL
+ AUTORADIOBUTTON "向上", rb_up, 7, 71, 37, 12, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "向下", rb_down, 47, 71, 36, 12, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTOCHECKBOX "区分大小写", chk_matchcase, 8, 53, 76, 12, BS_MULTILINE
+ AUTOCHECKBOX "整词匹配", chk_wholeword, 87, 53, 98, 12, BS_MULTILINE
+ AUTOCHECKBOX "循环查找", chk_rollback, 86, 71, 64, 12, BS_MULTILINE
+ DEFPUSHBUTTON "查    找", m_findnext, 191, 53, 65, 14, BS_DEFPUSHBUTTON
+ PUSHBUTTON "退    出", cb_exit, 51, -1, 58, 14, NOT WS_VISIBLE | WS_TABSTOP
+ LTEXT "查找文字：", st_targettext, 8, 11, 75, 11, SS_LEFT
+ AUTOCHECKBOX "找到第一匹配项后退出", chk_exitafterfirstmatch, 8, 105, 175, 12
+ PUSHBUTTON "替    换", m_replace, 191, 73, 65, 14
+ PUSHBUTTON "全部替换", m_replaceall, 191, 93, 65, 14
+ AUTOCHECKBOX "仅在选区内", chk_withinselrange, 8, 89, 72, 12
+ AUTOCHECKBOX "高亮查找结果", chk_highlightmatch, 86, 89, 96, 12
+}
+
+
+
+Statistics_Box DIALOG 0, 0, 160, 163
+STYLE DS_MODALFRAME | DS_SETFONT | WS_VISIBLE | WS_BORDER | WS_CAPTION | WS_DLGFRAME | WS_POPUP | WS_SYSMENU
+CAPTION "统计信息"
+FONT 9, "Arial"
+{
+ CONTROL "", tab_switch, WC_TABCONTROL, 0 | WS_CHILD | WS_VISIBLE, 10, 10, 139, 144
+ LTEXT "", st_count_left, 21, 29, 80, 117
+ LTEXT "", st_count_right, 105, 29, 34, 117
+}
+
+
+
+LogIn_Box DIALOG 6, 15, 155, 77
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "登录 minipad2"
+FONT 9, "Arial"
+{
+ EDITTEXT sle_password, 10, 28, 134, 14, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP | ES_PASSWORD
+ DEFPUSHBUTTON "确    定", IDOK, 54, 54, 42, 14
+ PUSHBUTTON "取    消", IDCANCEL, 102, 54, 42, 14
+ LTEXT "请输入登录密码：", st_inputpassword, 10, 10, 140, 11
+}
+
+Import_Box DIALOG 6, 15, 155, 96
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "导入"
+FONT 9, "Arial"
+{
+ DEFPUSHBUTTON "确    定", IDOK, 54, 73, 42, 14
+ PUSHBUTTON "取    消", IDCANCEL, 102, 73, 42, 14
+ LTEXT "导入来源：", st_importtype, 10, 10, 140, 13
+ AUTORADIOBUTTON "从文件", rb_fromfile, 19, 25, 60, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "从文件夹", rb_fromfolder, 83, 25, 66, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTOCHECKBOX "外部存储", chk_virtualimport, 10, 47, 133, 12
+}
+
+Export_Box DIALOG 6, 15, 154, 101
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "导出"
+FONT 9, "Arial"
+{
+ DEFPUSHBUTTON "确    定", IDOK, 54, 77, 42, 14
+ PUSHBUTTON "取    消", IDCANCEL, 102, 77, 42, 14
+ LTEXT "导出方式：", st_exporttype, 10, 10, 67, 13
+ AUTORADIOBUTTON "剪贴板", rb_toclipboard, 84, 7, 63, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "文件", rb_tofile, 25, 23, 55, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "文件夹", rb_tofolder, 84, 23, 64, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ LTEXT "编码：", st_encode, 10, 49, 53, 17
+ COMBOBOX cmb_encode, 68, 49, 76, 52, CBS_DROPDOWNLIST | WS_TABSTOP
+}
+
+
+InsertLink_Box DIALOG 6, 15, 212, 93
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "插入链接"
+FONT 9, "Arial"
+{
+ EDITTEXT sle_linktext, 10, 39, 173, 14, ES_AUTOHSCROLL | WS_BORDER | WS_TABSTOP
+ DEFPUSHBUTTON "确    定", IDOK, 112, 70, 42, 14
+ PUSHBUTTON "取    消", IDCANCEL, 160, 70, 42, 14
+ PUSHBUTTON "...", cb_browse, 188, 39, 14, 14
+ LTEXT "类别：", st_category, 10, 9, 26, 8
+ LTEXT "链接：", st_link, 11, 26, 60, 8
+ COMBOBOX cmb_linktype, 37, 8, 59, 68, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+}
+
+
+Note_Box DIALOG 17, 24, 146, 102
+STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "新建笔记"
+FONT 9, "Arial"
+{
+}
+

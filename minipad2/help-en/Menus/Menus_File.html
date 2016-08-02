@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>File</title>
+</head>
+
+<body>
+	<h1>File</h1>
+	    
+	<p>This menu involves the common operations for all the kinds of pages.</p>
+
+	<p><a name="m_newnote"></a><b>New NotePage:</b> Create a new NotePage. ( Normally as the last sibling of the selected node. If use Ctrl_Click, then the new node will be inserted before the selected node. If the current node is a group, then directly clicking "New NotePage" will create a new note as the child of the group, Shift_Click will create a new note as the sibling of the group. The same rules for New Group, New CalcPage... ).</p>
+
+	<p><b>New ExtPage:</b> Create the special pages with special functions. Including:<br>
+		<a name="m_newcalc"></a><b>New CalcPage:</b> Create a new CalcPage which can be used as calculator. ( see "Extensions"--><a href='..\Extensions\Ext_Calculator.html'>"Calculator"</a> )<br>
+		<a name="m_newmemo"></a><b>New MemoPage:</b> Create a new MemoPage used for reminders, to-do-list and scheduled tasks. ( see "Extensions"--><a href='..\Extensions\Ext_Memo.html'>"Memo"</a> )<br>
+		<a name="m_newdict"></a><b>New DictPage:</b> Create a new DictPage which can be used as dictionary. ( see "Extensions"--><a href='..\Extensions\Ext_Dictionary.html'>"Dictionary"</a> )<br>
+		<a name="m_newlink"></a><b>New LinkPage:</b> Create a new LinkPage which can be used as program/file launcher. ( see "Extensions"--><a href='..\Extensions\Ext_Launcher.html'>"Launcher" </a>)<br>
+		<a name="m_newcontact"></a><b>New ContactPage:</b> Create a new ContactPage which can be used as contact list. (see "Extensions"--><a href='..\Extensions\Ext_ContactList.html'>"Contact List"</a>)</p>
+
+	<p><a name="m_newgroup"></a><b>New Group:</b> Create a new Group (Folder). Under a group you can create unlimited pages or sub-groups.</p>
+
+	<p><a name='m_rename'></a><b>Rename:</b> Rename the current page.</p>
+
+	<p><a name="m_switchlock"></a><b>Switch Lock:</b> Switch the status of current page between locked, readonly and unlocked.<br>
+	Actually, the program supports four kinds of page-status:<br>
+	<ul class="list">
+		<li>Normal: The page can be edited or deleted.
+		<li>Locked (+): The page can be edited, but cannot be deleted.
+		<li>Protected (*): When switch to this kind of page, all the original contents are protected from modification or delete, it's only allowed to append new text. It's also not allowed to delete this page.
+		<li>ReadOnly (#): The page content is set as readonly and cannot be modified or appended. Page delete is also not allowed.
+	</ul>
+	You can switch between "Normal", "Locked" & "ReadOnly" via this menu item. If you want to set the page status to "Protected", you need to go to the "Property" dialog.</p>
+	
+	<p><b>Save:</b> save the content manually. (The software supports auto-save and timed-save, In most cases it's not necessary to use this function).</p>
+
+	<p><a name="m_delete"></a><b>Delete Page:</b> Delete the current page.</p>
+
+	<p><a name="m_property"></a><b>Property:</b> Click to open the "Property" dialog. In this dialog you can modify the page title, change the icon if the page (by clicking the icon button), set different page status (Normal, Locked, Protected, ReadOnly), view the node path or corresponding time informations, or write annotations. For the text pages, you can set whether to save in a separate txt file (external save), and set the file name; For the list pages, you an set the columns, select view style (Big Icon, Small Icon, List, Report, Abstract...), set whether to be full-row-select-style or not, whether to show checkboxes or gridLines, etc. It's also possible to save the current settings as the default settings for creating new pages with the same type.</p>
+	
+	<p><a name="m_view"></a><b>View:</b> Switch between five different view styles: Big icon, Small icon, List, Report & <a href="..\Featured Functions.html#abstract">Abstract</a> for the current list page.</p>
+
+	<p><a name="m_import"></a><b>Import:</b> Import the content of external text files. Support to import from files, or from folder. Supports the following two text formats:<br>
+	<ul class="list">
+		<li>*.txt: import the content of text files as new note pages in minipad2. 
+		<li>*.mep: re-import the content of list pages previously exported.
+	</ul>
+	The import dialog supports multi-select, i.e., allows to import multiple files simultaneously.<br>
+	You can select whether to import the whole content of the file, or only create a node which links to this file (virtual import) without saving the content inside of minipad2.dat.<br>
+	Another way of import is dragging the files / folders from Windows Explorer into the window of minipad2.<br>
+	During the importing of several files, press and holding ESC if you want to abort.
+	</p>
+
+	<p><a name="m_export"></a><b>Export:</b> Export the content of current page to clipboard, file or folder. For file/folder export:<br>
+	<ul class="list">
+		<li>Text pages (NotePage, CalcPage, DictPage): the page content is saved as txt file.
+		<li>List Pages (MemoPage, LinkPage, ContactPage, Template): you can choose from the following two formats:<br>
+			1. *.txt: save the content shown in the current page to txt file.<br>
+			2. *.mep: save everything (including the hided columns) and the page-settings (styles, widths of columns...) to external file. Can be used for re-import (e.g., export from one computer and reimport the pages to minipad2 on another computer).<br>
+		<li>For groups with subnodes, there are two ways for export: one way is export the group to a folder while keeping the tree structure, (i.e., sub-pages to separate txt files, sub-groups to sub-folders), another way is merge and export the content of the whole group (with all it's sub-nodes) into a single text file. 
+	</ul>
+	For the exported file you can select within these four encodings: Ansi, UTF-8, UTF16LE (Unicode) & UTF16BE (Unicode Big Endian).<br>
+	</p>
+
+	<p><a name="m_sendmail"></a><b>Send Mail:</b> Send the content of current page as email. ( load the mail-client which is set in "Options"--><a href='..\Options\Program Settings\Opt_ProgramSettings.html'>"Program Settings"</a>(if no mail-client is set there, then use the system's default mail-client), create a new mail, use the page-title as the mail-subject, page-content as the mail-content. )</p>
+
+	<p><b>Exit:</b> Exit the program.</p><br>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>未公开的选项</title>
+</head>
+
+<body>
+	<h1>未公开的选项</h1>
+	<p>以下选项均为不存在于“选项”对话框中的扩展选项。用户在 <span class="emphasis">关闭 minipad2</span> 的情况下，可自行用记事本等纯文本编辑器打开 minipad2.ini 文件进行设定。</p>
+	
+	<h2><a name="startpage"></a>1. 启动页面</h2>
+	<p>默认情况下，minipad2 启动时自动载入前一次关闭时最后浏览的页面。但使用者也可指定 minipad2 启动时载入某一特定页面。方法：</p>
+	<ol>
+		<li>用记事本等文本编辑器打开 data\minipad2.idx，找到需设为主页的页面所在的一行，记下其 id（该行最左侧的数字）。
+		<li>打开 minipad2.ini，找到[Program]-->StartPage 字段，将等号右侧改为上述的 id（如该行不存在，可自行添加）。保存，关闭。
+	</ol>
+	<p>以后每次启动 minipad2，即自动进入该页面。</p>
+	<p>如希望每次启动时当前页面为根节点“全部”，只需设为 StartPage=0 即可。</p>
+	
+	<h2><a name="defremindtime"></a>2. 定时提醒的默认时间</h2>
+	<p>在创建备忘条目时，默认提醒时间为当前时间的 10 分钟后。如希望修改该选项，可通过修改 ini 文件进行。例如添加如下项目：</p>
+	<p>[MemoPage]<br>
+	DefRemindTime=5</p>
+	<p>默认的提醒时间即改为 5 分钟后。</p><br>
+</body>
+</html>

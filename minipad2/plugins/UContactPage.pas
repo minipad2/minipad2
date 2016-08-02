@@ -1,0 +1,384 @@
+unit UContactPage;
+
+interface
+
+uses UPageSuper, UPageProperty, UxlList, UTypeDef, UEditBox, UxlComboBox, UxlStdCtrls;
+
+type
+	TContactPage = class (TChildItemContainer)
+   private
+   public
+   	class function PageType (): TPageType; override;
+      class function DefChildType (): TPageType; override;
+      class procedure GetListShowCols (o_list: TxlIntList); override;
+		class procedure InitialListProperty (lp: TListProperty); override;
+   end;
+
+   TContactProperty = class (TClonableProperty)
+   private
+   public
+      Sex: integer;
+      Mobile: widestring;
+      Email: widestring;
+      IM1: widestring;
+      IM2: widestring;
+      Company: widestring;
+      Department: widestring;
+      Address: widestring;
+      Zipcode: widestring;
+      Tel: widestring;
+      Fax: widestring;
+      Others: widestring;
+      Remark: widestring;
+
+   	procedure Load (o_list: TxlStrList); override;
+      procedure Save (o_list: TxlStrList); override;
+      class procedure GetShowCols (o_list: TxlIntList); 
+      function GetColText (id_col: integer; var s_result: widestring): boolean; override;
+   end;
+
+   TContactItem = class (TChildItemSuper)
+   private
+   	FContact: TContactProperty;
+   protected
+      function GetImageIndex (): integer; override;
+   public
+      constructor Create (i_id: integer); override;
+      destructor Destroy (); override;
+
+   	class function PageType (): TPageType; override;
+//      function GetColText (id_col: integer): widestring; override;
+		class procedure GetSearchCols (o_list: TxlIntList); override;
+      property Contact: TContactProperty read FContact;
+   end;
+
+   TContactBox = class (TEditBoxSuper)
+   private
+   	FCmbSex: TxlComboBox;
+      procedure f_SexChanged (Sender: TObject);
+   protected
+      function f_DefaultIcon (): integer; override;
+      function AllowUserDefinedIcon (): boolean; override;
+
+      procedure OnInitialize (); override;
+      procedure OnOpen (); override;
+      procedure OnClose (); override;
+//      procedure OnCommand (ctrlID: integer); override;
+
+      procedure LoadItem (value: TPageSuper); override;
+      procedure ClearAndNew (); override;
+      function SaveItem (value: TPageSuper): integer; override;
+   public
+   	class function PageType (): TPageType; override;
+   end;
+
+implementation
+
+uses Windows, UxlFunctions, UxlListView, UxlStrUtils, UPageFactory, UPageStore, ULangManager, UxlCommDlgs, Resource;
+
+class	function TContactPage.PageType (): TPageType;
+begin
+	result := ptContact;
+end;
+
+class function TContactPage.DefChildType (): TPageType;
+begin
+	result := ptContactItem;
+end;
+
+class procedure TContactPage.InitialListProperty (lp: TListProperty);
+const c_cols: array[0..3] of integer = (sr_Name, sr_Tel, sr_Mobile, sr_Email);
+	c_widths: array[0..3] of integer = (60, 100, 100, 150);
+begin
+	with lp do
+   begin
+		ColList.Populate (c_cols);
+		WidthList.Populate (c_widths);
+      CheckBoxes := false;
+		View := lpvReport;
+   	FullrowSelect := true;
+   	GridLines := false;
+   end;
+end;
+
+class procedure TContactPage.GetListShowCols (o_list: TxlIntList);
+begin
+	TContactProperty.GetShowCols (o_list);
+end;
+
+//-----------------------
+
+constructor TContactItem.Create (i_id: integer);
+begin
+	inherited Create (i_id);
+	FContact := TContactProperty.Create (i_id);
+   FItemProperty := FContact;
+   AddProperty (FContact);
+end;
+
+destructor TContactItem.Destroy ();
+begin
+	FContact.free;
+   inherited;
+end;
+
+class function TContactItem.PageType (): TPageType;
+begin
+	result := ptContactItem;
+end;
+
+function TContactItem.GetImageIndex (): integer;
+begin
+	result := PageImageList.IndexOf (PageType) + Ord(FContact.Sex);
+end;
+
+//function TContactItem.GetColText (id_col: integer): widestring;
+//begin
+//	if not FContact.GetColText (id_col, result) then
+//   	result := inherited GetColText (id_col);
+//end;
+
+class procedure TContactItem.GetSearchCols (o_list: TxlIntList);
+begin
+   TContactProperty.GetShowCols (o_list);
+end;
+
+//----------------
+
+procedure TContactProperty.Load (o_list: TxlStrList);
+begin
+   Sex := StrToIntDef(o_list[0]);
+   Mobile := o_list[1];
+   Email := o_list[2];
+   IM1 := o_list[3];
+   IM2 := o_list[4];
+   Company := o_list[5];
+   Department := o_list[6];
+   Address := o_list[7];
+   Zipcode := o_list[8];
+   Tel := o_list[9];
+   Fax := o_list[10];
+   Others := o_list[11];
+   Remark := SingleLineToMultiLine(o_list[12]);
+   o_list.Delete (0, 13);
+end;
+
+procedure TContactProperty.Save (o_list: TxlStrList);
+begin
+	with o_list do
+   begin
+      Add (IntToStr(Sex));
+      Add (Mobile);
+      Add (Email);
+      Add (IM1);
+      Add (IM2);
+      Add (Company);
+      Add (Department);
+      Add (Address);
+      Add (Zipcode);
+      Add (Tel);
+      Add (Fax);
+      Add (Others);
+      Add (MultiLineToSingleLine(Remark));
+   end;
+end;
+
+class procedure TContactProperty.GetShowCols (o_list: TxlIntList);
+const c_cols: array[0..13] of integer = (sr_Name, sr_Sex, sr_Mobile, sr_Email, sr_IM1, sr_IM2, sr_Company, sr_Department, sr_Address, sr_Zipcode, sr_Tel, sr_Fax, sr_Others, sr_Remark);
+var i: integer;
+begin
+   for i := Low(c_cols) to High(c_cols) do
+		o_list.Add (c_cols[i]);
+end;
+
+function TContactProperty.GetColText (id_col: integer; var s_result: widestring): boolean;
+begin
+	result := true;
+	case id_col of
+   	sr_Name:
+      	s_result := PageStore[FPageId].Name;
+   	sr_Sex:
+      	s_result := IfThen (Sex = 0, LangMan.GetItem (sr_boy), LangMan.GetItem (sr_girl));
+      sr_Mobile:
+      	s_result := Mobile;
+      sr_Email:
+      	s_result := Email;
+      sr_IM1:
+      	s_result := IM1;
+      sr_IM2:
+      	s_result := IM2;
+      sr_Company:
+      	s_result := Company;
+      sr_Department:
+      	s_result := Department;
+      sr_Address:
+      	s_result := Address;
+      sr_Zipcode:
+      	s_result := Zipcode;
+      sr_Tel:
+      	s_result := Tel;
+      sr_Fax:
+      	s_result := Fax;
+      sr_Others:
+      	s_result := Others;
+      sr_Remark:
+      	s_result := Remark;
+      else
+      	result := false;
+   end;
+end;
+
+//--------------------
+
+procedure TContactBox.OnInitialize ();
+begin
+	SetTemplate (Contact_Box, m_newcontact);
+end;
+
+const c_ContactBox: array[0..16] of word = (st_name, st_sex, st_mobile, st_email, st_im1, st_im2, st_company, st_department, st_address, st_zipcode, st_tel, st_fax, st_others, st_remark, cb_new, IDOK, IDCancel);
+
+procedure TContactBox.OnOpen ();
+begin
+	FCmbSex := TxlComboBox.Create (self, ItemHandle[cmb_sex]);
+   FCmbSex.Items.Add (LangMan.GetItem(sr_boy, 'ÄÐ'));
+   FCmbSex.Items.Add (LangMan.GetItem(sr_girl, 'Å®'));
+   FCmbSex.Items.OnSelChange := f_SexChanged;
+
+   inherited;
+   RefreshItemText (self, c_ContactBox);
+end;
+
+procedure TContactBox.OnClose ();
+begin
+	FCmbSex.free;
+	inherited;
+end;
+
+class function TContactBox.PageType (): TPageType;
+begin
+	result := ptContactItem;
+end;
+
+procedure TContactBox.LoadItem (value: TPageSuper);
+var p: TContactProperty;
+begin
+	self.Text := LangMan.GetItem(sr_EditContact);
+
+   ItemText[sle_name] := value.name;
+
+   p := TContactItem(value).Contact;
+   FCmbSex.Items.SelIndex := p.sex;
+   ItemText[sle_mobile] := p.mobile;
+   ItemText[sle_email] := p.email;
+   ItemText[sle_IM1] := p.IM1;
+   ItemText[sle_IM2] := p.IM2;
+   ItemText[sle_company] := p.company;
+   ItemText[sle_department] := p.department;
+   ItemText[sle_address] := p.address;
+   ItemText[sle_zipcode] := p.zipcode;
+   ItemText[sle_tel] := p.tel;
+   ItemText[sle_fax] := p.fax;
+   ItemText[sle_others] := p.others;
+   ItemText[mle_remark] := p.remark;
+
+   FocusControl (sle_name);
+   inherited LoadItem (value);
+end;
+
+procedure TContactBox.ClearAndNew ();
+begin
+	self.Text := LangMan.GetItem(sr_NewContact);
+
+   ItemText[sle_name] := '';
+   FCmbSex.Items.SelIndex := 0;
+   ItemText[sle_mobile] := '';
+   ItemText[sle_email] := '';
+   ItemText[sle_IM1] := '';
+   ItemText[sle_IM2] := '';
+   ItemText[sle_company] := '';
+   ItemText[sle_department] := '';
+   ItemText[sle_address] := '';
+   ItemText[sle_zipcode] := '';
+   ItemText[sle_tel] := '';
+   ItemText[sle_fax] := '';
+   ItemText[sle_others] := '';
+   ItemText[mle_remark] := '';
+
+   FocusControl (sle_name);
+   inherited ClearAndNew;
+end;
+
+function TContactBox.SaveItem (value: TPageSuper): integer;
+begin
+   value.name := ItemText[sle_name];
+   with TContactItem (value).Contact do
+   begin
+      sex := FCmbSex.Items.SelIndex;
+      mobile := ItemText[sle_mobile];
+      email := ItemText[sle_email];
+      IM1 := ItemText[sle_IM1];
+      IM2 := ItemText[sle_IM2];
+      company := ItemText[sle_company];
+      department := ItemText[sle_department];
+      address := ItemText[sle_address];
+      zipcode := ItemText[sle_zipcode];
+      tel := ItemText[sle_tel];
+      fax := ItemText[sle_fax];
+      others := ItemText[sle_others];
+      remark := ItemText[mle_remark];
+   end;
+   inherited SaveItem (value);
+end;
+
+procedure TContactBox.f_SexChanged (Sender: TObject);
+begin
+	f_DetermineIcon;
+end;
+
+function TContactBox.f_DefaultIcon (): integer;
+begin
+	if (FCmbSex = nil) or (FCmbSex.Items.SelIndex = 0) then
+   	result := ic_boy
+   else
+		result := ic_girl;
+end;
+
+function TContactBox.AllowUserDefinedIcon (): boolean;
+begin
+	result := true;
+end;
+
+//procedure TContactBox.OnCommand (ctrlID: integer);
+//begin
+//	case ctrlID of
+//   	cmb_sex:
+//         f_DetermineIcon;
+//      else
+//      	inherited OnCommand (ctrlID);
+//   end;
+//end;
+
+//--------------------
+
+//function ContactInitialSettings (): widestring;
+//begin
+//	result := IntToStr(st_Name) + ',' + IntToStr(st_Sex) + ';400,400;0;' + IntToStr(Ord(lvsList)) + ';1;0;1';
+//end;
+
+initialization
+	PageFactory.RegisterClass (TContactPage);
+   PageImageList.AddImageWithOverlay (ptContact, m_newcontact);
+	PageNameMan.RegisterDefName (ptContact, sr_defcontactname);
+//   PageDefSettingsMan.RegisterType (ptContact, contactInitialsettings);
+
+	PageFactory.RegisterClass (TContactItem);
+   PageImageList.AddImages (ptContactItem, [ic_boy, ic_girl]);
+//	PageNameMan.RegisterDefName (ptContactItem, sr_defcontactItemname);
+   EditBoxFactory.RegisterClass (TContactBox);
+
+finalization
+
+end.
+
+
+

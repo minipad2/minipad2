@@ -1,0 +1,309 @@
+unit ULinkPage;
+
+interface
+
+uses UPageSuper, UPageProperty, UxlList, UTypeDef, UEditBox, UxlComboBox;
+
+type
+	TLinkPage = class (TPageContainer)
+   private
+   public
+   	class function PageType (): TPageType; override;
+      function DefChildType (): TPageType; override;
+      class procedure GetListShowCols (o_list: TxlIntList); override;
+		class procedure InitialListProperty (lp: TListProperty); override;
+   end;
+
+  	TLinkType = (ltFile, ltFolder, ltPage, ltEmail, ltBatch);
+
+   TLinkProperty = class (TClonableProperty)
+   private
+   public
+      LinkType: TLinkType;
+      Link: widestring;
+      HotKey: THotKey;
+      FastLink: boolean;
+      Remark: widestring;
+
+   	procedure Load (o_list: TxlStrList); override;
+      procedure Save (o_list: TxlStrList); override;
+      class procedure GetShowCols (o_list: TxlIntList); 
+      function GetColText (id_col: integer; var s_result: widestring): boolean;
+   end;
+
+   TLinkItem = class (TChildItemSuper)
+   private
+   	FLink: TLinkProperty;
+   public
+      constructor Create (i_id: integer); override;
+      destructor Destroy (); override;
+
+   	class function PageType (): TPageType; override;
+      function ImageIndex (): integer; override;
+      function GetColText (id_col: integer): widestring; override;
+		class procedure GetSearchCols (o_list: TxlIntList); override;
+      property Link: TLinkProperty read FLink;
+   end;
+
+   TLinkBox = class (TEditBoxSuper)
+   private
+   	FCmbSex: TxlComboBox;
+   protected
+      procedure OnInitialize (); override;
+      procedure OnOpen (); override;
+      procedure OnClose (); override;
+
+      procedure LoadItem (value: TPageSuper); override;
+      procedure ClearAndNew (); override;
+      function SaveItem (value: TPageSuper): integer; override;
+   public
+   	class function PageType (): TPageType; override;
+   end;
+
+implementation
+
+uses Windows, UxlFunctions, UxlListView, UxlStrUtils, UPageFactory, UPageStore, ULangManager, Resource;
+
+class	function TLinkPage.PageType (): TPageType;
+begin
+	result := ptLink;
+end;
+
+function TLinkPage.DefChildType (): TPageType;
+begin
+	result := ptLinkItem;
+end;
+
+class procedure TLinkPage.InitialListProperty (lp: TListProperty);
+const c_cols: array[0..1] of integer = (sr_Title, sr_Link);
+	c_widths: array[0..1] of integer = (100, 200);
+begin
+	with lp do
+   begin
+		ColList.Populate (c_cols);
+		WidthList.Populate (c_widths);
+      CheckBoxes := false;
+		View := lpvReport;
+   	FullrowSelect := true;
+   	GridLines := false;
+   end;
+end;
+
+class procedure TLinkPage.GetListShowCols (o_list: TxlIntList);
+begin
+	TLinkProperty.GetShowCols (o_list);
+end;
+
+//-----------------------
+
+constructor TLinkItem.Create (i_id: integer);
+begin
+	inherited Create (i_id);
+	FLink := TLinkProperty.Create (i_id);
+   AddProperty (FLink);
+end;
+
+destructor TLinkItem.Destroy ();
+begin
+	FLink.free;
+   inherited;
+end;
+
+class function TLinkItem.PageType (): TPageType;
+begin
+	result := ptLinkItem;
+end;
+
+function TLinkItem.ImageIndex (): integer;
+begin
+   if (LinkProperty.LinkType in [ltFile, ltFolder]) and (not OptionMan.Options.LinkOptions.DisableIconRead) then
+   begin
+      if linktype = ltFile then
+      begin
+         TLinkList.GetInstance.DecryptLink (link, s_link, s_dir, s_param);
+         uFlags := SHGFI_ICON or SHGFI_USEFILEATTRIBUTES;
+      end
+      else
+      begin
+         s_link := link;
+         uFlags := SHGFI_ICON;
+      end;
+      SHGetFileInfoW (pwidechar(s_Link), FILE_ATTRIBUTE_NORMAL, o_info, sizeof(o_info), uFlags);
+      result := PageImageList.ImageFromHIcon (o_info.icon);
+      DestroyIcon (o_info.hicon);
+   end
+   else
+      result := PageImageList.IndexOf (PageType) + Ord (LinkType);
+end;
+
+function TLinkItem.GetColText (id_col: integer): widestring;
+begin
+	if not FLink.GetColText (id_col, result) then
+   	result := inherited GetColText (id_col);
+end;
+
+class procedure TLinkItem.GetSearchCols (o_list: TxlIntList);
+begin
+   TLinkProperty.GetShowCols (o_list);
+end;
+
+//----------------
+
+procedure TLinkProperty.Load (o_list: TxlStrList);
+begin
+   LinkType := TLinkType(StrToIntDef(o_list[0]));
+   Link := SingleLineToMultiLine (o_list[1]);
+   HotKey := StrToIntDef(o_list[2]);
+   Remark := SingleLineToMultiLine(o_list[3]);
+   o_list.Delete (0, 4);
+end;
+
+procedure TLinkProperty.Save (o_list: TxlStrList);
+begin
+	with o_list do
+   begin
+      Add (IntToStr(Ord(o_item.LinkType)));
+      Add (MultiLineToSingleLine(o_item.Link));
+      Add (IntToStr(o_item.HotKey));
+      Add (MultiLineToSingleLine(Remark));
+   end;
+end;
+
+class procedure TLinkProperty.GetShowCols (o_list: TxlIntList);
+const c_cols: array[0..4] of integer = (sr_Title, sr_Link, sr_LinkType, sr_HotKey, sr_Remark);
+var i: integer;
+begin
+   for i := Low(c_cols) to High(c_cols) do
+		o_list.Add (c_cols[i]);
+end;
+
+function TLinkProperty.GetColText (id_col: integer; var s_result: widestring): boolean;
+begin
+	result := true;
+	case id_col of
+   	sr_Title:
+      	s_result := PageStore[FPageId].Name;
+      sr_LinkType:
+	      s_result := LangMan.GetItem (sr_LinkTypes + Ord(o_linkitem.LinkType));
+      sr_Link:
+      	s_result := Link;
+      sr_HotKey:
+      	s_result := HotKeyToString(o_linkitem.HotKey);
+      sr_Remark:
+      	s_result := Remark;
+      else
+      	result := false;
+   end;
+end;
+
+//--------------------
+
+procedure TLinkBox.OnInitialize ();
+begin
+	SetTemplate (Link_Box, m_newLink);
+end;
+
+const c_LinkBox: array[0..16] of word = (st_name, st_sex, st_mobile, st_email, st_im1, st_im2, st_company, st_department, st_address, st_zipcode, st_tel, st_fax, st_others, st_remark, cb_new, IDOK, IDCancel);
+
+procedure TLinkBox.OnOpen ();
+begin
+	FCmbSex := TxlComboBox.Create (self, ItemHandle[cmb_sex]);
+   FCmbSex.Items.Add (LangMan.GetItem(sr_boy, 'ÄÐ'));
+   FCmbSex.Items.Add (LangMan.GetItem(sr_girl, 'Å®'));
+   inherited;
+   RefreshItemText (self, c_LinkBox);
+end;
+
+procedure TLinkBox.OnClose ();
+begin
+	FCmbSex.free;
+	inherited;
+end;
+
+class function TLinkBox.PageType (): TPageType;
+begin
+	result := ptLinkItem;
+end;
+
+procedure TLinkBox.LoadItem (value: TPageSuper);
+var p: TLinkProperty;
+begin
+	self.Text := LangMan.GetItem(sr_EditLink);
+
+   ItemText[sle_name] := TLinkItem(value).name;
+   p := TLinkItem(value).Link;
+   FCmbSex.Items.SelIndex := p.sex;
+   ItemText[sle_mobile] := p.mobile;
+   ItemText[sle_email] := p.email;
+   ItemText[sle_IM1] := p.IM1;
+   ItemText[sle_IM2] := p.IM2;
+   ItemText[sle_company] := p.company;
+   ItemText[sle_department] := p.department;
+   ItemText[sle_address] := p.address;
+   ItemText[sle_zipcode] := p.zipcode;
+   ItemText[sle_tel] := p.tel;
+   ItemText[sle_fax] := p.fax;
+   ItemText[sle_others] := p.others;
+   ItemText[mle_remark] := p.remark;
+
+   FocusControl (sle_name);
+end;
+
+procedure TLinkBox.ClearAndNew ();
+begin
+	self.Text := LangMan.GetItem(sr_NewLink);
+
+   ItemText[sle_name] := '';
+   FCmbSex.Items.SelIndex := 0;
+   ItemText[sle_mobile] := '';
+   ItemText[sle_email] := '';
+   ItemText[sle_IM1] := '';
+   ItemText[sle_IM2] := '';
+   ItemText[sle_company] := '';
+   ItemText[sle_department] := '';
+   ItemText[sle_address] := '';
+   ItemText[sle_zipcode] := '';
+   ItemText[sle_tel] := '';
+   ItemText[sle_fax] := '';
+   ItemText[sle_others] := '';
+   ItemText[mle_remark] := '';
+
+   FocusControl (sle_name);
+end;
+
+function TLinkBox.SaveItem (value: TPageSuper): integer;
+begin
+   TLinkItem (value).name := ItemText[sle_name];
+   with TLinkItem (value).Link do
+   begin
+      sex := FCmbSex.Items.SelIndex;
+      mobile := ItemText[sle_mobile];
+      email := ItemText[sle_email];
+      IM1 := ItemText[sle_IM1];
+      IM2 := ItemText[sle_IM2];
+      company := ItemText[sle_company];
+      department := ItemText[sle_department];
+      address := ItemText[sle_address];
+      zipcode := ItemText[sle_zipcode];
+      tel := ItemText[sle_tel];
+      fax := ItemText[sle_fax];
+      others := ItemText[sle_others];
+      remark := ItemText[mle_remark];
+   end;
+end;
+
+//--------------------
+
+initialization
+	PageFactory.RegisterClass (TLinkPage);
+   PageImageList.AddImageWithOverlay (ptLink, m_newLink);
+	PageNameMan.RegisterDefName (ptLink, sr_defLinkname);
+
+	PageFactory.RegisterClass (TLinkItem);
+   PageImageList.AddImages (ptLinkItem, [ic_filelink, ic_folderlink, ic_pagelink, ic_emaillink, ic_batchlink]);
+	PageNameMan.RegisterDefName (ptLinkItem, sr_defLinkItemname);
+   EditBoxFactory.RegisterClass (TLinkBox);
+
+finalization
+
+end.

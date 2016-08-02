@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Launcher</title>
+</head>
+
+<body>
+	<h1>Launcher</h1>
+
+	<p>The LinkPage is something like launcher or virtual-desktop, for manage of software links, file links & urls. <br>
+	Use "File"-->"New ExtPage"--><a href='..\Menus\Menus_File.html#m_newlink'>"New LinkPage"</a> to create a new LinkPage.</p>
+	 
+	<h2>Basic Use</h2>
+	<p>Use "Edit"--><a href='..\Menus\Menus_Edit.html#m_newitem'>"New Item"</a> (or double-click on any empty place inside of linkpage) to open the "New Link" dialog to create a new Link.<br>
+	(Another way to add new links is directly dragging the files / folders / shortcut icons from Windows Desktop / Explorer into the LinkPage of minipad2)<br>
+	Right-click at existing item, choose <a href='..\Menus\Menus_Edit.html#m_edititem'>"Edit Item"</a> to open the "Edit Link" dialog to modify this item.<br>
+	Double-click on existing items to launch the linked program/file/url...<br>
+	To delete an existing item, right-click it and choose <a href='..\Menus\Menus_Edit.html#m_delete'>"Delete Item"</a>.<br>
+	To adjust the order of items, select the item and drag it to the target position.<br>
+	If there's more than one LinkPages, you can move/copy the links between different pages using dragdrop.</p>
+
+	<h2>"Edit Link" dialog</h2>
+	
+	<p><b>Title:</b> the title of the link</p>
+	<p><b>Category:</b> including five kinds of link types:<br>
+	<ul class="list">
+		<li>Program/File: click the "..." button to associate a file. Execute this kind of link will open the associated program/file. If the program has parameters, please quote the program itself. e.g., "c:\notepad.exe" d:\123.txt
+		<li>Folder: Use the "..." button to associate a folder. Execute this kind of link will open the associated folder.
+		<li>Url: Input url in the "Link" (the single-line-edit). Execute this kind of link will open the default browser to launch the url.
+		<li>Email: Input the email address in the "Link". Execute this kind of link will launch the default Email Client to create a new email, with the associated address as the receiver.
+		<li><a name="batchlink"></a>Batch Link: input multiple links in the "Link" (the multi-line-edit one). The links can be program/file, folder, url, or email address. Each link occupies one line. You can also use "Add" button to add one or more programs/files. Execute this kind of link will open the multiple programs/files/urls simultaneously.
+	</ul>
+	</p>
+	
+	<p><b>Hotkey:</b> The hotkey for quickly open this link.</p>
+	<p><b>Abbrev:</b>the character / abbreviation used for quick launching this item in the popup menu (only for fast-links, to simulate win+r launching).</p>
+
+	<a name="fastlink"></a><h2>Fast Link</h2>
+	<p>Fast link is a special link page. The links in this page can be launched via tray menu or popup menu.</p>
+	<p>Click "Tools"--><a href='..\Menus\Menus_Tools.html#m_fastlink'>"FastLink Manage"</a>, you can launch the fast link page, in which you can add, delete, edit and double-click to run link items, just like in normal link pages. It also supports to drag in links from external source.</p>
+	<p>You can also launch the fast links from the tray menu.</p>
+	<p>Use the <a href='..\Options\Extensions\Opt_Launcher.html#fastlinkhotkey'>fastlink hotkey</a> defined in "Options"-->"Extensions"--><a href='..\Options\Extensions\Opt_Launcher.html'>"Launcher"</a> to launch the fast link popup-menu. In the popup menu you can use mouse-pointer to select the target item, or you can also press 1..9 to directly launch the first nine items. If press Shift and click one item, all the items before the selected item will be simultaneously launched.</p>
+	<p>If <a href='..\Options\Extensions\Opt_Launcher.html#enablesubkey'>"Enable subitem hotkey"</a> is checked in "Options"-->"Extensions"-->"Launcher", then you can use the subitem-key to directly launch the first nine items. (e.g., if the hotkey for the fastlink is Ctrl+Alt+D, then the hotkeys for the first nine items will be Ctrl+Alt+1..9).</p>
+
+	<h2>Options</h2>
+	<p>In "Options"-->"Extensions"-->"Launcher" there're some options for the LinkPage, including Disable Icon-read, Minimize minipad2 after open link, FastLink Hotkey, etc. Please refer to the chapter "Options"-->"Extensions"--><a href='..\Options\Extensions\Opt_Launcher.html'>"Launcher"</a>.</p><br>
+</body>
+</html>

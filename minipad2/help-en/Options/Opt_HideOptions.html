@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Unpublished Options</title>
+</head>
+
+<body>
+	<h1>Unpublished Options</h1>
+	<p>The following options does not exist in "Options" dialog. If you want to use it, after <span class="emphasis">closing minipad2</span>, you can use notepad to open the configure file: minipad2.ini, and modify the settings.</span>
+
+	<h2>1. Start Page</h2>
+	<p>By default, minipad2 will load the last page when it is closed last time. But user can also define a page for minipad2 to load during program-loading (something like "HomePage" in the browser), just follow these steps:</p>
+	<ol>
+		<li>Use notepad (or other plain-text editors) to open data\minipad2.idx, find the line where the page you want to set as Start Page locates, write down it's id (the first number on the left of the line).
+		<li>Open minipad2.ini, find the key [Program]-->StartPage, set it's value to the id above (If you can't find this key, you can add a line: StartPage=XX under [Program]). Then save & close.
+	</ol>
+	<p>Later if you open minipad2, the program will load this page when it starts.</p>
+	<p>If you want to use "Root" as the Start Page, set StartPage = 0.</p>
+	
+	<h2><a name="defremindtime"></a>2. Default reminding time</h2>
+	<p>When create a new reminder, the reminding time is 10 minutes after the current time by default. If you want to change this settings, add an item in the ini file like the following:</p>
+	<p>[MemoPage]<br>
+	DefRemindTime=5</p>
+	<p>In this example, the default reminding time is set to 5 minutes after the current time.</p><br>
+</body>
+</html>

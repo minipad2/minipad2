@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="TreeView Style">
+		<param name="Name" value="Basic Use">
+		<param name="Local" value="Basic Use.html#treeviewstyle">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Multi-Page Style">
+		<param name="Name" value="Basic Use">
+		<param name="Local" value="Basic Use.html#multipagestyle">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Calculator">
+		<param name="Name" value="Calculator">
+		<param name="Local" value="Extensions\Ext_Calculator.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="User Functions &amp; Variables">
+		<param name="Name" value="Calculator">
+		<param name="Local" value="Extensions\Ext_Calculator.html#userfunctions">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Memo">
+		<param name="Name" value="Memo">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Reminder">
+		<param name="Name" value="Memo">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Scheduled Task">
+		<param name="Name" value="Memo">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="to-do-list">
+		<param name="Name" value="Memo">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Dictionary">
+		<param name="Name" value="Dictionary">
+		<param name="Local" value="Extensions\Ext_Dictionary.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Text Template">
+		<param name="Name" value="Template">
+		<param name="Local" value="Extensions\Ext_Template.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Multi-Clipboard">
+		<param name="Name" value="Clipboard">
+		<param name="Local" value="Extensions\Ext_MultiClipboard.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="File Link">
+		<param name="Name" value="Launcher">
+		<param name="Local" value="Extensions\Ext_Launcher.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Fast Link">
+		<param name="Name" value="Launcher">
+		<param name="Local" value="Extensions\Ext_Launcher.html#fastlink">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Launcher">
+		<param name="Name" value="Launcher">
+		<param name="Local" value="Extensions\Ext_Launcher.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Contact List">
+		<param name="Name" value="Contact List">
+		<param name="Local" value="Extensions\Ext_ContactList.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Stay On Top">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#stayontop">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Auto Hide">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#autohide">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Auto adjust appearance">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#autoadjust">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="External Scroll">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#externalscroll">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Snap text">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#snaptext">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Recent notes">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#navigation">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Favorite">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#navigation">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Text highlight">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#texthighlight">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Global search">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#search">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Abstract view">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#abstract">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Auto save">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#autosave">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Auto backup">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#autosave">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="External save">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#externalsave">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Recycler">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html#recycler">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Embeded calculation">
+		<param name="Name" value="Calculator">
+		<param name="Local" value="Extensions\Ext_Calculator.html#embededcalc">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Embededquery">
+		<param name="Name" value="Dictionary">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#embededquery">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="User Dictionary">
+		<param name="Name" value="Dictionary">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#userdictionary">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Range Query">
+		<param name="Name" value="Dictionary">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#rangequery">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Dictionary configuration">
+		<param name="Name" value="Dictionary">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#configuredict">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Tip-query">
+		<param name="Name" value="Dictionary">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#tipquery">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Simulating Keypress">
+		<param name="Name" value="Template">
+		<param name="Local" value="Extensions\Ext_Template.html#sendkey">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Designating symbols">
+		<param name="Name" value="Template">
+		<param name="Local" value="Extensions\Ext_Template.html#designator">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Switch Lock">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_switchlock">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Property">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_property">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Import File">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_import">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Import Folder">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_import">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Export Node">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_export">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Export Group">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_export">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Send Mail">
+		<param name="Name" value="File">
+		<param name="Local" value="Menus\Menus_File.html#m_sendmail">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Text Tools">
+		<param name="Name" value="Edit">
+		<param name="Local" value="Menus\Menus_Edit.html#m_texttools">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Find">
+		<param name="Name" value="Edit">
+		<param name="Local" value="Menus\Menus_Edit.html#m_find">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Replace">
+		<param name="Name" value="Edit">
+		<param name="Local" value="Menus\Menus_Edit.html#m_find">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Insert Link">
+		<param name="Name" value="Edit">
+		<param name="Local" value="Menus\Menus_Edit.html#m_insertlink">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Text Count">
+		<param name="Name" value="Tools">
+		<param name="Local" value="Menus\Menus_Tools.html#m_statistics">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Database statistics">
+		<param name="Name" value="Tools">
+		<param name="Local" value="Menus\Menus_Tools.html#m_statistics">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Define Toolbar">
+		<param name="Name" value="Tools">
+		<param name="Local" value="Menus\Menus_Tools.html#m_definetoolbar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Define Accelerators">
+		<param name="Name" value="Define Accelerators">
+		<param name="Local" value="Menus\Accelerators.html#accelerators">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Options">
+		<param name="Name" value="Options">
+		<param name="Local" value="Options\Options.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Start Page">
+		<param name="Name" value="Unpublished Options">
+		<param name="Local" value="Options\Opt_HideOptions.html#m_startpage">
+		</OBJECT>
+</UL>
+</BODY></HTML>

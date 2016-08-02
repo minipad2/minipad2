@@ -1,0 +1,279 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="笔记风格">
+		<param name="Name" value="基本操作">
+		<param name="Local" value="Basic Use.html#treeviewstyle">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="便笺风格">
+		<param name="Name" value="基本操作">
+		<param name="Local" value="Basic Use.html#multipagestyle">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="计算器">
+		<param name="Name" value="计算页">
+		<param name="Local" value="Extensions\Ext_Calculator.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="自定义函数与变量">
+		<param name="Name" value="计算页">
+		<param name="Local" value="Extensions\Ext_Calculator.html#userfunctions">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="备忘录">
+		<param name="Name" value="备忘页">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="定时提醒">
+		<param name="Name" value="备忘页">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="计划任务">
+		<param name="Name" value="备忘页">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="日程">
+		<param name="Name" value="备忘页">
+		<param name="Local" value="Extensions\Ext_Memo.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="词典">
+		<param name="Name" value="词典页">
+		<param name="Local" value="Extensions\Ext_Dictionary.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="文字模板">
+		<param name="Name" value="文字模板">
+		<param name="Local" value="Extensions\Ext_Template.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="剪贴板">
+		<param name="Name" value="多重剪贴板">
+		<param name="Local" value="Extensions\Ext_MultiClipboard.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="链接">
+		<param name="Name" value="链接页">
+		<param name="Local" value="Extensions\Ext_Launcher.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="快速链接">
+		<param name="Name" value="链接页">
+		<param name="Local" value="Extensions\Ext_Launcher.html#fastlink">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="快启面板">
+		<param name="Name" value="链接页">
+		<param name="Local" value="Extensions\Ext_Launcher.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="通讯录">
+		<param name="Name" value="通讯页">
+		<param name="Local" value="Extensions\Ext_ContactList.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="总在最前">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#stayontop">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="边缘隐藏">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#autohide">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="自动调整界面元素">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#autoadjust">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="外部滚动">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#externalscroll">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="笔记摘录">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#snaptext">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="最近的笔记">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#navigation">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="收藏夹">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#navigation">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="局部高亮">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#texthighlight">
+		</OBJECT>	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="全局搜索">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#search">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="摘要视图">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#abstract">
+		</OBJECT>	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="自动保存">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#autosave">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="自动备份">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#autosave">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="外部存储">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#externalsave">
+		</OBJECT>	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="回收站">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html#recycler">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="嵌入式计算">
+		<param name="Name" value="计算页">
+		<param name="Local" value="Extensions\Ext_Calculator.html#embededcalc">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="嵌入式查词">
+		<param name="Name" value="词典页">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#embededquery">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="自制词典">
+		<param name="Name" value="词典页">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#userdictionary">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="范围型查询">
+		<param name="Name" value="词典页">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#rangequery">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="配置词典">
+		<param name="Name" value="词典页">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#configuredict">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="屏幕取词">
+		<param name="Name" value="词典页">
+		<param name="Local" value="Extensions\Ext_Dictionary.html#tipquery">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="模拟按键">
+		<param name="Name" value="文字模板">
+		<param name="Local" value="Extensions\Ext_Template.html#sendkey">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="转义符与指代符">
+		<param name="Name" value="文字模板">
+		<param name="Local" value="Extensions\Ext_Template.html#designator">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="加锁解锁">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_switchlock">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="节点属性">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_property">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="文件导入">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_import">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="文件夹导入">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_import">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="笔记导出">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_export">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="整组导出">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_export">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="发送邮件">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_File.html#m_sendmail">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="文字工具">
+		<param name="Name" value="文件">
+		<param name="Local" value="Menus\Menus_Edit.html#m_texttools">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="查找">
+		<param name="Name" value="编辑">
+		<param name="Local" value="Menus\Menus_Edit.html#m_find">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="替换">
+		<param name="Name" value="编辑">
+		<param name="Local" value="Menus\Menus_Edit.html#m_find">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="插入链接">
+		<param name="Name" value="编辑">
+		<param name="Local" value="Menus\Menus_Edit.html#m_insertlink">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="文字统计">
+		<param name="Name" value="工具">
+		<param name="Local" value="Menus\Menus_Tools.html#m_statistics">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="数据库统计">
+		<param name="Name" value="工具">
+		<param name="Local" value="Menus\Menus_Tools.html#m_statistics">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="自定义工具栏">
+		<param name="Name" value="工具">
+		<param name="Local" value="Menus\Menus_Tools.html#m_definetoolbar">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="快捷键设定">
+		<param name="Name" value="快捷键设定">
+		<param name="Local" value="Menus\Accelerators.html#accelerators">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="选项">
+		<param name="Name" value="选项">
+		<param name="Local" value="Options\Options.html">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="启动页面">
+		<param name="Name" value="未公开的选项">
+		<param name="Local" value="Options\Opt_HideOptions.html#m_startpage">
+		</OBJECT>
+</UL>
+</BODY></HTML>

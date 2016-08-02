@@ -1,0 +1,413 @@
+#include "resource.pas"
+#include "f:\SoftDev\ResEdit\include\windows.h"
+#include "f:\SoftDev\ResEdit\include\commctrl.h"
+#include "f:\SoftDev\ResEdit\include\richedit.h"
+
+
+//
+// Dialog resources
+//
+Option_Box DIALOG 6, 15, 381, 231
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "选项"
+FONT 9, "Arial"
+{
+ DEFPUSHBUTTON "确    定", IDOK, 225, 208, 42, 14, BS_DEFPUSHBUTTON
+ PUSHBUTTON "取    消", IDCANCEL, 277, 208, 42, 14, BS_PUSHBUTTON
+ CONTROL "", tv_options, WC_TREEVIEW, 39 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 10, 9, 105, 189
+ LTEXT "Text", st_placeholder, 125, 9, 245, 189, WS_BORDER | SS_LEFT
+ PUSHBUTTON "应    用", cb_apply, 328, 208, 42, 14
+}
+
+
+ob_program DIALOG 4, 18, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "随系统自动启动", chk_autostart, 9, 5, 109, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "显示托盘图标", chk_showtrayicon, 125, 5, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "最小化到托盘区", chk_minimizetotray, 9, 21, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "启动时最小化", chk_startminimize, 125, 21, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "关闭到托盘区", chk_closeminimize, 9, 37, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "自动命名新标签页", chk_autoname, 125, 37, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "确认标签删除", chk_confirmdelete, 9, 53, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "外部滚动", chk_externalscroll, 125, 53, 109, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "记忆页面滚动位置", chk_rememberpagescroll, 9, 70, 111, 17
+ AUTOCHECKBOX "切换页面时焦点总在编辑器", chk_alwaysfocuseditor, 125, 70, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ CONTROL "", hk_callwindow, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 106, 113, 67, 12
+ EDITTEXT sle_mailclient, 75, 131, 141, 12, WS_BORDER | WS_TABSTOP
+ PUSHBUTTON "...", cb_browse, 220, 131, 13, 12
+ LTEXT "最小化／还原热键：", st_callwindowhotkey, 9, 113, 91, 17, SS_LEFT
+ LTEXT "邮件客户端：", st_mailclient, 9, 131, 61, 17
+ LTEXT "最近的笔记：", st_recentnotescount, 9, 93, 61, 18
+ EDITTEXT sle_recentnotescount, 75, 93, 28, 12, WS_BORDER | WS_TABSTOP
+ CONTROL "", ud_recentnotescount, UPDOWN_CLASS, 54 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 94, 93, 10, 12
+ LTEXT "回收站容量：", st_recyclerlimit, 125, 93, 61, 17
+ COMBOBOX cmb_recyclerlimit, 189, 92, 44, 77, CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+}
+
+
+ob_edit DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "自动空行风格", chk_autoemptyline, 10, 9, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ AUTOCHECKBOX "自动缩进风格", chk_autoindent, 125, 9, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ AUTOCHECKBOX "确认清空操作", chk_confirmclear, 10, 47, 112, 12, BS_AUTOCHECKBOX | BS_MULTILINE
+ COMBOBOX cmb_tabstops, 84, 68, 28, 65, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWNLIST
+ EDITTEXT sle_undolimit, 84, 87, 28, 12, WS_BORDER | WS_TABSTOP
+ LTEXT "Tab 宽度：", st_tabstops, 10, 69, 69, 17, SS_LEFT
+ LTEXT "撤销次数：", st_undolimit, 10, 88, 70, 17, SS_LEFT
+ LTEXT "1 .. 32767", -1, 119, 88, 55, 11, SS_LEFT
+ AUTOCHECKBOX "平滑滚动", chk_smoothscroll, 10, 29, 110, 12
+ LTEXT "无序列表 1：", st_ul1, 10, 107, 58, 21
+ LTEXT "无序列表 2：", st_ul2, 125, 107, 57, 24
+ EDITTEXT sle_ul1, 71, 106, 16, 12, WS_BORDER | WS_TABSTOP
+ EDITTEXT sle_ul2, 185, 106, 16, 12, WS_BORDER | WS_TABSTOP
+ AUTOCHECKBOX "单击打开链接", chk_oneclickopenlink, 125, 29, 111, 12
+}
+
+
+ob_notes DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ CONTROL "", hk_newnote_foreground, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 14, 67, 12
+ CONTROL "", hk_newnote_background, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 56, 67, 12
+ CONTROL "", hk_snaptext, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 77, 67, 12
+ LTEXT "新建笔记热键：", st_newnote_foreground_hotkey, 9, 14, 96, 21
+ LTEXT "后台新建笔记热键：", st_newnote_background_hotkey, 9, 56, 96, 21
+ LTEXT "捕捉文字热键：", st_snaptext_hotkey, 9, 77, 96, 21
+ LTEXT "后台新建笔记并捕捉文字热键：", st_newnotebg_snaptext_hotkey, 9, 98, 96, 21
+ CONTROL "", hk_newnotebg_snaptext, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 98, 67, 12
+ LTEXT "捕捉文字并保存为文件热键：", st_snaptexttofile_hotkey, 9, 119, 96, 21
+ CONTROL "", hk_snaptexttofile, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 119, 67, 12
+ LTEXT "关闭笔记热键：", st_closenotehotkey, 9, 35, 96, 21
+ LTEXT "自动记录开关热键：", st_autorecordhotkey, 9, 140, 96, 21
+ CONTROL "", hk_closenote, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 35, 67, 12
+ CONTROL "", hk_autorecord, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 110, 140, 67, 12
+}
+
+
+ob_import_export DIALOG 20, 20, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ EDITTEXT sle_sepline, 80, 139, 139, 14, ES_AUTOHSCROLL
+ LTEXT "条目分隔行：", st_separateline, 9, 139, 68, 17, SS_LEFT
+ LTEXT "导入来源：", st_importtype, 38, 40, 54, 17
+ AUTORADIOBUTTON "从文件", rb_fromfile, 96, 36, 66, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "从文件夹", rb_fromfolder, 167, 36, 70, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTOCHECKBOX "外部存储", chk_virtualimport, 38, 54, 193, 12
+ LTEXT "当导入时：", st_importoption, 9, 8, 207, 8
+ AUTORADIOBUTTON "总是提示", rb_import_showdialog, 17, 22, 73, 12
+ AUTORADIOBUTTON "使用以下默认设置：", rb_import_default, 95, 22, 141, 12
+ LTEXT "当导出时：", st_exportoption, 9, 73, 223, 8
+ AUTORADIOBUTTON "总是提示", rb_export_showdialog, 19, 87, 70, 12
+ AUTORADIOBUTTON "使用以下默认设置：", rb_export_default, 94, 87, 141, 12
+ LTEXT "导出方式：", st_exporttype, 34, 104, 44, 17
+ AUTORADIOBUTTON "剪贴板", rb_toclipboard, 79, 101, 48, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "文件", rb_tofile, 131, 101, 43, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "文件夹", rb_tofolder, 179, 101, 59, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ LTEXT "编码：", st_encode, 35, 120, 40, 17
+ COMBOBOX cmb_encode, 80, 120, 76, 47, CBS_DROPDOWNLIST | WS_TABSTOP
+ AUTOCHECKBOX "拖入外部文件时默认为外部存储", chk_externalsaveWhenDragInFile, 9, 161, 227, 12
+}
+
+
+ob_behavior DIALOG 12, 11, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTORADIOBUTTON "窗口最小化", rb_escminimize, 16, 23, 78, 17, BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "清空文字", rb_escclear, 100, 23, 135, 17, BS_AUTORADIOBUTTON | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "重命名", rb_rename1, 16, 56, 78, 17, BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "加锁切换", rb_switchproperty1, 100, 56, 67, 17, BS_AUTORADIOBUTTON | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "删除", rb_delete1, 174, 56, 63, 17, BS_AUTORADIOBUTTON | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "重命名", rb_rename2, 16, 91, 78, 17, BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "加锁切换", rb_switchproperty2, 100, 91, 69, 17, BS_AUTORADIOBUTTON | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "删除", rb_delete2, 174, 91, 63, 17, BS_AUTORADIOBUTTON | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "新建标签页", rb_newpage, 16, 128, 79, 17, BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP | BS_MULTILINE
+ AUTORADIOBUTTON "回到上一层", rb_levelup, 100, 128, 135, 17, BS_AUTORADIOBUTTON | WS_TABSTOP | BS_MULTILINE
+ LTEXT "Esc 键用于：", st_esckey, 8, 11, 222, 12, SS_LEFT
+ LTEXT "双击标签页：", st_pagedblclick, 8, 45, 224, 8
+ LTEXT "中键单击标签页：", st_mbuttonclick, 8, 80, 224, 8
+ LTEXT "双击组的空白处：", st_groupdblclick, 8, 117, 223, 8
+}
+
+
+ob_login DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "密码登录：", chk_needlogin, 10, 9, 221, 13, BS_AUTOCHECKBOX | BS_MULTILINE
+ EDITTEXT sle_password, 85, 27, 96, 12, WS_BORDER | WS_TABSTOP | ES_PASSWORD
+ EDITTEXT sle_confirmpassword, 85, 46, 96, 12, WS_BORDER | WS_TABSTOP | ES_PASSWORD
+ LTEXT "密码：", st_password, 19, 28, 62, 17
+ LTEXT "确认密码：", st_confirmpassword, 19, 47, 63, 17
+ COMBOBOX cmb_locktraytime, 85, 69, 57, 80, CBS_DROPDOWN | WS_TABSTOP | WS_VSCROLL
+ LTEXT "min", -1, 149, 72, 60, 8
+ AUTOCHECKBOX "托盘区锁定：", chk_locktrayicon, 11, 69, 71, 12
+ AUTOCHECKBOX "加密数据文件", chk_encryptdatafile, 11, 87, 219, 12
+}
+
+
+ob_backup DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "定时保存，间隔：", chk_autosave, 10, 5, 79, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ COMBOBOX cmb_autosavetime, 94, 7, 40, 74, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWN
+ AUTOCHECKBOX "自动备份，间隔：", chk_autobackup, 10, 24, 81, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ EDITTEXT sle_backupinterval, 94, 28, 28, 12, WS_BORDER | WS_TABSTOP
+ CONTROL "", ud_backupinterval, UPDOWN_CLASS, 54 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 115, 29, 10, 12
+ COMBOBOX cmb_backupintervaltype, 132, 28, 37, 70, CBS_DROPDOWNLIST | WS_TABSTOP
+ COMBOBOX cmb_totalbackup, 94, 47, 49, 69, CBS_DROPDOWN | WS_TABSTOP
+ EDITTEXT sle_backuppath, 41, 85, 167, 12, WS_BORDER | WS_TABSTOP
+ PUSHBUTTON "...", cb_browse, 213, 84, 15, 14, BS_PUSHBUTTON
+ LTEXT "min.", -1, 140, 10, 43, 8
+ LTEXT "备份路径：", st_backuppath, 11, 68, 161, 14, SS_LEFT
+ LTEXT "备份数：", st_totalbackup, 10, 47, 82, 18
+}
+
+
+ob_specialmode DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ COMBOBOX cmb_direction, 92, 10, 42, 67, WS_TABSTOP | WS_TABSTOP | CBS_DROPDOWNLIST
+ COMBOBOX cmb_hidedelay, 92, 31, 42, 67, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWN
+ COMBOBOX cmb_showdelay, 92, 51, 42, 67, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWN
+ COMBOBOX cmb_animationtime, 92, 72, 42, 67, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWN
+ COMBOBOX cmb_edgewidth, 92, 92, 42, 67, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWN
+ LTEXT "方向：", st_direction, 11, 11, 76, 17, SS_LEFT
+ LTEXT "回缩延时：", st_hidedelay, 11, 32, 76, 17, SS_LEFT
+ LTEXT "ms", -1, 139, 32, 21, 8, SS_LEFT
+ LTEXT "弹出延时：", st_showdelay, 11, 52, 76, 17, SS_LEFT
+ LTEXT "ms", -1, 139, 52, 21, 8, SS_LEFT
+ LTEXT "ms", -1, 139, 72, 21, 8, SS_LEFT
+ LTEXT "动画速度：", st_animationtime, 10, 73, 76, 17, SS_LEFT
+ LTEXT "边缘宽度：", st_edgewidth, 10, 94, 76, 17, SS_LEFT
+ LTEXT "pts", -1, 139, 93, 22, 8, SS_LEFT
+}
+
+
+ob_appearance DIALOG 27, 18, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "工具窗口风格", chk_toolwindowstyle, 9, 34, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ AUTOCHECKBOX "标题栏显示标签名", chk_captionpagename, 125, 34, 113, 17, BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP
+ AUTOCHECKBOX "显示菜单栏", chk_showmenubar, 9, 51, 111, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ AUTOCHECKBOX "显示工具栏", chk_showtoolbar, 125, 51, 113, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ AUTOCHECKBOX "自动调整界面元素", chk_autoadjust, 9, 111, 111, 17, BS_MULTILINE
+ COMBOBOX cmb_splitterwidth, 90, 74, 31, 68, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+ COMBOBOX cmb_adjustlevel, 181, 114, 36, 68, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
+ COMBOBOX cmb_transparency, 90, 93, 31, 68, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
+ LTEXT "敏感度：", st_sensitivity, 125, 115, 54, 17, SS_LEFT
+ LTEXT "透明等级：", st_transparency, 9, 93, 76, 17, SS_LEFT
+ COMBOBOX cmb_language, 90, 10, 67, 41, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWNLIST | WS_TABSTOP
+ LTEXT "界面语言：", st_language, 9, 10, 77, 17, SS_LEFT
+ LTEXT "分隔条宽度：", st_splitterwidth, 9, 74, 78, 17
+}
+
+
+ob_treeview DIALOG 27, 18, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "树窗口水平滚动条", chk_treehorzscroll, 126, 53, 111, 17, BS_MULTILINE
+ AUTOCHECKBOX "显示节点按钮", chk_nodebuttons, 10, 71, 113, 17, BS_MULTILINE
+ AUTOCHECKBOX "显示节点连线", chk_nodelines, 126, 71, 111, 17, BS_MULTILINE
+ AUTOCHECKBOX "根节点以线相连", chk_linesatroot, 126, 89, 113, 17, BS_MULTILINE
+ AUTOCHECKBOX "显示节点图标", chk_shownodeimages, 10, 89, 111, 17, BS_MULTILINE
+ PUSHBUTTON "字体...", cb_settreefont, 133, 32, 46, 13, BS_PUSHBUTTON
+ PUSHBUTTON "背景色...", cb_settreecolor, 184, 32, 46, 13, BS_PUSHBUTTON
+ LTEXT "", st_treefontdemo, 76, 9, 157, 16, WS_BORDER | SS_LEFT
+ LTEXT "树窗口：", st_tree, 10, 11, 62, 17, SS_LEFT
+ AUTOCHECKBOX "树窗口位于右侧", chk_treeonright, 10, 53, 111, 17
+}
+
+
+ob_tabcontrol DIALOG 27, 18, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "显示标签图标", chk_showtabimages, 9, 55, 113, 17, BS_MULTILINE
+ AUTOCHECKBOX "标签栏位于底部", chk_tabonbottom, 9, 36, 111, 17, BS_MULTILINE
+ AUTOCHECKBOX "标签栏多行显示", chk_multilinetab, 124, 36, 113, 17, BS_MULTILINE
+ AUTOCHECKBOX "固定标签宽度：", chk_fixedtabwidth, 9, 74, 77, 17, BS_MULTILINE
+ COMBOBOX cmb_tabwidth, 89, 77, 31, 65, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWNLIST
+ PUSHBUTTON "字体...", cb_settabfont, 186, 9, 46, 13, BS_PUSHBUTTON
+ LTEXT "", st_tabfontdemo, 75, 8, 106, 16, WS_BORDER | SS_LEFT
+ LTEXT "标签栏：", st_tabpage, 9, 9, 60, 17, SS_LEFT
+ AUTOCHECKBOX "高亮当前标签", chk_highlightcurrenttab, 124, 55, 112, 17, BS_MULTILINE
+}
+
+
+
+ob_listview DIALOG 24, 17, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ LTEXT "列表窗口：", st_list, 7, 10, 63, 17, SS_LEFT
+ LTEXT "", st_listfontdemo, 73, 10, 157, 16, WS_BORDER | SS_LEFT
+ PUSHBUTTON "字体...", cb_setlistfont, 132, 31, 46, 13, BS_PUSHBUTTON
+ PUSHBUTTON "背景色...", cb_setlistcolor, 185, 31, 46, 13, BS_PUSHBUTTON
+ LTEXT "摘要视图：", st_blog, 7, 53, 62, 20
+ LTEXT "", st_blogfontdemo, 73, 53, 157, 16, WS_BORDER | WS_GROUP
+ PUSHBUTTON "字体...", cb_setblogfont, 132, 74, 46, 13
+ PUSHBUTTON "背景色...", cb_setblogcolor, 185, 74, 46, 13
+ LTEXT "摘要标题：", st_blogtitle, 7, 94, 63, 18
+ LTEXT "", st_blogtitlefontdemo, 73, 94, 157, 16, WS_BORDER | WS_GROUP
+ PUSHBUTTON "字体...", cb_setblogtitlefont, 132, 115, 46, 13
+ PUSHBUTTON "背景色...", cb_setblogtitlecolor, 185, 115, 46, 13
+ LTEXT "当前摘要标题：", st_blogseltitle, 7, 137, 63, 20
+ LTEXT "", st_blogseltitlefontdemo, 73, 137, 157, 16, WS_BORDER | WS_GROUP
+ PUSHBUTTON "字体...", cb_setblogseltitlefont, 132, 159, 46, 13
+ PUSHBUTTON "背景色...", cb_setblogseltitlecolor, 185, 159, 46, 13
+}
+
+
+ob_editor DIALOG 27, 18, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ PUSHBUTTON "字体...", cb_seteditorfont, 136, 29, 46, 13, BS_PUSHBUTTON
+ PUSHBUTTON "背景色...", cb_seteditorcolor, 187, 29, 46, 13, BS_PUSHBUTTON
+ LTEXT "编辑器：", st_editor, 10, 7, 62, 17, SS_LEFT
+ LTEXT "", st_editorfontdemo, 76, 7, 157, 16, WS_BORDER | SS_LEFT
+ AUTOCHECKBOX "显示行号栏", chk_showlinenumber, 10, 59, 110, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ PUSHBUTTON "颜色...", cb_setlinenumbercolor, 124, 61, 36, 13, BS_PUSHBUTTON
+ AUTOCHECKBOX "高亮显示当前行", chk_highlightselline, 10, 78, 110, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ PUSHBUTTON "颜色...", cb_setsellinecolor, 124, 80, 36, 13, BS_PUSHBUTTON
+ COMBOBOX cmb_margins, 76, 40, 28, 67, WS_TABSTOP | WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWNLIST
+ LTEXT "页面边距：", st_margins, 10, 41, 64, 17, SS_LEFT
+ LTEXT "文字高亮方案：", st_HLText, 10, 103, 200, 14
+ LTEXT "", st_linenumberdemo, 165, 61, 11, 13, WS_BORDER | SS_LEFT
+ LTEXT "", st_sellinedemo, 165, 80, 11, 13, WS_BORDER | SS_LEFT
+ PUSHBUTTON "颜色...", cb_HLColor, 101, 119, 36, 13
+ LTEXT "", st_HLDemo, 142, 119, 11, 13, WS_BORDER | WS_GROUP
+ AUTOCHECKBOX "使用下划线", chk_useunderline, 101, 138, 135, 12
+ LISTBOX lst_HLText, 21, 120, 71, 50, LBS_NOTIFY | WS_BORDER | LBS_HASSTRINGS | WS_BORDER | WS_VSCROLL
+}
+
+
+ob_othercontrols DIALOG 27, 18, 242, 180
+STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ LTEXT "笔记小窗口：", st_mininote, 7, 10, 62, 17
+ LTEXT "", st_mininotefontdemo, 73, 10, 157, 16, WS_BORDER | WS_GROUP
+ PUSHBUTTON "字体...", cb_setmininotefont, 133, 34, 46, 13
+ PUSHBUTTON "背景色...", cb_setmininotecolor, 184, 34, 46, 13
+}
+
+
+ob_extfuncs DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "启用计算页", chk_calcpage, 9, 7, 219, 12, BS_AUTOCHECKBOX
+ AUTOCHECKBOX "启用备忘页", chk_memopage, 9, 23, 219, 12, BS_AUTOCHECKBOX
+ AUTOCHECKBOX "启用词典页", chk_dictpage, 9, 39, 219, 12, BS_AUTOCHECKBOX
+ AUTOCHECKBOX "启用链接页", chk_linkpage, 9, 55, 219, 12, BS_AUTOCHECKBOX
+ AUTOCHECKBOX "启用通讯页", chk_contactpage, 9, 71, 219, 12, BS_AUTOCHECKBOX
+ AUTOCHECKBOX "启用文字模板", chk_template, 9, 87, 219, 12, BS_AUTOCHECKBOX
+ AUTOCHECKBOX "启用多重剪贴板", chk_clipboard, 9, 103, 219, 12, BS_AUTOCHECKBOX
+ LTEXT "注：对本页面设定的修改在重启程序后生效", st_extfuncsprompt, 9, 158, 225, 26
+}
+
+
+ob_calcpage DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ COMBOBOX cmb_decimal, 94, 9, 64, 65, WS_VSCROLL | WS_TABSTOP | CBS_DROPDOWNLIST
+ AUTORADIOBUTTON "弧度制", rb_radian, 94, 26, 64, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ AUTORADIOBUTTON "角度制", rb_degree, 163, 26, 73, 17, WS_TABSTOP | BS_AUTORADIOBUTTON | BS_MULTILINE
+ EDITTEXT mle_userfunctions, 9, 69, 224, 100, ES_MULTILINE | ES_AUTOHSCROLL | ES_WANTRETURN | WS_BORDER | WS_VSCROLL | WS_TABSTOP
+ LTEXT "有效小数位数：", st_decimal, 9, 10, 80, 17, SS_LEFT
+ LTEXT "三角函数计算：", st_radianordegree, 9, 30, 81, 17, SS_LEFT
+ LTEXT "自定义函数：", st_userfunctions, 9, 49, 220, 17, SS_LEFT
+}
+
+
+ob_dictpage DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "全选", chk_selectall, 128, 8, 69, 12, BS_MULTILINE
+ PUSHBUTTON "∧", cb_up, 202, 8, 13, 12, BS_PUSHBUTTON
+ PUSHBUTTON "∨", cb_down, 219, 8, 13, 12, BS_PUSHBUTTON
+ CONTROL "", lv_dictlist, WC_LISTVIEW, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 11, 26, 221, 103
+ AUTOCHECKBOX "显示多词典检索结果", chk_multidict, 12, 135, 94, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ CONTROL "", hk_textcapture, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 74, 157, 60, 13
+ LTEXT "词典列表：", st_dictlist, 11, 10, 111, 8, SS_LEFT
+ LTEXT "屏幕取词：", st_textcapture, 12, 158, 60, 17
+ PUSHBUTTON "颜色...", cb_setcolor, 148, 157, 36, 13
+ LTEXT "", st_colordemo, 189, 157, 11, 13, WS_BORDER | WS_GROUP
+}
+
+
+ob_linkpage DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ AUTOCHECKBOX "不读取链接图标（速度较快）", chk_disableiconread, 10, 9, 220, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ CONTROL "", hk_fastlink, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 92, 51, 74, 15
+ AUTOCHECKBOX "启用子条目热键", chk_enableitemhotkey, 10, 73, 222, 17, BS_AUTOCHECKBOX | BS_MULTILINE
+ LTEXT "快速链接热键：", st_fastlinkhotkey, 10, 51, 78, 17, SS_LEFT
+ AUTOCHECKBOX "打开链接后自动最小化 minipad2", chk_autominimizeafteropenlink, 10, 27, 219, 17, BS_MULTILINE
+}
+
+
+ob_template DIALOG 6, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ CONTROL "", hk_template, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 114, 10, 74, 15
+ AUTOCHECKBOX "启用子条目热键", chk_enableitemhotkey, 9, 29, 222, 17, BS_AUTOCHECKBOX
+ CONTROL "", hk_capture, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 114, 56, 74, 15
+ AUTOCHECKBOX "模板 / 剪贴板弹出菜单无焦点", chk_popupmenunofocus, 9, 75, 222, 17
+ LTEXT "弹出菜单热键：", st_templatehotkey, 9, 10, 100, 17
+ LTEXT "捕捉热键：", st_capturehotkey, 9, 56, 100, 17
+}
+
+
+ob_clipboard DIALOG 9, 15, 242, 180
+STYLE DS_MODALFRAME | DS_SETFONT | WS_POPUP
+FONT 9, "Arial"
+{
+ COMBOBOX cmb_maxclipnum, 112, 8, 49, 65, CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+ COMBOBOX cmb_maxitembyte, 112, 26, 49, 65, CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+ COMBOBOX cmb_menuwidth, 112, 45, 49, 65, CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
+ AUTOCHECKBOX "条目粘贴后上浮为第一项", chk_newpastetotop, 9, 97, 223, 17, BS_MULTILINE
+ CONTROL "", hk_clipboard, HOTKEY_CLASS, 0 | WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP, 98, 120, 66, 14
+ AUTOCHECKBOX "启用子条目热键", chk_enableitemhotkey, 9, 136, 223, 17, BS_MULTILINE
+ LTEXT "剪贴板条目数：", st_maxclipnum, 9, 9, 97, 17, SS_LEFT
+ LTEXT "条目最大字节数：", st_maxitembyte, 9, 28, 97, 17, SS_LEFT
+ LTEXT "弹出菜单热键：", st_cliphotkey, 9, 120, 83, 17
+ LTEXT "弹出菜单宽度：", st_menuwidth, 9, 46, 97, 17
+ AUTOCHECKBOX "过滤重复条目", chk_filtersameitems, 9, 65, 224, 12
+ AUTOCHECKBOX "仅过滤相邻的重复条目", chk_onlyfilterneighboring, 17, 80, 213, 12
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

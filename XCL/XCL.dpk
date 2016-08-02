@@ -1,0 +1,68 @@
+package XCL;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl;
+
+contains
+  UxlClasses in 'UxlClasses.pas',
+  UxlCommDlgs in 'UxlCommDlgs.pas',
+  UxlDragControl in 'UxlDragControl.pas',
+  UxlDialog in 'UxlDialog.pas',
+  UxlEdit in 'UxlEdit.pas',
+  UxlFile in 'UxlFile.pas',
+  UxlFunctions in 'UxlFunctions.pas',
+  UxlImageList in 'UxlImageList.pas',
+  UxlIniFile in 'UxlIniFile.pas',
+  UxlListSuper in 'UxlListSuper.pas',
+  UxlListView in 'UxlListView.pas',
+  UxlMath in 'UxlMath.pas',
+  UxlMenu in 'UxlMenu.pas',
+  UxlStack in 'UxlStack.pas',
+  UxlStdCtrls in 'UxlStdCtrls.pas',
+  UxlStrUtils in 'UxlStrUtils.pas',
+  UxlTabControl in 'UxlTabControl.pas',
+  UxlWinClasses in 'UxlWinClasses.pas',
+  UxlTreeView in 'UxlTreeView.pas',
+  UxlWinControl in 'UxlWinControl.pas',
+  UxlWindow in 'UxlWindow.pas',
+  UxlMiscCtrls in 'UxlMiscCtrls.pas',
+  UxlList in 'UxlList.pas',
+  UxlRichEdit in 'UxlRichEdit.pas',
+  UxlCanvas in 'UxlCanvas.pas',
+  UxlConst in 'UxlConst.pas',
+  UxlExtDlgs in 'UxlExtDlgs.pas',
+  UxlExtClasses in 'UxlExtClasses.pas',
+  UxlWinDef in 'UxlWinDef.pas',
+  UxlPanel in 'UxlPanel.pas',
+  UxlGrid in 'UxlGrid.pas',
+  UxlGridEx in 'UxlGridEx.pas',
+  UxlDateTimeUtils in 'UxlDateTimeUtils.pas',
+  UxlComboBox in 'UxlComboBox.pas',
+  UxlRichEditClasses in 'UxlRichEditClasses.pas',
+  UxlAppbar in 'UxlAppbar.pas';
+
+end.

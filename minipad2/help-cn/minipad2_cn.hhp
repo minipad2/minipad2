@@ -1,0 +1,75 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=..\Chinese.chm
+Contents file=minipad2_cn.hhc
+Default Font=,9,0
+Default topic=Introduction.html
+Display compile progress=No
+Full-text search=Yes
+Index file=minipad2.hhk
+Language=0x804 中文(中国)
+Title=minipad2 帮助
+
+
+[FILES]
+Introduction.html
+
+Version History\Version History.html
+Version History\v32.html
+Version History\v31.html
+Version History\v30.html
+Version History\v2x.html
+
+Basic Use.html
+Featured Functions.html
+
+Extensions\Extensions.html
+Extensions\Ext_ContactList.html
+Extensions\Ext_Calculator.html
+Extensions\Ext_Dictionary.html
+Extensions\Ext_Launcher.html
+Extensions\Ext_Memo.html
+Extensions\Ext_MultiClipboard.html
+Extensions\Ext_Template.html
+
+Menus\Menus.html
+Menus\Menus_File.html
+Menus\Menus_Edit.html
+Menus\Menus_Navigation.html
+Menus\Menus_Tools.html
+Menus\Menus_Help.html
+Menus\Menus_Tray.html
+Menus\Accelerators.html
+
+Options\Options.html
+Options\Opt_HideOptions.html
+
+Options\Program Settings\Opt_ProgramSettings.html
+Options\Program Settings\Opt_Edit.html
+Options\Program Settings\Opt_Notes.html
+Options\Program Settings\Opt_Import_Export.html
+Options\Program Settings\Opt_Behavior.html
+Options\Program Settings\Opt_LogIn.html
+Options\Program Settings\Opt_Backup.html
+Options\Program Settings\Opt_AutoHide.html
+
+Options\Appearance\Opt_Appearance.html
+Options\Appearance\Opt_TreeView.html
+Options\Appearance\Opt_TabBar.html
+Options\Appearance\Opt_ListView.html
+Options\Appearance\Opt_Editor.html
+Options\Appearance\Opt_OtherControls.html
+
+Options\Extensions\Opt_Extensions.html
+Options\Extensions\Opt_Calculator.html
+Options\Extensions\Opt_Dictionary.html
+Options\Extensions\Opt_Launcher.html
+Options\Extensions\Opt_Template.html
+Options\Extensions\Opt_Clipboard.html
+
+FAQ.html
+About Author.html
+Donate.html
+
+[INFOTYPES]
+

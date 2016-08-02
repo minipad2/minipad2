@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Edit</title>
+</head>
+
+<body>
+	<h1>Edit</h1>
+
+	<p><a name="m_clear"></a><b>Clear:</b> Clear the content of the current page.<br>
+	<a name="m_undo"></a><b>Undo:</b> Undo the last edit.<br>
+	<a name="m_redo"></a><b>Redo:</b> Redo the cancelled edit.<br>
+	<a name="m_selectall"></a><b>Select All:</b> Select all the contents in the current page.</p>
+
+	<p><a name="m_cut"></a><b>Cut:</b> Cut the selected text to clipboard.<br>
+	<a name="m_copy"></a><b>Copy:</b> Copy the selected text to clipboard.<br>
+	<a name="m_paste"></a><b>Paste:</b> Paste the content of clipboard to the cursor position.<br>
+	<a name="m_delete"></a><b>Delete:</b> Delete he selected text block, or selected list items.</p>
+
+	<p><a name="m_newitem"></a><b>New Item:</b> Add a new item in the current page.<br>
+	<b>Insert Item:</b> Insert a new item before the selected item.<br>
+	<b>Edit Item:</b> Edit the selected item.<br>
+
+	<p><a name="m_wordwrap"></a><b>Word Wrap:</b> Set whether the editor be word-wrap style or not.<br>
+	<b>Text tools:</b> Drop-down menu, contains a series of text tools:<br>
+		&emsp;&emsp;<b>Highlight 1 .. Highlight 4:</b> Set underline or backcolor highlight for the selected text block. See "Options"-->"Appearance"--><a href="..\Options\Appearance\Opt_Editor.html">"Editor"</a> for the corresponding options.<br>
+		&emsp;&emsp;<b>Remove Highlight:</b> Remove highlight for the selected text block.<br>
+		&emsp;&emsp;<b>Ordered List:</b> Add numbers of order for the selected lines.<br>
+		&emsp;&emsp;<b>List 1, 2: </b> Add prefix of order for the selected lines ( by default is >, *. You can set your own prefix in "Options"-->"Program Settings"--><a href="..\Options\Program Settings\Opt_Edit.html">"Edit"</a>.)<br>
+		&emsp;&emsp;<b>Remove List:</b> Remove numbers or prefix of order for the selected lines.<br>
+		&emsp;&emsp;<b>Delete all empty lines: </b>Delete all empty lines for the selected text block (if no text block is selected, then delete all empty lines in the current page).<br>
+		&emsp;&emsp;<b>Leave one empty line: </b>For the selected text block (or the whole page if no text is selected), delete all empty lines, then insert one empty line between each paragraph.
+	</p>
+
+	<a name="m_find"></a><p><b>Find / Replace:</b> Open the "Find / Replace" window, input the text to find (and replace), set the find direction, whether to match whole word and case sensitive, whether only find in the selected text block, whether to roll-back, whether to highligh the match, and whether to exit this dialog after first match, then click "ok" to find the first match. The dialog also contains other buttons: "Find next" (if press Shift will be "Find Previous"), "Replace and find next" (if press Shift will be "Replace and fine previous"), "Replace all", for subsequent find and replace.<br>
+	<b>Subsequent find:</b> Drop-down menu, contains the following items:<br>
+	&emsp;&emsp;<b>Find Next:</b> Find the next matching text. ( If set as "Down" and "Roll back", after reaches the end of the page will automatically scrolls back to the head of the page)<br>
+	&emsp;&emsp;<b>Find Previous:</b> Find the previous matching text.<br>
+	&emsp;&emsp;<b>Replace & Find Next:</b> Replace the current matching text and continues to find the next match.<br>
+	&emsp;&emsp;<b>Replace & Find Previous:</b> Replace the current matching text and continues to find the previous match.<br>
+	&emsp;&emsp;<b>Replace All:</b> Replace all the matching text in the current page.</p>
+	<b>Highlight Match:</b> Highlight all the matching text in the current page.</p>
+	
+	<p><a name="m_insertlink"></a><b>Insert Link:</b> Open "Insert Link" dialog, select link type (Program/File, Folder, Url, Node...), input the link text, then click "OK" to insert link in the current caret position. Use Double-Click (or Ctrl_Click) to open the link.<br>
+	<a name="m_inserttemplate"></a><b>Insert TemplateText:</b> Insert the selected template text to the cursor position. ( see "Extension"--><a href='..\Extensions\Ext_Template.html'>"Template"</a> )<br>
+	<a name="m_inserttemplate"></a><b>Insert ClipText:</b> Insert the selected cliptext to the cursor position. ( see "Extension"--><a href='..\Extensions\Ext_MultiClipboard.html'>"Multi-Clipboard"</a> )</p><br>
+</body>
+</html>

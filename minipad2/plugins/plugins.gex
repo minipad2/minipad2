@@ -1,0 +1,7 @@
+[General]
+Name=plugins
+Project=1
+[Classes]
+Count=2
+Class0="TPluginManager","","UPluginManager","0","E:\minipad2\plugins\UPluginManager.pas"
+Class1="TPluginCenter","","UPluginManager","0","E:\minipad2\plugins\UPluginManager.pas"

@@ -1,0 +1,349 @@
+unit UEditor;
+
+interface
+
+uses Windows, Messages, UxlRichEdit, UxlRichEditEx, Resource, richedit, UGlobalObj, UExtFuncs, UxlStrUtils, UPageSuper,
+	UDialogs, UxlFunctions, UClientSuper, UxlWinControl, UxlClasses, UxlExtClasses, UxlList, UTypeDef, UFindHandler;
+
+type
+	TSelMemo = class
+   private
+   public
+   	procedure SetSel (id: integer; i_start, i_len: integer; const o_scrollpos: TPoint);
+      procedure GetSel (id: integer; var i_start, i_len: integer; var o_scrollpos: TPoint);
+   end;
+
+   TEditorClient = class (TClientSuper, IOptionObserver, IMemorizer, IEventObserver, ICommandExecutor)
+   private
+      FWndParent: TxlWinControl;
+      FEditor: TxlRichEditEx;
+      FSelMemo: TSelMemo;
+      FFindHandler: TFindHandler;
+      FCalcHandler: TCalcHandler;
+
+      procedure f_OnChange (Sender: TObject);
+      procedure SetStatus ();
+      procedure f_OnContextmenu (Sender: TObject);
+		function f_ProcessEditorMessage (AMessage, wParam, lParam: DWORD): boolean;
+   protected
+		procedure Load (value: TPageSuper); override;
+      procedure Save (); override;
+   public
+      constructor Create (WndParent: TxlWinContainer);
+      destructor Destroy (); override;
+      function Control (): TxlControl; override;
+
+		procedure OnPageEvent (pct: TPageEvent; id, id2: integer); override;
+      function CheckCommand (opr: word): boolean;
+      procedure ExecuteCommand (opr: word);
+      procedure OptionChanged ();
+      procedure RestoreMemory ();
+      procedure SaveMemory ();
+      procedure EventNotify (event, wparam, lparam: integer);
+   end;
+
+implementation
+
+uses UxlCommDlgs, UxlMath, UxlWinClasses, UxlWinDef, UxlWindow, ShellAPI, UOptionManager, ULangManager;
+
+procedure TSelMemo.SetSel (id: integer; i_start, i_len: integer; const o_scrollpos: TPoint);
+begin
+end;
+
+procedure TSelMemo.GetSel (id: integer; var i_start, i_len: integer; var o_scrollpos: TPoint);
+begin
+	i_start := 0;
+   i_len := 0;
+   o_scrollpos.x := 0;
+   o_scrollpos.y := 0;
+end;
+
+//function TEditorClient.GetSettings (): widestring;
+//var i_start, i_length: integer;
+//	o_list: TxlIntList;
+//begin
+//   FEditor.GetSel(i_start, i_length);
+//   o_list := TxlIntList.Create;
+//   with o_list do
+//   begin
+//      Separator := ',';
+//      Add (i_start);
+//      Add (i_length);
+//      Add (FEditor.ScrollPos.x);
+//      Add (FEditor.ScrollPos.y);
+//   end;
+//   result := o_list.Text;
+//   o_list.Free;
+//end;
+//
+//procedure TEditorClient.SetSettings (const s_settings: widestring);
+//var i_pos: integer;
+//	o_list: TxlIntList;
+//begin
+//	if s_settings <> '' then
+//   begin
+//   	o_list := TxlIntList.Create;
+//      o_list.Separator := ',';
+//      o_list.Text := s_settings;
+//      FSelStart := o_list[0];
+//      FSelLength := o_list[1];
+//      FScrollPos.x := o_list[2];
+//      FScrollPos.y := o_list[3];
+//      o_list.Free;
+//   end
+//   else
+//   begin
+//   	FSelStart := 0;
+//      FSelLength := 0;
+//      FScrollPos.x := 0;
+//      FScrollPos.Y := 0;
+//   end;
+//end;
+
+//----------------------
+
+constructor TEditorClient.Create (WndParent: TxlWinContainer);
+begin
+   FWndParent := WndParent;
+
+   FEditor := TxlRichEditEx.Create (WndParent);
+	FEditor.OnChange := f_OnChange;
+   FEditor.OnContextMenu := f_OnContextMenu;
+   FEditor.ProcessMessage := f_ProcessEditorMessage;
+
+   FFindHandler := TFindHandler.Create (FEditor);
+   FCalcHandler := TCalcHandler.Create (FEditor);
+   FSelMemo := TSelMemo.Create;
+
+   CommandMan.AddExecutor (self);
+   OptionMan.AddObserver(self);
+   MemoryMan.AddObserver (self);
+   EventMan.AddObserver (self);
+end;
+
+destructor TEditorClient.Destroy ();
+begin
+	EventMan.RemoveObserver(self);
+	MemoryMan.RemoveObserver (self);
+	OptionMan.RemoveObserver(self);
+   CommandMan.RemoveExecutor (self);
+
+   FSelMemo.Free;
+   FCalcHandler.Free;
+   FFindHandler.Free;
+   FEditor.Free;
+   inherited;
+end;
+
+function TEditorClient.Control (): TxlControl;
+begin
+	result := FEditor;
+end;
+
+procedure TEditorClient.f_OnChange (Sender: TObject);
+begin
+	CommandMan.CheckCommands;
+end;
+
+//----------------------
+
+procedure TEditorClient.Load (value: TPageSuper);
+var i_selstart, i_sellength: integer;
+	o_scrollpos: TPoint;
+   o_point: TPoint;
+   i_char: integer;
+begin
+	if value = nil then exit;
+   inherited Load (value);
+	FEditor.Text := value.Text;
+	FCalcHandler.PageType := value.PageType;
+
+   FSelMemo.GetSel (value.id, i_selstart, i_sellength, o_scrollpos);
+   FEditor.ScrollPos := o_ScrollPos;
+   FEditor.Perform (EM_POSFROMCHAR, wparam(@o_point), i_SelStart);
+   if InRange(o_point.y, 0, FEditor.TextRect.bottom) then
+      FEditor.SetSel(i_SelStart, i_SelLength)
+   else
+   begin
+      o_point.X := 0;
+      o_point.Y := FEditor.LineHeight;
+      i_char := FEditor.Perform(EM_CHARFROMPOS, 0, lparam(@o_point));
+      FEditor.SetSel(i_char, 0);
+   end;
+   SetStatus ();
+end;
+
+procedure TEditorClient.Save ();
+var i_selstart, i_sellength: integer;
+begin
+  	FPage.Text := FEditor.Text;
+  	FEditor.GetSel (i_selstart, i_sellength);
+	FSelMemo.SetSel (FPage.id, i_selstart, i_sellength, FEditor.ScrollPos);
+   inherited;
+end;
+
+procedure TEditorClient.SetStatus ();
+begin
+	FEditor.Protected := (FPage.Status = psProtected);
+   FEditor.ReadOnly := (FPage.Status = psReadOnly);
+end;
+
+procedure TEditorClient.OptionChanged ();
+begin
+   with FEditor do
+   begin
+      UndoLimit := OptionMan.Options.undolimit;
+      TabStops := OptionMan.Options.tabstops;
+      AutoIndent := OptionMan.Options.autoindent;
+      AutoEmptyLine := OptionMan.Options.autoemptyline;
+      Font := OptionMan.Options.editorfont;
+      Color := OptionMan.Options.editorcolor;
+      Margins := OptionMan.Options.Margins * 4 + 2;
+      LineNumberColor := OptionMan.Options.LineNumberColor;
+      ShowLineNumber := OptionMan.Options.showlinenumber;
+      SelLineColor := Optionman.Options.SelLineColor;
+      HighLightSelLine := OptionMan.Options.HighLightSelLine;
+   end;
+   FEditor.Update;
+end;
+
+procedure TEditorClient.RestoreMemory ();
+begin
+  	FEditor.WordWrap := MemoryMan.WordWrap;
+   CommandMan.ItemChecked [m_wordwrap] := FEditor.WordWrap;
+end;
+
+procedure TEditorClient.SaveMemory ();
+begin
+	MemoryMan.WordWrap := FEditor.WordWrap;
+end;
+
+//---------------------
+
+procedure TEditorClient.OnPageEvent (pct: TPageEvent; id, id2: integer);
+begin
+	case pct of
+		pctSwitchStatus:
+      	if id = FPage.id then
+      		SetStatus ();
+      else
+         inherited OnPageEvent (pct, id, id2);
+   end;
+end;
+
+function TEditorClient.CheckCommand (opr: word): boolean;
+begin
+   with FEditor do
+   begin
+      case opr of
+         m_selectall, m_export, m_sendmail:
+            result := not IsEmpty();
+         m_clear:
+            result := CanClear();
+         m_undo:
+            result := CanUndo ();
+         m_redo:
+            result := CanRedo ();
+         m_cut, m_delete:
+            result := CanCut ();
+         m_copy:
+            result := CanCopy ();
+         m_paste:
+            result := CanPaste ();
+         m_wordwrap, m_find, m_inserttemplate, m_insertcliptext:
+            result := true;
+         else
+         	result := true;
+      end;
+   end;
+end;
+
+procedure TEditorClient.ExecuteCommand (opr: word);
+begin
+	if not CheckCommand (opr) then exit;
+   case opr of
+      m_wordwrap:
+      	begin
+         	FEditor.WordWrap := not FEditor.WordWrap;
+            CommandMan.ItemChecked [m_wordwrap] := FEditor.WordWrap;
+         end;
+      m_clear: FEditor.clear ();
+      m_undo: FEditor.undo ();
+      m_redo: FEditor.redo ();
+      m_selectall: FEditor.selectall ();
+      m_cut: FEditor.cut();
+      m_copy: FEditor.copy ();
+      m_paste: FEditor.paste ();
+      else
+         exit;
+   end;
+   f_onchange (self);
+end;
+
+procedure TEditorClient.EventNotify (event, wparam, lparam: integer);
+var s: widestring;
+	pt: TPoint;
+{$J+}const cs_settings: widestring = ''; {$J-}
+begin
+	if not FEditor.Visible then exit;
+   case event of
+   	e_RecordClipboard:
+         begin
+            if FEditor.TextCount > 0 then
+            begin
+               s := Clipboard.Text;
+               EventMan.EventNotify (e_PassNextClipItem);
+               Clipboard.Text := EventMan.Message;    // 加上分隔符
+               FEditor.Paste;
+               EventMan.EventNotify (e_PassNextClipItem);
+               Clipboard.Text := s;
+            end;
+            FEditor.Paste;
+         end;
+      WM_FOCUSEDITOR:
+      	FEditor.SetFocus;
+      WM_ACTIVATEAPP:
+      	if wparam <> 0 then
+         begin
+         	FEditor.SetFocus;
+            if FEditor.CursorInWindow then
+            begin
+            	pt := FEditor.CursorPos;
+            	FEditor.Post (WM_LBUTTONDOWN, 0, Makelparam(pt.x, pt.y));
+            end;
+         end;
+      e_WinStatusChanged:
+      	if wparam in [p_maximized] then
+         	FEditor.ScrollPos := FEditor.ScrollPos;  // 防止出现最大化后滚动超过页面底部的现象。
+      e_GetEditorSelText:
+         EventMan.Message := IfThen (FEditor.Visible, FEditor.SelText, '');
+   end;
+end;
+
+procedure TEditorClient.f_OnContextmenu (Sender: TObject);
+begin
+	EventMan.EventNOtify (e_ContextMenuDemand, EditorContext);
+end;
+
+function TEditorClient.f_ProcessEditorMessage (AMessage, wParam, lParam: DWORD): boolean;
+begin
+	if AMessage = WM_MOUSEWHEEL then
+   	result := ScrollMan.ExternalScroll(AMessage, wParam, lParam)
+   else
+   	result := false;
+end;
+
+end.
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+#include "Resource.pas"
+
+// Version Info
+1 VERSIONINFO 
+FILEVERSION 3, 2, 0, 19
+PRODUCTVERSION 3, 2, 0, 19
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+{
+ BLOCK "StringFileInfo"
+ {
+  BLOCK "040904E4"
+  {
+   VALUE "CompanyName", "NebulaSoft\000"
+   VALUE "ProductName", "minipad2\000"
+   VALUE "ProductVersion", "3.2.0\000"
+   VALUE "InternalName", "minipad2\000"
+   VALUE "OriginalFilename", "minipad2.exe\000"
+   VALUE "FileDescription", "minipad2\000"
+   VALUE "FileVersion", "3.2.0\000"
+   VALUE "LegalCopyright", "Copyright (c) 2007-2010 NebulaSoft\000"
+   VALUE "Comments", "This program is a freeware!\000"
+  }
+ }
+}
+
+// Icon resources
+m_newnote ICON "images\m_file\note.ico"
+m_newpage ICON "images\m_file\newpage.ico"
+m_newcalc ICON "images\m_file\calc.ico"
+m_newmemo ICON "images\m_file\memo.ico"
+m_newdict ICON "images\m_file\dict.ico"
+m_newlink ICON "images\m_file\link.ico"
+m_newcontact ICON  "images\m_file\contact.ico"
+m_newgroup ICON           "images\m_file\group.ico"
+
+m_rename ICON           "images\m_file\rename.ico"
+m_switchlock      ICON           "images\m_file\switchlock.ico"
+m_deletepage          ICON           "images\m_file\deletepage.ico"
+m_save ICON "images\m_file\save.ico"
+
+m_property ICON "images\m_file\property.ico"
+m_view ICON "images\m_file\view.ico"
+
+m_import          ICON           "images\m_file\import.ico"
+m_export          ICON           "images\m_file\export.ico"
+m_sendmail        ICON           "images\m_file\sendmail.ico"
+m_exit ICON "images\m_file\exit.ico"
+
+m_clear           ICON           "images\m_edit\clear.ico"
+m_undo            ICON           "images\m_edit\undo.ico"
+m_redo            ICON           "images\m_edit\redo.ico"
+m_selectall       ICON           "images\m_edit\selectall.ico"
+
+m_cut             ICON           "images\m_edit\cut.ico"
+m_copy            ICON           "images\m_edit\copy.ico"
+m_paste           ICON           "images\m_edit\paste.ico"
+m_delete  ICON  "images\m_edit\delete.ico"
+
+m_newitem  ICON  "images\m_edit\newitem.ico"
+m_insertitem  ICON  "images\m_edit\insertitem.ico"
+m_edititem  ICON  "images\m_edit\edititem.ico"
+
+m_wordwrap ICON "images\m_edit\wordwrap.ico"
+m_texttools ICON "images\m_edit\texttools.ico"
+
+m_find            ICON           "images\m_edit\find.ico"
+m_subsequentfind         ICON           "images\m_edit\subsequentfind.ico"
+m_highlightmatch ICON "images\m_edit\highlightmatch.ico"
+
+m_insertlink ICON "images\m_edit\insertlink.ico"
+m_insertcliptext      ICON           "images\m_edit\insertcliptext.ico"
+m_inserttemplate  ICON           "images\m_edit\inserttemplate.ico"
+
+m_prior ICON "images\m_navigation\prior.ico"
+m_next ICON "images\m_navigation\next.ico"
+m_levelup ICON  "images\m_navigation\levelup.ico"
+m_favorite ICON "images\m_navigation\favorite.ico"
+m_search ICON "images\m_navigation\search.ico"
+m_tag ICON "images\m_navigation\tag.ico"
+m_recyclebin ICON "images\m_navigation\recyclebin.ico"
+m_recentroot ICON "images\m_navigation\recentroot.ico"
+m_recentcreate ICON "images\m_navigation\recentcreate.ico"
+m_recentmodify ICON "images\m_navigation\recentmodify.ico"
+m_recentvisit ICON "images\m_navigation\recentvisit.ico"
+
+m_showtree  ICON  "images\m_tools\showtree.ico"
+m_stayontop   ICON     "images\m_tools\stayontop.ico"
+m_transparent ICON "images\m_tools\transparent.ico"
+m_specialmode ICON     "images\m_tools\specialmode.ico"
+m_template    ICON     "images\m_tools\template.ico"
+m_fastlink    ICON     "images\m_tools\fastlink.ico"
+
+m_watchclipboard    ICON "images\m_tools\watchclipboard.ico"
+m_clearclipboard  ICON           "images\m_tools\clearclipboard.ico"
+m_clipboard   ICON           "images\m_tools\clipboard.ico"
+
+m_statistics   ICON "images\m_tools\statistics.ico"
+m_definetoolbar   ICON           "images\m_tools\definetoolbar.ico"
+m_options      ICON           "images\m_tools\options.ico"
+
+m_helptopic       ICON           "images\m_help\helptopic.ico"
+m_homepage        ICON           "images\m_help\homepage.ico"
+m_forum           ICON           "images\m_help\forum.ico"
+
+MainIcon        ICON           "images\minipad2.ico"
+ic_reminder  ICON  "images\misc\reminder.ico"
+ic_noaction ICON "images\misc\noaction.ico"
+ic_boy ICON "images\misc\boy.ico"
+ic_girl ICON "images\misc\girl.ico"
+ic_pagelink ICON "images\misc\pagelink.ico"
+ic_emaillink ICON "images\misc\emaillink.ico"
+ic_batchlink ICON "images\misc\batchlink.ico"
+ic_filelink ICON "images\misc\filelink.ico"
+ic_folderlink ICON "images\misc\folderlink.ico"
+ic_backup ICON "images\misc\backup.ico"
+ic_login ICON "images\misc\login.ico"
+ic_fontcolor ICON "images\misc\setfont.ico"
+ic_behavior ICON "images\misc\behavior.ico"
+ic_edit ICON "images\misc\editoptions.ico"
+ic_autorecord ICON "images\misc\autorecord.ico"
+ic_externalnote ICON "images\m_file\externalnote.ico"
+ic_fixedclipitem      ICON           "images\misc\fixedclipitem.ico"
+
+ic_listview ICON "images\misc\listview.ico"
+ic_tabcontrol ICON "images\misc\tabcontrol.ico"
+ic_editor ICON "images\misc\editor.ico"
+ic_othercontrols ICON "images\misc\othercontrols.ico"
+
+ic_lockedmask    ICON            "images\m_file\lockedmask.ico"
+ic_protectedmask ICON "images\m_file\protectedmask.ico"
+ic_readonlymask  ICON            "images\m_file\readonlymask.ico"
+
+
+

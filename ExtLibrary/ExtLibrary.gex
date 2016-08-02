@@ -1,0 +1,7 @@
+[General]
+Name=ExtLibrary
+Project=1
+[Classes]
+Count=2
+Class0="TSelectPanel","","UCommPanels","0","E:\ExtLibrary\UCommPanels.pas"
+Class1="TFontColorPanel","","UCommPanels","0","E:\ExtLibrary\UCommPanels.pas"

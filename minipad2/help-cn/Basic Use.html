@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link href="/main.css" rel="stylesheet" type="text/css">
+	<title>基本操作</title>
+</head>
+
+<body>
+	<h1>基本操作</h1>
+	
+	<p>minipad2 的主要定位是纯文本的笔记／便笺软件，笔记与记事功能为其基本功能。</p>
+
+	<h2><a name="multipagestyle"></a>便笺风格操作</h2>
+
+	<p>软件第一次启动时，为多页面的便笺风格，并已默认建立了一个名为“note1”的页面。在该页面中可自由编辑与记事。编辑完毕无需手动保存或关闭软件，只需将其最小化到托盘区，软件在最小化时会自动保存所有内容。</p>
+
+	<p>点击<a href='Menus\Menus_File.html'>“文件”</a>菜单下的<a href='Menus\Menus_File.html#m_newnote'>“新建笔记页”</a>（或在标签栏的空白处双击），可新建新的页面进行编辑，并可在各页面间自由切换。</p>
+
+	<p>点击“文件”菜单下的<a href='Menus\Menus_File.html#m_rename'>“重命名”</a>，可对当前页面进行重命名。另一重命名的方式是在页面中选中待作为标题的文字，然后按 F10，所选文字将作为页面标题。</p>
+	
+	<p>点击“文件”菜单下的<a href='Menus\Menus_File.html#m_property'>“属性”</a>，可查看或修改当前页面的属性设置。</p>
+
+	<p>如需改变标签的位置，直接将其拖曳到目标位置即可。</p>
+
+	<p>如需删除某一页面，点击“文件”菜单下的<a href='Menus\Menus_File.html#m_delete'>“删除”</a>，或（默认设置下）直接双击该页面的标签即可。</p>
+
+	<p>如需对某一页面加锁防止误删除，可点击“文件”菜单下的<a href='Menus\Menus_File.html#m_switchlock'>“加锁切换”</a>，或（默认设置下）在该页面的标签上用中键单击。</p>
+
+	<p>软件支持标签页的分组创建与管理。点击“文件”菜单下的<a href='Menus\Menus_File.html#m_newgroup'>“新建组”</a>，可新建标签组。</p>
+
+	<p>可使用“导航”菜单下的<a href='Menus\Menus_Navigation.html#m_goprior'>“后退”</a>、<a href='Menus\Menus_Navigation.html#m_gonext'>“前进”</a>、<a href='Menus\Menus_Navigation.html#m_levelup'>“上一层”</a>等导航功能项，在标签页／标签组之间进行导航切换。</p>
+
+	<p>在“选项”-->“界面设置”--><a href='Options\Appearance\Opt_Appearance.html'>“标签栏”</a>中，提供了较多的标签风格设置、如选择标签栏显示在上部／下部、单行／多行风格、标签页宽度固定／可变、是否显示图标、是否高亮当前标签等。</p>
+
+	<h2><a name="treeviewstyle"></a>笔记风格操作</h2>
+
+	<p>点击“工具”菜单下的<a href='Menus\Menus_Tools.html#m_showtree'>“显示目录树”</a>，可切换为带树视图的笔记软件风格。在树窗口中可任意新建组（类似于文件夹）与标签页。使用快捷键 Ctrl+Tab，可在编辑区与树／标签区之间切换焦点。</p>
+
+	<p>在笔记风格下，软件同样支持通过拖曳的方式改变节点（组、页）的位置与所属。</p>
+
+	<p>如需将笔记内容保存为 txt 文件，可点击“文件”菜单下的<a href='Menus\Menus_File.html#m_export'>“导出”</a>。软件支持将整组笔记（包括所有下属节点与子组）批量导出到指定文件夹中，同时保持树结构。</p>
+
+	<p>如需导入 txt 文件的内容，可点击“文件”菜单下的<a href='Menus\Menus_File.html#m_import'>“导入”</a>，或从资源管理器中直接将 txt 文件拖入 minipad2 窗口。软件同样支持将指定文件夹中的所有文本文件一次性导入到 minipad2 中，同时保持树结构。</p>
+
+	<p>如需将当前页面内容发送到邮件，可点击“文件”菜单下的<a href='Menus\Menus_File.html#m_sendmail'>“发送邮件”</a>，将调用“选项”--><a href='Options\Program Settings\Opt_ProgramSettings.html'>“程序设置”</a>中设定的邮件客户端程序（如未设定，则调用系统默认的邮件客户端）创建新的邮件，并将该页面标题作为邮件标题、内容作为邮件正文。</p>
+
+	<p>点击树窗口与编辑区之间的分隔条中间的小按钮，可隐藏／显示树窗口。左键与右键单击各有不同的效果，具体试一下即知。</p>
+
+	<h2>标签／节点的拖曳操作</h2>
+
+	<p>不管在多标签风格还是在笔记风格下，软件均支持通过拖曳的方式改变标签／节点（组、页）的位置与所属。<br>
+	在笔记风格下，拖曳可在左侧的树窗口中进行，也可在右侧的列表窗口中进行，操作类同于资源管理器。</p>
+
+	<p>如将某一页拖曳到另一页之上，则被拖页将作为目标页的同级节点。<br>
+	如将某一页拖曳到某一组之上，默认为将该页作为该组的下属节点。但如拖曳的同时按住 shift 键，则将该节点作为该组的同级节点。<br>
+	如在拖曳的同时按住 Ctrl 键，则为节点复制操作。<br>
+	如在拖曳的过程中需要取消拖曳，按 Esc 键即可。</p>
+
+	<h2>文字编辑操作</h2>
+
+	<p>编辑器支持拖曳编辑特性，可选中文字以拖曳方式改变位置或进行复制，既可在编辑器内部进行拖曳，也可在编辑器与外部编辑器（如 WPS，EmEditor...）之间进行拖曳操作。<br>
+	在编辑器按住 Ctrl 键同时滚动鼠标滚轮，可以对编辑区字体进行缩放。按 Ctrl 的同时中键（滚轮）点击，则恢复到缩放前的字体大小。<br></p>
+
+	<p><a href='Menus\Menus_Edit.html'>“编辑”</a>菜单下包含了各类编辑器通用的基本功能，如<a href='Menus\Menus_Edit.html#m_clear'>清空</a>、<a href='Menus\Menus_Edit.html#m_undo'>撤销</a>／<a href='Menus\Menus_Edit.html#m_redo'>重做</a>、<a href='Menus\Menus_Edit.html#m_selectall'>全选</a>、<a href='Menus\Menus_Edit.html#m_cut'>剪切</a>／<a href='Menus\Menus_Edit.html#m_copy'>复制</a>／<a href='Menus\Menus_Edit.html#m_paste'>粘贴</a>、<a href='Menus\Menus_Edit.html#m_find'>查找／替换</a>等。</p>
+	<p>“编辑”菜单中另有一系列<a href='Menus\Menus_Edit.html#m_texttools'>文字工具</a>，如针对选中的局部文字进行高亮或添加下划线、针对所选的多行文字添加序号等。</p>
+	<p>点击“编辑”--><a href='Menus\Menus_Edit.html#m_insertlink'>“插入链接”</a>，可在文字中插入链接（包括网址、文件、节点链接等）。链接在编辑器中高亮显示，双击（或 Ctrl+单击）可执行。</p>
+	
+	<p>在“选项”-->“程序设置”--><a href='Options\Program Settings\Opt_Edit.html'>“编辑设置”</a>中，可设定编辑器的编辑特性，如自动缩进、回车时自动插入空行、平滑滚动、单击打开链接、Tab 宽度等。<br>
+	在“选项”-->“界面设置”--><a href='Options\Appearance\Opt_Editor.html'>“编辑器”</a>中，可设定编辑器的界面特性，如字体、字号、文字颜色与背景色，以及页面边距、是否显示行号、是否高亮当前行、文字高亮方案等。</p>
+
+	<h2>列表类页面的操作</h2>
+
+	<p>软件除普通的便笺／笔记页外，还支持几种特殊的“功能页”，其中<a href='Extensions\Ext_Memo.html'>备忘页</a>、<a href='Extensions\Ext_Launcher.html'>链接页</a>、<a href='Extensions\Ext_ContactList.html'>通讯页</a>以及<a href='Extensions\Ext_Template.html'>文字模板</a>与<a href='Extensions\Ext_MultiClipboard.html'>剪贴板</a>的编辑页面均为列表（而非文本编辑器）风格。</p>
+
+	<p>对于列表页面，点击<a href='Menus\Menus_Edit.html'>“编辑”</a>菜单下的<a href='Menus\Menus_Edit.html#m_newitem'>“新建项目”</a>（或双击页面空白处），可创建新的项目。<br>
+	双击现有项目，将弹出编辑窗口，可对该项目进行编辑修改。<br>
+	右键点击项目，将弹出相应的功能菜单，上有“新建”、<a href='Menus\Menus_Edit.html#m_insertitem'>“插入”</a>、<a href='Menus\Menus_Edit.html#m_edititem'>“编辑”</a>、“删除”等常规功能项。<br>
+	如需删除某项目，右键点击，选择<a href='Menus\Menus_Edit.html#m_delete'>“删除项目”</a>（支持多选删除）。<br>
+	如项目标题为空，或为连续三个 '-' 以上，则视为用于分隔的空行，不显示图标与内容。</p>
+
+	<p>如需改变项目的位置，选中项目后直接拖曳至目标位置即可（支持 Shift 和 Ctrl 多选）。<br>
+	如需复制项目，使用 Ctrl+拖曳。<br>
+	如需将所选项目移动／复制到其它同类页面，同样使用拖曳／Ctrl+拖曳的方式将其拖动到目标页面。</p>
+
+	<p>单击列头，可对各项目进行升／降排序。<br>
+	按住列头并拖放，可调整各列的顺序。</p>
+	
+	<p>如需改变当前列表页面的属性设置，点击“文件”菜单下的<a href='Menus\Menus_File.html#m_property'>“属性”</a>。在弹出对话框中可设定当前页的列项目、显示风格、是否显示勾选框等，并可将当前设定存为默认风格。<br>
+	点击“文件”菜单下的<a href='Menus\Menus_File.html#m_view'>“视图”</a>，可直接在不同显示风格（大图标、小图标、列表、详细信息、<a href='Featured Functions.html#abstract'>摘要</a>）之间进行切换。<br></p>
+
+	<p>列表类页面的导出（另存为文件）操作与普通页面相同，但支持以下两种格式的文件：</p>
+	<ol>
+		<li>存为普通 txt 文件。以 txt 格式保存当前页面上显示的内容。
+		<li>存为 *.mep 文件。保存所有内容（包括未选择的列），以及当前页面的格式信息（显示风格，各列宽度...），可用于再次导入（如导入到另一电脑上的 minipad2 中）。
+	</ol>
+
+	<h2>右键菜单操作</h2>
+
+	<p>软件的各部分（树窗口、列表窗口、标签、编辑区、摘要视图、工具栏空白处）均支持上下文敏感的右键菜单操作。</p><br>
+
+</body>
+</html>

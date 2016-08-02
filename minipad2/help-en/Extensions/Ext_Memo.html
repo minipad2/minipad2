@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Memo</title>
+</head>
+
+<body>
+	<h1>Memo</h1>
+
+	<p>The MemoPage of minipad2 combines the functions of reminders, to-do-list and scheduled tasks. <br>
+	Use "File"-->"New ExtPage"--><a href='..\Menus\Menus_File.html#m_newmemo'>"New MemoPage"</a> to create a new MemoPage.</p>
+
+	<h2>Basic Use</h2>
+	
+	<p>Use "Edit"--><a href='..\Menus\Menus_Edit.html#m_newitem'>"New Item"</a> (or double-click on any empty place inside of memopage) to open the "New Reminder" dialog to create a new reminder/to-do/task.<br>
+	Double-click an existing reminder to open the "Edit Reminder" dialog to modify this item.<br>
+	After the pre-defined remind-time has been reached, a pop-up reminder window will appear in the right-lower side of the desktop, with a beep-sound (if it's defined). If you want to close the pop-up and remind again after some minutes, you can set the next remind-time in the pop-up window. <br>
+	To delete an existing reminder, right-click it and choose <a href='..\Menus\Menus_Edit.html#m_delete'>"Delete Item"</a>.<br>
+	To adjust the positions of reminders, select the item and drag it to the target position.<br>
+	If there's more than one MemoPages, you can move/copy the reminders between different pages using dragdrop.</p>
+
+	<h2>"Edit Reminder" dialog</h2>
+
+	<p><b>Title:</b> the title of the reminder.</p>
+	<p><b>Action:</b> including three kinds of actions: reminder, execute task, no action.<br>
+	<ul class="list">
+		<li>Reminder: something like an alarm-clock. Will pop-up a reminder-window when the time reaches the pre-defined reminder time. The text in the pop-up window is defined in "Description".
+		<li>Execute Task: execute sheduled task. When the pre-defined time reaches, the tasks defined in "Description" will be executed (e.g., launch program, open url, etc.)
+		<li>No Action: Used only as a to-do, without scheduled remind.
+	</ul>
+	</p>
+	
+	<p><b>Time:</b> the scheduled time of the reminder/task ( DateTime format: year-month-day hour:minute). Including:<br>
+	<ul class="list">
+		<li>ThisDay: remind/execute only once at the designated time.
+		<li>Daily: everyday at the designated time.
+		<li>Weekly: Some day every week (e.g., 1, 3, 6-7) at the designated time. Here Sunday can be 0 or 7.
+		<li>Monthly: Some day every month (e.g., 3, 15, 22-28) at the designated time.
+		<li>Yearly: Some days in every year (e.g., 3-20, 9-3, 12-24. i.e., "month-day", use comma to separate several days) at the designated time.
+		<li>Period: set a certain date period. It's only used for some to-dos without remind. The action can only be set as "No Action".
+		<li>No time: similar to "Period", but without date period. Only used for simple to-do-list, without any remind or action.
+	</ul>
+	</p>
+	
+	<p><b>Description:</b> The description for the memo-item.<br>
+	<ul class="list">
+		<li>For reminders: This text will appear in the pop-up remind window.
+		<li>For scheduled tasks: the tasks need to be executed (launch program, open url...). It is recommended to use the button "Add" to add the programs to be launched. You can add multiple tasks to be executed together (e.g., open a few programs together). Please refer to the <a href='..\Extensions\Ext_Launcher.html#batchlink'>"Batch Link"</a> section in the chapter "Launcher".
+	</ul>
+	</p>
+
+	<p><b>Sound:</b> The beep sound together with the remind/task. Can be choosed from PC beep or *.wav files. To open a certain *.wav file, use the "..." button.<br>
+	If you choosed "sound file" without designating a *.wav file, then the program still use the default PC beep.</p>
+
+	<h2>Examples</h2>
+	
+	<p>1. add a reminder, at 19:00 every night show the remind "stop playing games and do your homeworks!"<br>
+	Double-click in the empty part of the memopage, in the "New Reminder" dialog input the title "Do homework", the description "stop playing games and do your homeworks!"", set the time as "This day", 19:00, the action as "Reminder", choose a sound file, then click "OK" to finish the definition.<br>
+	At 19:00 every night, a small reminder window will appears in the right-lower side of the desktop.</p>
+
+	<p>2. add a task, execute disk-scan at Monday, Wednesday & Friday noon every week.<br>
+	Double-click in the empty part of the memopage, in the "New Reminder" dialog input the title "Disk Scan", press the "Add" button at the right side of "Description", in the "Open File" dialog select the disk-scan program then click "OK", select "Weekly", input "1,3,5" and select 12:00 for the time, set the action as "Execute Task", then click "OK".<br>
+	At 12:00 of Monday, Wednesday & Friday every week, the disk-scan program will automatically be launched to execute the disk scan.</p><br>
+</body>
+</html>

@@ -1,0 +1,47 @@
+package plugins;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl;
+
+contains
+  UPluginManager in 'UPluginManager.pas',
+  UContactPage in 'UContactPage.pas',
+  UCalcDictPage in 'UCalcDictPage.pas',
+  UCalcHandler in 'UCalcHandler.pas',
+  UCalculator in 'UCalculator.pas',
+  UDictionary in 'UDictionary.pas',
+  ULinkPage in 'ULinkPage.pas',
+  UMemoPage in 'UMemoPage.pas',
+  UTemplatePage in 'UTemplatePage.pas',
+  UTemplateHandler in 'UTemplateHandler.pas',
+  UMemoHandler in 'UMemoHandler.pas',
+  ULinkHandler in 'ULinkHandler.pas',
+  UClipPage in 'UClipPage.pas',
+  UClipHandler in 'UClipHandler.pas',
+  UPasteHandler in 'UPasteHandler.pas';
+
+end.

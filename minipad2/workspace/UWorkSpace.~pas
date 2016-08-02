@@ -1,0 +1,323 @@
+unit UWorkSpace;
+
+interface
+
+uses Windows, UxlPanel, UxlClasses, UxlWinControl, UxlMiscCtrls, UxlExtClasses, UxlList, UGlobalObj, UxlEdit, UNavigatorSuper,
+	UClientSuper, UTypeDef, UPageSuper, USpace, UxlDragControl, USearchPage, UFavoritePage, URecentPage, URecycleBin, UPageFactory;
+
+type
+   TWorkSpace = class (TxlPanel, IMemorizer, IEventObserver, IOptionObserver, ISizeObserver, IPageObserver)
+   private
+      FSplitter: TxlVertSplitter;
+      FTree, FTab: TNavigatorSuper;
+      FEditor, FList, FBlog: TClientSuper;
+      FSearchHandler: TSearchHandler;
+      FFavoriteHandler: TFavoriteHandler;
+      FRecentHandler: TRecentHandler;
+      FRecycleHandler: TRecycleHandler;
+      FSpace: TSpace;
+
+      FTreeMode: boolean;
+      FCaptionPageName: boolean;
+
+      procedure ShowTree (value: boolean);
+		procedure f_SetParentCaption ();
+      procedure f_OnSplitterButtonclick (Sender: TObject);
+		procedure f_OnDropItems (o_dragsource: IDragSource; i_targetid, i_pid: integer; b_copy: boolean);
+   public
+      procedure OnCreate (); override;
+      procedure OnDestroy (); override;
+		function OnWinMessage (AMessage, wParam, lParam: DWORD): DWORD; override;
+
+      procedure SaveMemory ();
+      procedure RestoreMemory ();
+      procedure EventNotify (event, wparam, lparam: integer);
+      procedure OptionChanged ();
+      procedure OnPageEvent (pct: TPageEvent; id, id2: integer);
+      procedure AdjustAppearance ();
+      procedure GetClientSize (var i_width, i_height: integer);
+      property TreeMode: boolean read FTreeMode write ShowTree;
+   end;
+
+implementation
+
+uses Messages, ShellAPI, UEditor, UList, UBlog, UPageStore, UTabNavigator, UTreeNavigator, Resource, UxlCommDlgs, UxlWindow, UxlTabControl,
+	UxlRichEdit, UxlFunctions, UOptionManager;
+
+procedure TWorkSpace.OnCreate ();
+begin
+	inherited;
+
+   FSpace := TSpace.Create;
+
+   FTree := TTreeNavigator.create (self);
+   FTree.OnDropItems := f_OnDropItems;
+
+   FTab := TTabNavigator.create (self);
+   FTab.OnDropItems := f_OnDropItems;
+
+   FEditor := TEditorClient.Create (self);
+
+   FList := TListClient.Create (self);
+   FList.OnDropItems := f_OnDropItems;
+
+   FBlog := TBlogClient.Create (self);
+
+	FSplitter := TxlVertSplitter.Create (self);
+   FSplitter.ShowButton := true;
+   FSplitter.OnButtonclick := f_OnSplitterButtonClick;
+
+   FSearchHandler := TSearchHandler.Create (self);
+   FFavoriteHandler := TFavoriteHandler.Create;
+   FRecentHandler := TRecentHandler.Create;
+   FRecycleHandler := TRecycleHandler.Create;
+
+   SetWndStyle (CS_DBLCLKS);
+   PageCenter.AddObserver (self);
+   EventMan.AddObserver(self);
+   OptionMan.AddObserver(self);
+   MemoryMan.AddObserver (self);
+   SizeMan.AddObserver (self);
+end;
+
+procedure TWorkSpace.OnDestroy ();
+begin
+	SizeMan.RemoveObserver (self);
+	OptionMan.RemoveObserver(self);
+   MemoryMan.RemoveObserver(self);
+   EventMan.RemoveObserver(self);
+   PageCenter.RemoveObserver (self);
+
+   FRecycleHandler.Free;
+   FRecentHandler.free;
+   FFavoriteHandler.Free;
+   FSearchHandler.free;
+   
+   FBlog.free;
+	FList.free;
+   FEditor.free;
+   FTree.free;
+   FTab.free;
+   FSplitter.Free;
+   FSpace.free;
+   
+   inherited;
+end;
+
+function TWorkSpace.OnWinMessage (AMessage, wParam, lParam: DWORD): DWORD;
+begin
+	result := 0;
+	case AMessage of
+   	WM_LBUTTONDBLCLK:
+      	if OptionMan.Options.GroupDblClick = lbLevelUp then
+         	CommandMan.ExecuteCommand(m_levelup)
+         else
+				CommandMan.ExecuteCommand(m_newsiblingnote);
+      else
+         result := inherited OnWinMessage (AMessage, wParam, lParam);
+   end;
+end;
+
+//-----------------------
+
+procedure TWorkSpace.EventNotify (event, wparam, lparam: integer);
+	procedure f_ProcessDropFiles (h_drop: HDrop);
+	var i, i_count: integer;
+   	buffer: array[0..2000] of widechar;
+   begin
+//   	i_count := DragQueryFileW (h_drop, $FFFFFFFF, nil, 0);
+//      for i := 0 to i_count - 1 do
+//      begin
+//      	DragQueryFileW (h_drop, i, @buffer, sizeof(buffer));
+//         if not TListClient(FList).DropFiles (buffer) then
+//      		FSpace.ImportFrom (buffer);
+//      end;
+   end;
+begin
+	case event of
+      WM_DROPFILES:
+			f_ProcessDropFiles (wparam);
+   end;
+end;
+
+procedure TWorkSpace.f_SetParentCaption ();
+begin
+   if FCaptionPageName and (PageCenter.ActivePage <> nil) then
+      Parent.Text := PageCenter.ActivePage.Name + ' - minipad2'
+   else
+   	Parent.Text := 'minipad2';
+end;
+
+procedure TWorkSpace.GetClientSize (var i_width, i_height: integer);
+begin
+	i_width := FEditor.Control.Width;
+   i_height := FEditor.Control.Height;
+end;
+
+//------------------------
+
+procedure TWorkSpace.SaveMemory ();
+begin
+//   MemoryMan.ShowTree := FTree.Control.Visible;
+   if FTree.Control.Width > 0 then
+   	MemoryMan.Treewidth := FTree.Control.Width;
+   if PageCenter.ActivePage <> nil then
+   	MemoryMan.PageID := PageCenter.ActivePage.Id;
+end;
+
+procedure TWorkSpace.RestoreMemory ();
+var id: integer;
+begin
+	if MemoryMan.TreeWidth > 0 then
+		FTree.Control.Width := MemoryMan.TreeWidth
+   else
+   	FTree.Control.Width := 0;
+
+   // 此段不可省
+   if OptionMan.Options.StartPage >= 0 then
+      id := OptionMan.Options.StartPage
+   else
+      id := MemoryMan.PageID;
+  	PageCenter.ActivePage := PageStore[id];
+
+//   ShowTree (MemoryMan.ShowTree);
+end;
+
+procedure TWorkSpace.OptionChanged ();
+var tp: TTabPosition;
+begin
+	FCaptionPageName := OptionMan.Options.CaptionPageName;
+   f_SetParentCaption;
+   if OptionMan.Options.TabOnBottom then
+   	tp := tpBottom
+   else
+   	tp := tpTop;
+   if tp <> TxlTabControl(FTab.Control).TabPosition then
+   begin
+      TxlTabControl(FTab.Control).TabPosition := tp;
+      if not FTreeMode then
+      	ShowTree (FTreeMode);
+   end;
+end;
+
+procedure TWorkSpace.OnPageEvent (pct: TPageEvent; id, id2: integer);
+var b: boolean;
+	p: TPageControl;
+begin
+	if pct = pctControlChange then
+   begin
+   	p := PageStore[id].PageControl;
+
+   	b := p = pcEdit;
+      FEditor.Active := b;
+      FEditor.Control.Visible := b;
+
+      b := p = pcListView;
+      FList.Active := b;
+      FList.Control.Visible := b;
+
+      b := p = pcBlog;
+      FBlog.Active := b;
+      FBlog.Control.Visible := b;
+   end;
+end;
+
+procedure TWorkSpace.ShowTree (value: boolean);
+begin
+	FTreeMode := value;
+   self.ClearChildList;
+   FTab.Control.ClearChildList;
+   FTree.Control.Visible := value;
+   FSplitter.Visible := value;
+   FTab.Control.Visible := not value;
+
+	if value then
+   begin
+      AddChild (FTree.Control, alLeft);
+      AddChild (FSplitter, alLeft);
+      AddChild (FEditor.Control, alClient);
+      AddChild (FList.Control, alClient);
+      AddChild (FBlog.Control, alClient);
+      FSplitter.SetBuddy ([FTree.Control], [FList.Control, FEditor.Control, FBlog.Control]);
+   end
+   else
+   begin
+      AddChild (FTab.Control, alClient);
+		FSplitter.ClearBuddy;
+      FTab.Control.AddChild (FEditor.Control, alClient);
+      FTab.Control.AddChild (FList.Control, alClient);
+      FTab.Control.AddChild (FBlog.Control, alClient);
+   end;
+
+   FTree.Active := value;
+   FTab.Active := not value;
+   if FEditor.Active then
+   	FEditor.Control.SetFocus;
+end;
+
+procedure TWorkSpace.AdjustAppearance ();
+begin
+   if FTreeMode then
+   begin
+   	FTree.Control.Visible := SizeMan.ShowTree;
+      FSplitter.Visible := FTree.Control.Visible;
+   end
+   else
+   begin
+      if SizeMan.ShowTab then
+      begin
+      	if FEditor.Control.Parent = FTab.Control then exit;
+      	FEditor.Control.Parent := FTab.Control;
+         FList.Control.Parent := FTab.Control;
+         FBlog.Control.Parent := FTab.Control;
+         ShowWindow (FTab.Control.handle, SW_Show);    // 不能用 FTab.Control.Visible！因 TxlWinContainer 的 visible 改变会影响 child 的 visible
+      end
+      else
+      begin
+      	if FEditor.Control.Parent = self then exit;
+      	FEditor.Control.Parent := self;
+         FList.Control.Parent := self;
+         FBlog.Control.Parent := self;
+         ShowWindow (FTab.Control.handle, SW_Hide);
+      end;
+   end;
+end;
+
+procedure TWorkSpace.f_OnSplitterButtonclick (Sender: TObject);
+begin
+	if FTree.Control.Width > 0 then
+   begin
+      MemoryMan.TreeWidth := -1 * FTree.Control.Width;
+   	FSplitter.SlidePos := 0;
+   end
+   else
+      FSplitter.SlidePos := ABS(MemoryMan.TreeWidth);
+end;
+
+procedure TWorkSpace.f_OnDropItems (o_dragsource: IDragSource; i_targetid, i_pid: integer; b_copy: boolean);
+var i, id: integer;
+	o_sourceid: TxlIntList;
+begin
+	o_sourceid := TxlIntList.Create();
+	o_dragsource.GetDragData(o_sourceid);
+
+	for i := o_sourceid.Low to o_sourceid.High do
+   	id := FSpace.ProcessMoveCopy (o_sourceid[i], i_targetid, i_pid, b_copy, KeyPressed(VK_SHIFT));
+
+   o_sourceid.free;
+   if o_dragsource = IDragSource(TxlDragControl(FTree.Control)) then
+   	PageCenter.ActivePage := PageStore[id];
+end;
+
+end.
+
+
+
+
+
+
+
+
+
+
+

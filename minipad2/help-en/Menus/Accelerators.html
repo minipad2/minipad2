@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Define Accelerators</title>
+</head>
+
+<body>
+	<a name="accelerators"><h1>Define Accelerators</h1>
+	
+	<p>Minipad2 allows to re-define the accelerators for various menu items (including a few functions which only use accelerators without corresponding menu items). </p>
+	<p>How to re-define accelerators:</p>
+	<p>Create a text file named "accel.txt" under "minipad2\". Write into the file lines of “id=accelerator”. E.g.,</p>
+
+	<p>1010=Alt+W<br>
+	1130=F7<br>
+	1160=Shift+Ctrl+P<br>
+	1720=</p>
+	
+	<p>This will re-define the accelerator of "New Note” (id=1010) to Alt+W, “Switch Lock” (1130) to F7, “Property” (1160) to Shift+Ctrl+P, and remove the accelerator for “Stay On Top” (1720).</p>
+	
+	<p>Here is a list of ids and default accelerators for various menu items:</p>
+	<ul class="list">
+		<li>New NotePage: 1010 (Ctrl+N)
+		<li>New ExtPage: 1020
+		<li>New CalcPage: 1030
+		<li>New MemoPage: 1040
+		<li>New DictPage: 1050
+		<li>New LinkPage: 1060
+		<li>New ContactPage: 1070
+		<li>New Group: 1110 (Ctrl+G)
+	</ul>
+	<ul class="list">
+		<li>Rename: 1120 (F2)
+		<li>Switch Lock: 1130 (F6)
+		<li>Delete Page: 1140 (Shift+Del)
+		<li>Save: 1150 (Ctrl+S)
+	</ul>
+	<ul class="list">
+		<li>Property...: 1160
+		<li>View: 1170
+	</ul>
+	<ul class="list">
+		<li>Import...: 1180
+		<li>Export...: 1190
+		<li>Send Mail...: 1200
+		<li>Exit: 1210
+	</ul>
+	<ul class="list">
+		<li>Clear: 1310 (Ctrl+L)
+		<li>Undo: 1320 (Ctrl+Z)
+		<li>Redo: 1330 (Ctrl+Y)
+		<li>Select All: 1340 (Ctrl+A)
+	</ul>
+	<ul class="list">
+		<li>Cut: 1350 (Ctrl+X)
+		<li>Copy: 1360 (Ctrl+C)
+		<li>Paste: 1370 (Ctrl+V)
+		<li>Delete / Delete Item / Remove Item: 1400 (Del)
+	</ul>
+	<ul class="list">
+		<li>New Item: 1410 (Ctrl+I)
+		<li>Insert Item: 1420;
+		<li>Edit Item: 1430;
+	</ul>
+	<ul class="list">
+		<li>Word Wrap: 1440;
+		<li>Text Tools: 1380;
+		<li>Highlight 1: 1381;
+		<li>Highlight 2: 1382;
+		<li>Highlight 3: 1383;
+		<li>Highlight 4: 1384;
+		<li>Remove Highlight: 1385;
+		<li>List 1: 1386;
+		<li>List 2: 1387;
+		<li>Ordered List: 1388;
+		<li>Remove List: 1389;
+		<li>Delete all empty lines: 1390;
+		<li>Leave one empty line: 1391;
+	</ul>
+	<ul class="list">
+		<li>Find / Replace: 1450 (Ctrl+F)
+		<li>Subsequent find: 1460
+		<li>Find Next: 1462 (F3)
+		<li>Find Previous: 1464 (Shift+F3)
+		<li>Replace & Find Next: 1466 (F4)
+		<li>Replace & Find Previous: 1468 (Shift+F4)
+		<li>Replace All: 1470 (Ctrl+F4)
+		<li>Highlight Match: 1480;
+	</ul>
+	<ul class="list">
+		<li>Insert Link: 1490 (Ctrl+K)
+		<li>Insert ClipText: 4000
+		<li>Insert Template: 5000
+	</ul>
+	<ul class="list">
+		<li>Go Prior: 1560 (Alt+Left)
+		<li>Go Next: 1570 (Alt+Right)
+		<li>Level Up: 1580 (Alt+U)
+		<li>Recent Notes: 1590;
+		<li>Recent Create: 7000;
+		<li>Recent Modify: 7500;
+		<li>Recent Visit: 8000;
+		<li>Manage Recent Notes: 1600;
+		<li>Favorite: 6500
+		<li>Add Favorite / Remove Favorite: 1610;
+		<li>Manage Favorite: 1620;
+		<li>Search: 1630 (Alt+F)
+		<li>Recycle Bin: 1650;
+	</ul>
+	<ul class="list">
+		<li>Show Tree: 1710 (Ctrl+T)
+		<li>Stay On Top: 1720 (Ctrl+P)
+		<li>Transparent: 1730 (Ctrl+R)
+		<li>Auto Hide: 1740 (Ctrl+H)
+	</ul>
+	<ul class="list">
+		<li>Template Manage: 1750;
+		<li>FastLink Manage: 1760;
+	</ul>
+	<ul class="list">
+		<li>Watch Clipboard: 1770;
+		<li>Clear Clipboard: 1780;
+		<li>Clipboard Manage: 1790;
+	</ul>
+	<ul class="list">
+		<li>Statistics...: 1800;
+		<li>Define Toolbar: 1810;
+		<li>Options: 1820;
+	</ul>
+	<ul class="list">
+		<li>Help Topic: 1910 (F1)
+		<li>Homepage: 1920;
+		<li>Forum: 1930;
+		<li>About: 1940;
+		<li>Donate: 1950;
+	</ul>
+	
+	<p>Here is the list of ids and accelerators for a few functions which only use accelerators without corresponding menu items: </p>
+	<ul class="list">
+		<li>Move up: 1220 (Alt+Up)
+		<li>Move down: 1230 (Alt+Down)
+		<li>Switch Focus: 354 (Ctrl+Tab)
+		<li>Set As Title: 355 (F10)
+		<li>Hide / Restore Tree (Towards Left): 356 (Ctrl+Alt+Left)
+		<li>Hide / Restore Tree (Towards Right): 347 (Ctrl+Alt+Right)
+	</ul>
+</body>
+</html>

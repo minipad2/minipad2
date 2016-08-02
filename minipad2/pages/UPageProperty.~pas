@@ -1,0 +1,437 @@
+unit UPageProperty;
+
+interface
+
+uses UTypeDef, UxlList;
+
+type
+	TPropertySuper = class
+   private
+//      procedure TriggerChange (pct: TPageEvent);
+   protected
+   	FPageId: integer;
+   public
+   	constructor Create (APageId: integer); virtual;
+
+   	procedure Load (o_list: TxlStrList); virtual; abstract;
+      procedure Save (o_list: TxlStrList); virtual; abstract;
+      procedure Clone (p: TPropertySuper); virtual; abstract;
+      procedure GetShowCols (o_list: TxlIntList); virtual;
+      function GetColText (id_col: integer; var s_result: widestring): boolean; virtual;
+   end;
+
+   TClonableProperty = class (TPropertySuper)
+	public
+      procedure Clone (p: TPropertySuper); override;
+	end;
+
+	TTruePageProperty = class (TPropertySuper)
+	private
+      FExternalSave: boolean;
+      FExportFile: widestring;
+      FRemark: widestring;
+   	procedure SetExternalSave (value: boolean);
+      procedure SetExportFile (const value: widestring);
+   public
+   	constructor Create (APageId: integer); override;
+   	procedure Load (o_list: TxlStrList); override;
+      procedure Save (o_list: TxlStrList); override;
+      procedure Clone (p: TPropertySuper); override;
+      procedure GetShowCols (o_list: TxlIntList); override;
+      function GetColText (id_col: integer; var s_result: widestring): boolean; override;
+
+      property ExternalSave: boolean read FExternalSave write SetExternalSave;
+      property ExportFile: widestring read FExportFile write SetExportFile;
+      property Remark: widestring read FRemark write FRemark;
+	end;
+
+   TPageChilds = class (TPropertySuper)
+   private
+   	FChilds: TxlIntList;
+   public
+   	constructor Create (APageId: integer); override;
+      destructor Destroy (); override;
+
+   	procedure Load (o_list: TxlStrList); override;
+      procedure Save (o_list: TxlStrList); override;
+      procedure Clone (p: TPropertySuper); override;
+      procedure GetChildList (o_list: TxlIntList);
+
+   	procedure AddChild (id: integer; sid: integer = -1);
+      procedure RemoveChild (id: integer);
+      function CanRemoveChild (id: integer): boolean;
+      procedure Clear ();
+   	function CanClear (): boolean;
+
+      function IsEmpty (): boolean;
+      function FindChild (id: integer): integer;
+      function Count (): integer;
+		function HasChildInTree (): boolean;
+		function GetNewChildName (pt: TPageType): widestring;
+   end;
+
+	TListPageView = (lpvIcon, lpvSmallIcon, lpvList, lpvReport, lpvBlog);
+
+   TListProperty = class (TClonableProperty)
+   protected
+		FView: TListPageView;
+      FFullrowSelect, FGridLines, FCheckBoxes: boolean;
+      FColList: TxlIntList;
+      FWidthList: TxlIntList;
+//      procedure f_checkChange (oldpc: TPageControl);
+//      procedure SetView (value: TListPageView);
+   public
+   	constructor Create (APageId: integer); override;
+      destructor Destroy (); override;
+      function PageControl (): TPageControl;
+
+   	procedure Load (o_list: TxlStrList); override;
+      procedure Save (o_list: TxlStrList); override;
+      
+		property View: TListPageView read FView write FView;
+      property FullRowSelect: boolean read FFullRowSelect write FFullRowSelect;
+      property GridLines: boolean read FGridLines write FGridLines;
+      property CheckBoxes: boolean read FCheckBoxes write FCheckBoxes;
+      property ColList: TxlIntList read FColList;
+      property WidthList: TxlIntList read FWidthList;
+   end;
+
+implementation
+
+uses UPageStore, UPageFactory, UPageSuper, UxlFunctions, UxlStrUtils, Resource;
+
+constructor TPropertySuper.Create (APageId: integer);
+begin
+	FPageId := APageId;
+end;
+
+//procedure TPropertySuper.TriggerChange (pct: TPageEvent);
+//begin
+//	if FPageId >= 0 then
+//		PageCenter.EventNotify (pct, FPageId);
+//end;
+
+procedure TPropertySuper.GetShowCols (o_list: TxlIntList);
+begin
+end;
+
+function TPropertySuper.GetColText (id_col: integer; var s_result: widestring): boolean;
+begin
+	result := false;
+end;
+
+//----------------------
+
+procedure TClonableProperty.Clone (p: TPropertySuper);
+var o_list: TxlStrList;
+begin
+   o_list := TxlStrList.Create;
+   p.Save (o_list);
+   Load (o_list);
+   o_list.free;
+end;
+
+//----------------------
+
+constructor TTruePageProperty.Create (APageId: integer);
+begin
+	inherited Create (APageId);
+   FExternalSave := false;
+   FExportFile := '';
+   FRemark := '';
+end;
+
+procedure TTruePageProperty.Load (o_list: TxlStrList);
+begin
+	FExternalSave := StrToBool (o_list[0]);
+   FExportFile := o_list[1];
+   FRemark := SingleLineToMultiLine (o_list[2]);
+   o_list.Delete (0, 3);
+end;
+
+procedure TTruePageProperty.Save (o_list: TxlStrList);
+begin
+	with o_list do
+   begin
+   	Add (BoolToStr(FExternalSave));
+      Add (FExportFile);
+      Add (MultiLineToSingleLine (FRemark));
+   end;
+end;
+
+procedure TTruePageProperty.Clone (p: TPropertySuper);
+begin
+   Remark := TTruePageProperty(p).Remark;
+end;
+
+procedure TTruePageProperty.GetShowCols (o_list: TxlIntList);
+const c_cols: array[0..2] of integer = (sr_ExternalSave, sr_ExportFile, sr_Remark);
+var i: integer;
+begin
+   for i := Low(c_cols) to High(c_cols) do
+		o_list.Add (c_cols[i]);
+end;
+
+function TTruePageProperty.GetColText (id_col: integer; var s_result: widestring): boolean;
+begin
+	result := true;
+	case id_col of
+      sr_ExternalSave:
+      	s_result := IfThen (ExternalSave, 'Y', '');
+      sr_ExportFile:
+      	s_result := ExportFile;
+      sr_Remark:
+      	s_result := Remark;
+      else
+      	result := false;
+   end;
+end;
+
+procedure TTruePageProperty.SetExternalSave (value: boolean);
+var s_text: widestring;
+	p: TPageSuper;
+begin
+	if value <> FExternalSave then
+   begin
+   	p := PageStore[FPageId];
+   	s_text := p.Text;
+      if value then     // 若由内部存储改为外部存储，则首先删除数据库中该页面的相关内容
+      	p.Text := '';
+   	FExternalSave := value;
+      p.Text := s_text;
+   end;
+end;
+
+procedure TTruePageProperty.SetExportFile (const value: widestring);
+var s_text: widestring;
+	p: TPageSuper;
+begin
+	if value <> FExportFile then
+   begin
+   	p := PageStore[FPageId];
+      if ExternalSAve then
+      	s_text := p.Text;
+      FExportFile := value;
+      if ExternalSave then
+      	p.Text := s_text;
+   end;
+end;
+
+//--------------------------
+
+constructor TPageChilds.Create(APageId: integer);
+begin
+	inherited Create (APageId);
+   FChilds := TxlIntList.Create;
+   FChilds.Separator := ',';
+end;
+
+destructor TPageChilds.Destroy ();
+begin
+	FChilds.free;
+	inherited;
+end;
+
+procedure TPageChilds.Load (o_list: TxlStrList);
+begin
+  	FChilds.Text := o_list[0];
+   o_list.Delete (0);
+end;
+
+procedure TPageChilds.Save (o_list: TxlStrList);
+begin
+	o_list.Add (FChilds.Text);
+end;
+
+procedure TPageChilds.Clone (p: TPropertySuper);
+begin
+end;
+
+procedure TPageChilds.AddChild (id: integer; sid: integer = -1);
+var i: integer;
+begin
+	if FChilds.ItemExists (id) then exit;
+   i := FChilds.Find (sid);
+   if FChilds.ItemValid (i) then
+   	FChilds.Insert (i, id)
+   else
+   	FChilds.Add (id);
+   PageCenter.EventNotify (pctAddChild, FPageId, id);
+end;
+
+procedure TPageChilds.RemoveChild (id: integer);
+begin
+	if FChilds.ItemExists (id) then
+   begin
+      PageCenter.EventNotify (pctRemoveChild, FPageId, id);
+		FChilds.DeleteByValue (id);
+   end;
+end;
+
+function TPageChilds.CanRemoveChild (id: integer): boolean;
+begin
+	if PageStore[id].ownerId = FPageId then
+   	result := PageStore[id].CanDelete
+   else
+		result := true;
+end;
+
+procedure TPageChilds.Clear ();
+var i: integer;
+begin
+	for i := FChilds.High downto FChilds.Low do
+   	RemoveChild (FChilds[i]);
+end;
+
+function TPageChilds.CanClear (): boolean;
+var i: integer;
+begin
+	result := false;
+	for i := FChilds.Low to FChilds.High do
+   	if not CanRemoveChild (FChilds[i]) then exit;
+   result := true;
+end;
+
+function TPageChilds.FindChild (id: integer): integer;
+begin
+	result := FChilds.Find(id);
+end;
+
+function TPageChilds.IsEmpty (): boolean;
+begin
+	result := FChilds.IsEmpty;
+end;
+
+function TPageChilds.Count (): integer;
+begin
+	result := FChilds.Count;
+end;
+
+function TPageChilds.GetNewChildName (pt: TPageType): widestring;
+   function f_PageNameExists (const s_name: widestring): boolean;
+   var i: integer;
+   begin
+      result := false;
+      for i := FChilds.Low to FChilds.High do
+         if PageStore[FChilds[i]].Name = s_name then
+         begin
+            result := true;
+            break;
+         end;
+   end;
+var i: integer;
+   s_defname: widestring;
+begin
+	s_defname := PageNameMan.GetDefName (pt);
+   i := 0;
+   repeat
+      inc (i);
+      result := s_defname + IntToStr(i);
+   until not f_Pagenameexists (result);
+end;
+
+procedure TPageChilds.GetChildList (o_list: TxlIntList);
+var i: integer;
+begin
+	o_list.Clear;
+   i := FChilds.Low;
+   while i <= FChilds.High do
+   begin
+   	if PageStore.PageValid (FChilds[i]) then
+      begin
+   		o_list.Add (FChilds[i]);
+         inc (i);
+      end
+      else
+      	FChilds.Delete(i);
+   end;
+end;
+
+function TPageChilds.HasChildInTree (): boolean;
+var p: TPageSuper;
+	i: integer;
+begin
+	result := false;
+   p := PageStore[FPageId];
+   for i := FChilds.Low to FChilds.High do
+   	if p.ChildShowInTree (PageStore[FChilds[i]].PageType) then
+      begin
+      	result := true;
+         exit;
+      end;
+end;
+
+//---------------------
+
+constructor TListProperty.Create (APageId: integer);
+begin
+   inherited Create (APageId);
+	FColList := TxlIntList.Create;
+   FColList.Separator := ',';
+   FWidthList := TxlIntList.Create;
+   FWidthList.Separator := ',';
+end;
+
+destructor TListProperty.Destroy ();
+begin
+	FColList.Free;
+   FWidthList.Free;
+   inherited;
+end;
+
+procedure TListProperty.Load (o_list: TxlStrList);
+var i, n: integer;
+begin
+//   pc := PageControl;
+
+   FColList.Text := o_list[0];
+   FWidthList.Text := o_list[1];
+   n := FWidthList.High;
+   for i := n + 1 to FColList.High do     // 防止万一 widthlist 的长度小于 collist
+      FWidthList.Add (100);
+   CheckBoxes := StrToBool (o_list[2]);
+   FView := TListPageView(StrToIntDef (o_list[3]));
+   FullRowSelect := StrToBool (o_list[4]);
+   GridLines :=  StrToBool (o_list[5]);
+   o_list.Delete (0, 6);
+
+//   f_CheckChange (pc);
+end;
+
+procedure TListProperty.Save (o_list: TxlStrList);
+begin
+	with o_list do
+   begin
+      Add (FColList.Text);
+      Add (FWidthList.Text);
+      Add (BoolToStr(FCheckBoxes));
+      Add (IntToStr(Ord(FView)));
+      Add (BoolToStr(FFullRowSelect));
+      Add (BoolToStr(FGridLines));
+   end;
+end;
+
+//------------------
+
+function TListProperty.PageControl (): TPageControl;
+begin
+   if View = lpvBlog then
+      result := pcBlog
+   else
+      result := pcListView;
+end;
+
+//procedure TListProperty.SetView (value: TListPageView);
+//var pc: TPageControl;
+//begin
+//	if value = FView then exit;
+//   pc := PageControl;
+//   FView := value;
+//   f_CheckChange (pc);
+//end;
+
+end.
+
+
+
+

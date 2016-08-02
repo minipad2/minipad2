@@ -1,0 +1,58 @@
+unit UCalcDictPage;
+
+interface
+
+type
+   TCalcPage = class (TEditPageSuper)
+   protected
+   public
+   	class function PageType (): TPageType; override;
+      class function CanSearch (): boolean; override;
+	end;
+
+   TDictPage = class (TEditPageSuper)
+   public
+   	class function PageType (): TPageType; override;
+      class function CanSearch (): boolean; override;
+	end;
+
+implementation
+
+uses UPageFactory, Resource;
+
+class	function TCalcPage.PageType (): TPageType;
+begin
+	result := ptCalc;
+end;
+
+class function TCalcPage.CanSearch (): boolean;
+begin
+	result := false;
+end;
+
+//------------------
+
+class	function TDictPage.PageType (): TPageType;
+begin
+	result := ptDict;
+end;
+
+class function TDictPage.CanSearch (): boolean;
+begin
+	result := false;
+end;
+
+//------------------
+
+initialization
+   PageFactory.RegisterClass (TCalcPage);
+   PageImageList.AddImageWithOverlay (ptCalc, m_newcalc);
+	PageNameMan.RegisterDefName (ptCalc, sr_defcalcname);
+
+   PageFactory.RegisterClass (TDictPage);
+   PageImageList.AddImageWithOverlay (ptDict, m_newdict);
+	PageNameMan.RegisterDefName (ptDict, sr_defdictname);
+
+finalization
+
+end.

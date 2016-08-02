@@ -1,0 +1,282 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="Background" value="0xfefefe">
+	<param name="Window Styles" value="0x800025">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Introduction">
+		<param name="Local" value="Introduction.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+		
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Version History">
+		<param name="Local" value="Version History\Version History.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="v3.2">
+			<param name="Local" value="Version History\v32.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="v3.1">
+			<param name="Local" value="Version History\v31.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="v3.0">
+			<param name="Local" value="Version History\v30.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="v2.x">
+			<param name="Local" value="Version History\v2x.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Basic Use">
+		<param name="Local" value="Basic Use.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Featured Functions">
+		<param name="Local" value="Featured Functions.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+		
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Extensions">
+		<param name="Local" value="Extensions\Extensions.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Calculator">
+			<param name="Local" value="Extensions\Ext_Calculator.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Memo">
+			<param name="Local" value="Extensions\Ext_Memo.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Dictionary">
+			<param name="Local" value="Extensions\Ext_Dictionary.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Launcher">
+			<param name="Local" value="Extensions\Ext_Launcher.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Contact List">
+			<param name="Local" value="Extensions\Ext_ContactList.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Template">
+			<param name="Local" value="Extensions\Ext_Template.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Multi-Clipboard">
+			<param name="Local" value="Extensions\Ext_MultiClipboard.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Menus">
+		<param name="Local" value="Menus\Menus.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="File">
+			<param name="Local" value="Menus\Menus_File.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Edit">
+			<param name="Local" value="Menus\Menus_Edit.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Navigation">
+			<param name="Local" value="Menus\Menus_Navigation.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Tools">
+			<param name="Local" value="Menus\Menus_Tools.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Help">
+			<param name="Local" value="Menus\Menus_Help.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Tray Menu">
+			<param name="Local" value="Menus\Menus_Tray.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Define Accelerators">
+			<param name="Local" value="Menus\Accelerators.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Options">
+		<param name="Local" value="Options\Options.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Program Settings">
+			<param name="Local" value="Options\Program Settings\Opt_ProgramSettings.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Edit">
+				<param name="Local" value="Options\Program Settings\Opt_Edit.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Notes">
+				<param name="Local" value="Options\Program Settings\Opt_Notes.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Import / Export">
+				<param name="Local" value="Options\Program Settings\Opt_Import_Export.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Behavior">
+				<param name="Local" value="Options\Program Settings\Opt_Behavior.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Log In">
+				<param name="Local" value="Options\Program Settings\Opt_LogIn.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Backup">
+				<param name="Local" value="Options\Program Settings\Opt_Backup.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Auto Hide">
+				<param name="Local" value="Options\Program Settings\Opt_AutoHide.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+		</UL>
+		
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Appearance">
+			<param name="Local" value="Options\Appearance\Opt_Appearance.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Tree Panel">
+				<param name="Local" value="Options\Appearance\Opt_TreeView.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Tab Bar">
+				<param name="Local" value="Options\Appearance\Opt_TabBar.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="List Panel">
+				<param name="Local" value="Options\Appearance\Opt_ListView.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Editor">
+				<param name="Local" value="Options\Appearance\Opt_Editor.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Other Controls">
+				<param name="Local" value="Options\Appearance\Opt_OtherControls.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+		</UL>
+
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Extended Functions">
+			<param name="Local" value="Options\Extensions\Opt_Extensions.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="CalcPage">
+				<param name="Local" value="Options\Extensions\Opt_Calculator.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="DictPage">
+				<param name="Local" value="Options\Extensions\Opt_Dictionary.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="LinkPage">
+				<param name="Local" value="Options\Extensions\Opt_Launcher.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Template">
+				<param name="Local" value="Options\Extensions\Opt_Template.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Clipboard">
+				<param name="Local" value="Options\Extensions\Opt_Clipboard.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+		</UL>
+		
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="Unpublished Options">
+			<param name="Local" value="Options\Opt_HideOptions.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Miscellaneous Skills">
+		<param name="Local" value="FAQ.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="About Author">
+		<param name="Local" value="About Author.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="Donate">
+		<param name="Local" value="Donate.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+</UL>
+</BODY></HTML>

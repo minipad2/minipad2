@@ -1,0 +1,13 @@
+[General]
+Name=DailyWord
+Project=1
+[Classes]
+Count=8
+Class0="TTrayMenu","TxlMenu","UMainForm","0","E:\DailyWord\UMainForm.pas"
+Class1="TMainForm","TxlWindow, IOptionObserver, IMemorizer","UMainForm","0","E:\DailyWord\UMainForm.pas"
+Class2="TAboutBox","TxlDialog","UDialogs","0","E:\DailyWord\UDialogs.pas"
+Class3="TOptionBox","TxlDialog","UDialogs","0","E:\DailyWord\UDialogs.pas"
+Class4="TQuery","TxlInterfacedObject, IOptionObserver","UQuery","0","E:\DailyWord\UQuery.pas"
+Class5="TOptionManager","TxlOption","UGlobalObj","0","E:\DailyWord\UGlobalObj.pas"
+Class6="TMemoryManager","TxlMemory","UGlobalObj","0","E:\DailyWord\UGlobalObj.pas"
+Class7="TQueryManager","TxlInterfacedObject, IOptionObserver","UQueryManager","0","E:\DailyWord\UQueryManager.pas"

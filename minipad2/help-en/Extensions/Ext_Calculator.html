@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Calculator</title>
+</head>
+
+<body>
+	<h1>Calculator</h2>
+
+	<p>Use "File"-->"New ExtPages"--><a href='..\Menus\Menus_File.html#m_newcalc'>"New CalcPage"</a> to create a new CalcPage. In the calcpage you can freely input equations, and press "Enter"or "=" to get the calculated results.</p>
+
+	<h2>Basic Use</h2>
+	
+	<h3>Internally supports:</h3>
+	<p>+, -, *, /<br>
+	^: power<br>
+	%: percent<br>
+	Sino-functions: lg, ln, exp, sqrt, sqr, rad, deg, sin, asin/arcsin, cos, acos/arccos, tg/tan, atan/arctan, cot, acot/arccot<br>
+	Dual-functions: log(x,y): the log of x on the base of y. same as lgx/lgy.<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;  round(x,y) ( round x to y digitals )<br>
+	Integer calculate: int(x) ( round x to integer ), \ ( div ), ! ( mod )<br>
+	Constants: pi, e<br>
+	Unlimited levels of ()</p>
+
+	<p>Remark:<br>
+	The functions does not distinguish between uppercase and lowercase. All the extra spaces will be automatically removed. e.g., LOG ( 2, 15 ) has no difference with log(2,15)</p>
+
+	<h3>Examples:</h3>
+	<p>(5+2)*(7-3)<br>
+	3^2 - sin5<br>
+	((15*9)^3 - ln20) + 12</p>
+
+	<p>After the correctly input of the equation, press "Enter" or "=" to get the result.<br>
+	If you modified a previously calculated equation, after modification simply press "Enter" or "=" again (can be in any location, neen't go to the end of the line, also needn't delete the old result) to get the new result.<br>
+	If there's any syntax error in the equation or overflow during the calculation, an error message will appear in the end of the equation. Then you can modify the equation and press enter to do the calculation again.</p>
+
+	<h2><a name="userfunctions"></a>User-defined Functions & Variables</h2>
+	
+	<p>Besides the internal functions, the CalcPage also supports user-defined functions and variables.<br>
+	The scope of the user-functions/variables can be globally or locally. The global funcs/vars is defined in "Options"-->"Extensions"--><a href='..\Options\Extensions\Opt_Calculator.html'>"Calculator"</a>, it is accessible in all CalcPages (including the embeded calculations in the normal NotePages).</p>
+
+	<h3>Examples:</h3>
+	<p>a=3 <br>
+	error(x,y)=(y-x)/y <br>
+	DensityRound(d,h,m)=m*4/(pi*d^2*h) </p>
+
+	<p>The local funcs/vars are defined in the current CalcPage. The scope of this kind of funcs/vars is from where it's defined to the end of the page. This kind of funcs/vars are started with # (in order not to mix with normal calculations).</p>
+
+	<h3>Examples:</h3>
+	<p>#va=5<br>
+	#myfunc(x,y)=x*y+va</p>
+
+	<p>The local funcs/variables can also be reloaded. This means if you define #va=5 in the 3rd line, do some calculations, then re-define #va=8 in the 12th line, then all the calculations after the 12th line will use va=8, not va=5. (But if you re-calculate the equations between line 3 and line 12, in these lines va still equals 5. It's because the scope of local funcs/vars is only valid for the lines after the local definition ).</p>
+
+	<p>After you defined the varibles/functions, you can freely use it in you equations. e.g., input<br>
+	myfunc(7.2, 9) + DensityRound (12.7, 2, 128.6)</p>
+
+	<p>Press Enter, then you'll get:<br>
+	myfunc(7.2,9)+DensityRound(12.7,2,128.6) = 70.307591</p>
+
+	<h2>Misc features</h2>
+
+	<p>Input ? in the CalcPage, press enter, you'll get a simple list of all the operators and internal varibles/functions supported.</p>
+	<p>Input ?list then press enter, you'll get a list of all the available user-functions/variables (global funcs/vars plus local funcs/vars in the current page before the current line).</p>
+
+	<p>If a line is started with //, it will be regarded as comment line and will not be taken into calculations.</p>
+	
+	<p>If you use Shift_Enter to get the result, the result will be automatically copied to the new line, so that you can do new calculations based on the result. If you use Ctrl_Enter to get the result, after calculation the carret will stay in the same line without return ( So you can press Tab and write // comments in the same line after the calculation, or press Tab and start another calculation in the same line )</p>
+
+	<p>Press F9 will carry out line-by-line re-calculation for the whole page (i.e., Refresh the whole page). This is useful if you set some variables, carry out some calculations with these variables, then go back to the beginning, set new values for these variables and do re-calculation based on the new values.</p>
+
+	<a name="embededcalc"></a><p>The software supports embed-calculations in the normal NotePages. You can input an equation in the NotePage and press Shift+Enter to get the result. Also use Ctrl+Enter to stay in the same line after calculation.</p>
+
+	<h2>Options</h2>
+	<p>In "Options"-->"CalcPage", you can define the accuracy (decimals), triangular calc settings, global functions/variables, etc. Please refer to the chapter 'Options"-->"Extensions"--><a href='..\Options\Extensions\Opt_Calculator.html'>"Calculator"</a>.</p><br>
+
+
+</body>
+</html>

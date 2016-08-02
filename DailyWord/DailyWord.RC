@@ -1,0 +1,91 @@
+#include "Resource.pas"
+
+// Version Info
+1 VERSIONINFO 
+FILEVERSION 1, 0, 2, 4
+PRODUCTVERSION 1, 0, 2, 4
+FILEOS VOS_NT_WINDOWS32
+FILETYPE VFT_APP
+{
+ BLOCK "StringFileInfo"
+ {
+  BLOCK "040904E4"
+  {
+   VALUE "CompanyName", "NebulaSoft\000"
+   VALUE "ProductName", "云影单词\000"
+   VALUE "ProductVersion", "1.0.2\000"
+   VALUE "InternalName", "DailyWord\000"
+   VALUE "OriginalFilename", "DailyWord.exe\000"
+   VALUE "FileDescription", "DailyWord\000"
+   VALUE "FileVersion", "1.0.2\000"
+   VALUE "LegalCopyright", "Copyright (c) 2009-2010 NebulaSoft\000"
+   VALUE "Comments", "This program is a freeware!\000"
+  }
+ }
+}
+
+// Icon resources
+MainIcon        ICON           "MainIcon.ico"
+m_options      ICON           "options.ico"
+
+// Menu Resource
+TrayMenu MENU
+BEGIN
+   POPUP ""
+   BEGIN
+      MENUITEM "启用", m_start
+      MENUITEM "测验模式", m_testmode
+      MENUITEM "全屏显示", m_fullscreen
+      MENUITEM "鼠标跟随", m_trackmouse
+      MENUITEM SEPARATOR
+      MENUITEM "更换词盒", m_newbox
+      MENUITEM "导出词盒", m_exportbox
+      MENUITEM SEPARATOR
+      MENUITEM "选项...", m_options
+      POPUP "帮助"
+      BEGIN
+         MENUITEM "帮助主题", m_helptopic
+         MENUITEM SEPARATOR
+         MENUITEM "主页", m_homepage
+         MENUITEM "论坛", m_forum
+         MENUITEM "捐助", m_donate
+         MENUITEM SEPARATOR
+         MENUITEM "关于...", m_about
+      END
+      MENUITEM SEPARATOR
+      MENUITEM "退出", m_exit
+   END
+END
+
+PopMenu MENU
+BEGIN
+   POPUP ""
+   BEGIN
+      MENUITEM "复制\tCtrl+C", m_Copy
+      MENUITEM "下一页\tPageDn", m_next
+      MENUITEM SEPARATOR
+      MENUITEM "启用", m_start
+      MENUITEM "测验模式\tCtrl+T", m_testmode
+      MENUITEM "全屏显示", m_fullscreen
+      MENUITEM "鼠标跟随", m_trackmouse
+      MENUITEM SEPARATOR
+      MENUITEM "更换词盒\tCtrl+PageDn", m_newbox
+      MENUITEM "选项...\tCtrl+O", m_options
+      MENUITEM "退出", m_exit
+   END
+END
+
+//AccelTAble ACCELERATORS
+//BEGIN
+//   "^C", m_copy, ASCII, NOINVERT
+//   "^I", m_next, ASCII, NOINVERT
+//end
+
+//      MENUITEM "++", m_IncLevel
+//      MENUITEM "--", m_DecLevel
+//      MENUITEM "复制", m_Copy
+//      MENUITEM "删除", m_Delete
+//      MENUITEM SEPARATOR
+//      MENUITEM "上一页", m_prior
+//      MENUITEM "下一页", m_next
+

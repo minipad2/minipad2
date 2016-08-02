@@ -1,0 +1,50 @@
+unit UCalcPage;
+
+interface
+
+type
+	TCalcPageSuper = class (TEditPageSuper)
+   private
+   	FEditor: TxlRichEditEx;
+   protected
+      function f_OnKeyPress (key: DWORD): boolean; virtual;
+   public
+   	procedure SetEditor (value: TxlRichEditEx); override;
+	end;
+
+   TCalcPage = class (TCalcPageSuper)
+   protected
+      function f_OnKeyPress (key: DWORD): boolean; override;
+   public
+	end;
+
+implementation
+
+procedure TCalcPageSuper.SetEditor (value: TxlRichEditEx);
+begin
+	FEditor := value;
+   FEditor.OnKeyDown := f_OnKeyDown;
+	FEditor.OnKeyPress := f_OnKeyPress;
+end;
+
+function TCalcPage.f_OnKeyPress (key: DWORD): boolean;
+begin
+	result := false;
+end;
+
+//------------------
+
+function TCalcPage.f_OnKeyPress (key: DWORD): boolean;
+var s: widestring;
+begin
+	result := false;
+   if (key = Ord('=')) then
+   begin
+      s := TrimLeft (FEditor.LineText);
+      if LeftStr(s, 1) = '#' then exit;
+      result := true;
+      FEditor.Perform (WM_KEYDOWN, VK_RETURN, 0);
+   end
+end;
+
+end.

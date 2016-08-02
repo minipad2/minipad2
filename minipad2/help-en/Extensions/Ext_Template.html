@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Template</title>
+</head>
+
+<body>
+	<h1>Template</h1>
+	<p>minipad2 has integrated the function of text template. You can add many commonly used text or symbols into the template list, for paste and re-use under various circumstances.</p>
+	
+	<h2>Basic Use</h2>
+	
+	<p>Use "Tools"--><a href='..\Menus\Menus_Tools.html#m_template'>"Template Manage"</a> to open the template-manage page. You can create, edit and manage templates in this page.<br>
+	Use "Edit"--><a href='..\Menus\Menus_Edit.html#m_newitem'>"New Item"</a> (or double-click on any empty place inside of the page) to open the "New Template" dialog to create a new template.<br>
+	(Another way to add new template is: Select the target text in any editor, press the "Capture hotkey" which is set in "Options"--><a href='..\Options\Extensions\Opt_Template.html'>“Template”</a>, then the selected text will be captured (added) to the template list.)<br>
+	Double-click an existing item to open the "Edit Template" dialog to modify this item.<br>
+	To delete an existing item, right-click it and choose <a href='..\Menus\Menus_Edit.html#m_delete'>"Delete Item"</a>.<br>
+	To adjust the order of items, select the item and drag it to the target position.</p>
+
+	<p>In the editor of minipad2, you can use "Edit"--><a href='..\Menus\Menus_Edit.html#m_inserttemplate'>"Insert Template"</a> to insert a template text into the current page.<br>
+	In other windows editors, you can use the tray-menu of minipad2 to insert a template. You can also use the hotkey (which is defined in "Options"--><a href='..\Options\Extensions\Opt_Template.html'>"Template"</a>) to launch the pop-up menu of template list. You can use mouse-click to select the items in the popup menu, or press 1..9 to directly launch the first nine items.<br>
+	In the popup menu if you click an item while holding Shift, then all the items above this item (also including this item itself) will be simultaneously pasted.<br>
+	For the paste of a certain template-item, you can use the hotkey defined for this item, or you can also use the subitem hotkeys for the first nine items, if <a href='..\Options\Extensions\Opt_Template.html#enablesubkey'>"SubItem hotkey key"</a> is checked in the "Options"-->"Template". (e.g., if the hotkey for the template popup is Ctrl+D, then the hotkeys for the first nine items will be Ctrl+1..9).</p>
+
+	<h2>"Edit Template" dialog</h2>
+	
+	<p><b>Title:</b> the title of the template. This title is only used for show in the template list, it does not represent the text being inserted.</p>
+	<p><b>Text:</b> the template text which is used for insert into the editor.</p>
+	<p><b>Hotkey:</b> the hotkey used for directly insert this template. (Optional)</p>
+	<p><b>Abbrev:</b>the character / abbreviation used for quick launching this item in the popup menu.</p>
+
+	<a name="symbols"></a><h2>Designating symbols</h2>
+	<p>The "Text" part of the template supports the following designating symbols:</p>
+	
+	<p><a name="designator"></a><b>Designators:</b>
+	<ul class="list">
+		<li>%d: current date with the format of system's locale settings (short date). 
+		<li>%i: current time (no second) with the format of system's locale settings.
+		<li>%u(###): DateTime with user-defined format. ### is the format string (e.g., yyyy-MM-dd HH:mm:ss). For more information of format strings, please refer to the settings and descriptions in your system's Control Panel - Local Settings.
+		<li>%t: Tab-indent
+		<li>%n: Carrige-return
+		<li>%s(n): n continuous "-".
+		<li>%s(###,n): n continuous ### (### can be anything).
+		<li>%c(##): ASCII character ( including non-visual characters. ).  ## is the ascii number. e.g., Tab: %c(9); carridge return: %c(13)%c(10)
+	</ul></p>
+	<p><a name="sendkey"></a><b>Simulating keypress:</b>
+	<ul class="list">
+		<li>~t: Tab
+		<li>~n: Enter
+		<li>~l: Left
+		<li>~r: Right
+		<li>~u: Up
+		<li>~d: Down
+		<li>~h: Home
+		<li>~e: End
+	</ul></p>
+	<p>you can add (n) after the above keypress-symbols to designate the repeat count of the keypress, e.g., ~l(5) will be pressing LEFT key for five times.</p>
+	<p>The software supports the mixture of normal text, indicating-symbols and simulating keypress. When the template is inserted, the indicating-symbols will be replaced with the text it represents, the simulating-keypress will be converted to the corresponding key-press (useful for input username-password or fill-in some tables).</p>
+	
+	<b>Other special symbols:</b>
+	<ul>
+		<li>~c: indicating the caret position after insertion of the template.
+		<li>~s: indicating the selected text.
+	</ul>
+	<p>These two special symbols are useful for Html tag templates.</p>
+	
+	<b>Examples</b>
+	<p><i>%d%i</i>: when inserted it will be replaced with current datetime, like "2009-06-09 22:10"</p>
+
+	<p><i>%tFirst Item%n%s(*-,12)%n%tSecond Item</i>: when inserted will be replaced with:<br>
+	&nbsp;&nbsp;&nbsp;First Item<br>
+	*-*-*-*-*-*-*-*-*-*-*-*-<br>
+	&nbsp;&nbsp;&nbsp;Second Item</p>
+
+	<p><i>username~tpassword~n</i>: when inserted will be:<br>
+	username (Press Tab) password (Press Enter)</p>
+	
+	<p><i>&lt;p&gt;~c&lt;/p&gt;</i>: after insertion will be:<br>
+	&lt;p&gt;&lt;/p&gt;, and the caret will be between &lt;p&gt; and &lt;/p&gt;.</p>
+	
+	<p><i>&lt;p&gt;~s&lt;/p&gt;</i>: after insertion will add &lt;p&gt; in the left side of the selection and &lt;/p&gt; in the right (will not replace the selected text).</p>
+
+	<p><i>&lt;a ref="~s"&gt;~c&lt;/a&gt;</i>: Suppose you selected http://www.nebulasoft.cn in the editor and pasted this template, then the text after paste will be:<br>
+	&lt;a ref="http://www.nebulasoft.cn"&gt;&lt;/a&gt;, and the caret will be in the left side of &lt;/a&gt;.</p>
+
+	<h2>Options</h2>
+	<p>In "Options"-->"Template", you can set the hotkey for the template pop-up menu, and set whether to activate subitem hotkey or not. Please see the chapter "Options"-->"Extensions"--><a href="..\Options\Extensions\Opt_Template.html">"Template"</a>.</p><br>
+</body>
+</html>

@@ -1,0 +1,251 @@
+unit UCalcHandler;
+
+interface
+
+uses Windows, UCalculator, UDictionary, UxlRichEdit, UxlClasses, UxlExtClasses, UTypeDef, UxlList;
+
+// 普通页：shift+enter 进行嵌入式计算或查词；ctrl+enter 嵌入式计算不回车；多词典（或单词典）查词
+//        （若以$或@开头则为查词，否则软件自行判断）；
+// 计算页：shift+enter 计算后将值放入下一行；ctrl+enter 计算后不回车
+// 词典页：ctrl+enter 多词典（或单词典）查词
+
+type
+   TCalcHandler = class (TxlInterfacedObject, IOptionObserver)
+   private
+   	FEditor: TxlRichEdit;
+      FCalculator: TCalculator;
+      FDictionary: TDictionary;
+      FPageType: TPageType;
+      FMultiDict: boolean;
+      FUserFuncs: TxlStrList;
+
+      function f_OnKeyDown (vkey: DWORD): boolean;
+      function f_OnKeyPress (key: DWORD): boolean;
+      
+      procedure f_InitializeUserFunctions ();
+      procedure f_SplitExpr (const s_line: widestring; var s_pref, s_type, s_expr: widestring; b_tabsep: boolean);
+      procedure f_RemoveOldVal (var s_expr: widestring; const s_sep: widestring);
+   public
+   	constructor Create (editor: TxlRichEdit);
+      destructor Destroy (); override;
+      procedure OptionChanged ();
+      procedure ReCalculate ();
+      property PageType: TPageType write FPageType;
+   end;
+
+implementation
+
+uses Messages, UOptionManager, UxlStrUtils, UxlFunctions;
+
+constructor TCalcHandler.Create (editor: TxlRichEdit);
+begin
+	FEditor := editor;
+   FEditor.OnKeyDown := f_OnKeyDown;
+	FEditor.OnKeyPress := f_OnKeyPress;
+   FCalculator := TCalculator.Create();
+   FDictionary := TDictionary.Create ();
+   OptionMan.AddObserver(self);
+end;
+
+destructor TCalcHandler.Destroy ();
+begin
+	OptionMan.RemoveObserver(self);
+   FCalculator.Free;
+   FDictionary.Free;
+   inherited;
+end;
+
+procedure TCalcHandler.OptionChanged ();
+begin
+	FCalculator.SetOptions (OptionMan.Options.CalcOptions);
+   FDictionary.SetOptions (OptionMan.Options.DictOptions);
+   FUserFuncs := OptionMan.Options.UserFuncs;
+   FMultiDict := OptionMan.Options.DictOptions.MultiDict;
+end;
+
+function TCalcHandler.f_OnKeyPress (key: DWORD): boolean;
+var s: widestring;
+begin
+	result := false;
+   if (key = Ord('=')) and (FPageType = ptCalc) then
+   begin
+      s := TrimLeft (FEditor.LineText);
+      if LeftStr(s, 1) = '#' then exit;
+      result := true;
+      FEditor.Perform (WM_KEYDOWN, VK_RETURN, 0);
+   end
+end;
+
+function TCalcHandler.f_OnKeyDown (vkey: DWORD): boolean;
+var i, i_sel, i_len, i_start, i_end: integer;
+   b_shift, b_ctrl, b_dict, b_calc, b_embed: boolean;
+   s_pref, s_type, s_expr, s_pref2, s_type2, s_expr2, s_result, s_sep, s_linetext: widestring;
+   o_result: TxlStrList;
+   b_multidict: boolean;
+begin
+   result := false;
+   if vkey = VK_F9 then
+   begin
+   	ReCalculate;
+      Exit;
+   end;
+   if vkey <> VK_RETURN then exit;
+
+   b_shift := KeyPressed (VK_SHIFT);
+   b_ctrl := KeyPressed (VK_CONTROL);
+   b_calc := FPageType = ptCalc;
+   b_dict := FPageType = ptDict;
+   b_embed := (FPageType = ptNote) and (b_shift or b_ctrl);
+   if not (b_calc or b_dict or b_embed) then exit;
+
+   FEditor.GetSel (i_sel, i_len);
+   FEditor.LocateLine (i_start, i_end);
+   if i_sel = i_start then exit;  // 位于行首
+   f_SplitExpr (FEditor.LineText, s_pref, s_type, s_expr, true);
+   if (s_expr = '') or (s_type = '//') or (b_calc and (s_type = '#'))then exit;
+
+   if b_embed then  // 嵌入式计算或查词
+   begin
+		b_dict := true;
+   	if not ((s_type ='$') or (s_type = '@')) then
+      begin
+         for i := 1 to length(s_expr) do
+            if (s_expr[i] >= '0') and (s_expr[i] <= '9') then
+            begin
+               b_dict := false;
+               break;
+            end;
+      end;
+   	b_calc := not b_dict;
+	end;
+
+   s_sep := IfThen (b_calc, '=', ':');
+   f_RemoveOldVal (s_expr, s_sep);
+
+   if b_calc then
+   begin
+		f_InitializeUserFunctions;
+
+      for i := 0 to FEditor.LineNumber - 1 do
+      begin
+      	f_SplitExpr (FEditor.Lines[i], s_pref2, s_type2, s_expr2, false);
+         if s_type2 = '#' then
+         	FCalculator.AddUserFunction (s_expr2);
+      end;
+
+      s_result := FCalculator.Calc (s_expr);
+   	s_sep := ' ' + s_sep;
+	end
+   else
+   begin
+   	s_pref2 := LeftStr (s_pref, length(s_pref) - length(trimleft(s_pref)));  // 计算左侧缩进部分
+   	o_result := TxlStrList.Create;
+      b_multidict := (FMultiDict and (not b_ctrl)) or ((not FMultiDict) and b_ctrl);
+      FDictionary.Calc (s_expr, o_result, b_multidict);
+      for i := 1 to o_result.High do
+         o_result[i] := s_pref2 + #9 + o_result[i];
+      s_result := o_result.Text;
+      if o_result.Count > 1 then
+      	s_result := s_result + #13#10;
+      o_result.Free;
+   end;
+
+   s_linetext := s_pref + s_expr + s_sep + ' ' + s_result;
+   if not ((i_sel < i_end) or (b_calc and b_ctrl)) then     // 计算后回车
+   begin
+   	s_linetext := s_linetext + #13#10;
+   	if (FPageType = ptCalc) and (b_shift) then     // 对于计算页中的Shift_Enter计算, 回车后将结果放入下一行。
+	   	s_linetext := s_linetext + s_result;
+   end;
+
+   FEditor.LineText := s_linetext;
+	result := true;
+end;
+
+procedure TCalcHandler.f_InitializeUserFunctions ();
+var i: integer;
+begin
+   FCalculator.ClearUserFunctions;
+   for i := FUserFuncs.Low to FUserFuncs.High do
+      FCalculator.AddUserFunction(FUserFuncs[i]);
+end;
+
+procedure TCalcHandler.f_SplitExpr (const s_line: widestring; var s_pref, s_type, s_expr: widestring; b_tabsep: boolean);
+	procedure f_Split (var s_expr, s_type: widestring; i_count: integer);
+   begin
+   	s_type := LeftStr(s_expr, i_count);
+      s_expr := TrimLeft (MidStr(s_expr, i_count + 1));
+   end;
+var i_pos: integer;
+begin
+   s_pref := '';
+   s_type := '';
+   s_expr := s_line;
+
+   if b_tabsep then   // 仅将最后一个tab右侧的部分作为表达式
+   begin
+      i_pos := LastPos (#9, s_line);
+      if i_pos > 0 then
+      begin
+         s_pref := LeftStr (s_line, i_pos);
+         s_expr := MidStr (s_line, i_pos + 1);
+      end;
+   end;
+   s_pref := s_pref + LeftStr (s_expr, length(s_expr) - length(trimleft(s_expr)));
+   s_expr := Trim (s_expr);
+
+   if s_expr = '' then exit;
+   if (s_expr[1] = '$') then
+   	s_type := '$'
+	else if (s_expr[1] = '@') or (s_expr[1] = '#') then
+   	f_Split (s_expr, s_type, 1)
+   else if LeftStr(s_expr, 2) = '//' then
+   	f_Split (s_expr, s_type, 2);
+end;
+
+procedure TCalcHandler.f_RemoveOldVal (var s_expr: widestring; const s_sep: widestring);
+var i_pos: integer;
+begin
+   i_pos := Pos(s_sep, s_expr);
+   if i_pos > 0 then s_expr := Trim(LeftStr (s_expr, i_pos - 1));
+end;
+
+procedure TCalcHandler.ReCalculate ();
+var i, i_sel, i_len, i_start, i_end, i_start2, i_linenumber: integer;
+	o_list: TxlStrList;
+   s_expr, s_pref, s_type, s_result: widestring;
+   o_scrollpos: TPoint;
+begin
+	if FPageType <> ptCalc then exit;
+   FEditor.GetSel (i_sel, i_len);
+   FEditor.LocateLine (i_start, i_end);
+   i_linenumber := FEditor.LineNumber;
+   o_scrollpos := FEditor.ScrollPos;
+
+	o_list := TxlStrList.Create;
+   o_list.Text := FEditor.Text;
+   f_InitializeUserFunctions;
+   for i := o_list.Low to o_list.High do
+   begin
+      f_SplitExpr (o_list[i], s_pref, s_type, s_expr, false);
+      if s_expr = '' then
+      	continue
+      else if s_type = '#' then
+         FCalculator.AddUserFunction (s_expr)
+      else if s_type = '' then
+      begin
+      	f_RemoveOldVal (s_expr, '=');
+         s_result := FCalculator.Calc (s_expr);
+      	o_list[i] := s_pref + s_expr + ' = ' + s_result;
+      end;
+	end;
+   FEditor.Text := o_list.Text;
+   o_list.Free;
+
+   FEditor.LocateLine (i_start2, i_end, i_linenumber);
+   FEditor.ScrollPos := o_scrollpos;
+   FEditor.SetSel (i_sel + i_start2 - i_start, i_len);     // 恢复原来的光标位置
+end;
+
+end.
+

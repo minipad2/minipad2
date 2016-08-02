@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>编辑</title>
+</head>
+
+<body>
+	<h1>编辑</h1>
+
+	<p><a name="m_clear"></a><b>清空：</b>清空当前页面内容。<br>
+	<a name="m_undo"></a><b>撤销：</b>撤销最近一次的编辑操作。<br>
+	<a name="m_redo"></a><b>重做：</b>恢复被撤销了的编辑操作。<br>
+	<a name="m_selectall"></a><b>全选：</b>将当前编辑区的文字或列表页的所有项目全部选中。</p>
+
+	<p><a name="m_cut"></a><b>剪切：</b>将当前所选文字剪切至剪贴板。<br>
+	<a name="m_copy"></a><b>复制：</b>将当前所选文字复制至剪贴板。<br>
+	<a name="m_paste"></a><b>粘贴：</b>在光标所在处插入剪贴板中的文字。<br>
+	<a name="m_delete"></a><b>删除：</b>删除当前所选文字或列表项目。</p>
+	
+	<p><a name="m_newitem"></a><b>新建项目：</b>在当前页面中新建新的项目。<br>
+	<b>插入项目：</b>插入一新的项目到所选项目之前。<br>
+	<b>编辑项目：</b>编辑当前所选项目。</p>
+
+	<p><a name="m_wordwrap"></a><b>自动换行：</b>设定编辑区是否为自动换行（即一行文字到达编辑区右边界时自动换为下一行）风格。<br>
+	<a name="m_texttools"></a><b>文字工具：</b>下拉菜单，包含如下文字工具：<br>
+		&emsp;&emsp;<b>高亮 1 .. 高亮 4：</b>对局部所选文字设置下划线或背景高亮。具体设置参见“选项”-->“界面设置”--><a href="..\Options\Appearance\Opt_Editor.html">“编辑器”</a>。<br>
+		&emsp;&emsp;<b>移除高亮效果：</b>移除当前所选文字块的高亮效果。<br>
+		&emsp;&emsp;<b>有序列表：</b>为当前所选多行文字逐行添加序号。<br>
+		&emsp;&emsp;<b>无序列表 1、2：</b>为当前所选多行文字逐行添加列表前缀（默认为 >、*。具体前缀可在“选项”-->“程序设置”--><a href="..\Options\Program Settings\Opt_Edit.html">“编辑设置”</a>中进行设置。<br>
+		&emsp;&emsp;<b>移除列表：</b>移除所选多行文字的序号或列表前缀。<br>
+		&emsp;&emsp;<b>删除空行：</b>删除所选文字块中的空行、或当前页面中的所有空行（在未选中任何文字块的情况下）<br>
+		&emsp;&emsp;<b>只空一行：</b>针对当前所选文字块、或当前页面的全部内容（在未选中任何文字块的情况下），删除所有多余空行，仅在每个段落之间保留一个空行。</p>
+
+	<a name="m_find"></a><p><b>查找／替换：</b>打开“查找／替换”窗口，输入待查找／替换的文字，设定查找方向、是否区分大小写、是否整词匹配、是否仅在选区内进行查找、是否在当前页面循环查找、是否高亮查找结果，以及是否在找到第一匹配项后即退出本对话框，随后点击“确定”进行查找。对话框中另有“查找下一个”（若按住 Shift 则为查找上一个）、“替换并查找下一个”（若按住 Shift 则为替换并查找上一个）、“替换全部”等按钮，方便进行后续查找与替换。<br>
+	<b>后续查找：</b>下拉菜单，包含如下几项：<br>
+		&emsp;&emsp;<b>查找下一个：</b>按前面输入的查找内容查找下一处出现的位置（若设定为向下查找并循环查找，则到达页尾后自动回卷至页首继续查找。<br>
+		&emsp;&emsp;<b>查找上一个：</b>反向查找上一处出现的位置。<br>
+		&emsp;&emsp;<b>替换并查找下一个：</b>替换当前查找结果并继续查找下一项。<br>
+		&emsp;&emsp;<b>替换并查找上一个：</b>替换当前查找结果并继续查找上一项。<br>
+		&emsp;&emsp;<b>替换全部：</b>在整个编辑区范围内用目标字符串替换全部查找结果。<br>
+	<b>高亮查找结果：</b>对当前页面中的匹配项目进行高亮显示。</p>
+	
+	<p><a name="m_insertlink"></a><b>插入链接：</b>打开“插入链接”对话框，选择链接类别（程序／文件，文件夹，网址，节点...），输入链接，随后点击“确定”以在当前光标处插入超链接。在默认设置下，双击（或 Ctrl+单击）超链接可打开该链接。<br>
+	<a name="m_inserttemplate"></a><b>插入模板文字：</b>下拉式菜单，在光标所在处插入文字模板。（详见“扩展功能”--><a href='..\Extensions\Ext_Template.html'>“文字模板”</a>）<br>
+	<a name="m_inserttemplate"></a><b>插入剪贴文字：</b>下拉式菜单，在光标所在处插入剪贴文字。（详见“扩展功能”--><a href='..\Extensions\Ext_MultiClipboard.html'>“多重剪贴板”</a>）</p><br>
+</body>
+</html>

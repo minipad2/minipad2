@@ -1,0 +1,398 @@
+unit UList;
+
+interface
+
+uses Windows, UxlClasses, UxlWinControl, UxlDragControl, UxlListView, UClientSuper, UxlExtClasses, UTypeDef,
+	UPageSuper, UxlList, UPageProperty;
+
+type
+   TListClient = class (TClientSuper, IOptionObserver, ICommandExecutor)
+   private
+      FWndParent: TxlWincontrol;
+      FListView: TxlListView;
+      FSortCol: integer;
+      FTemprList: TxlStrList;
+      FSettings: widestring;
+      FPList: TListProperty;
+
+      function Page (index: integer): TPageSuper;
+      procedure f_OnListItemDblClick (idx: integer);
+      procedure f_OnContextMenu (index: integer);
+      procedure f_OnSelectItem (index: integer; sel: boolean);
+      procedure f_OnDropEvent (o_dragsource: IDragSource; hidxTarget: integer; b_copy: boolean);
+      function f_OnEndLabelEdit (index: integer; const newtext: widestring): integer;
+      procedure f_OnColumnClick (index: integer);
+      procedure f_OnToolTipDemand (index: integer; const rt: TRect);
+      function f_ProcessListMessage (AMessage, wParam, lParam: DWORD): boolean;
+		function f_GetListItem (o_page: TPageSuper): TListViewItem;
+   protected
+      procedure Load (value: TPageSuper); override;
+      procedure Save (); override;
+   public
+      constructor Create (WndParent: TxlWinContainer);
+      destructor Destroy (); override;
+      function Control (): TxlControl; override;
+		procedure OnPageEvent (pct: TPageEvent; id, id2: integer); override;
+      function DropFiles (const s_file: widestring): boolean;
+
+      function CheckCommand (opr: word): boolean;
+      procedure ExecuteCommand (opr: word);
+      procedure OptionChanged ();
+   end;
+
+implementation
+
+uses Messages, UxlWinClasses, UxlStrUtils, UxlCommDlgs, UxlFunctions, Resource, UGlobalObj, UPageStore, UOptionManager,
+	ULangManager, UPageFactory, UxlMath;
+
+constructor TListClient.Create (WndParent: TxlWinContainer);
+begin
+   FWndParent := WndParent;
+   FSortCol := -1;
+
+   FListView := TxlListview.Create (WndParent);
+   with FListView do
+   begin
+      LargeImages := PageImageList.LargeImages;
+      SmallImages := PageImageList.Images;
+      ShowImages := true;
+      CanDrag := true;
+      CanDrop := true;
+      OnDropEvent := f_OnDropEvent;
+   	OnItemDblClick := f_OnListItemDblClick;
+      Items.OnSelect := f_OnSelectItem;
+      OnContextMenu := f_OnContextMenu;
+      Items.OnEndLabelEdit := f_OnEndLabelEdit;
+      Cols.OnClick := f_OnColumnClick;
+      OnToolTipDemand := f_OnToolTipDemand;
+      ProcessMessage := f_ProcessListMessage;
+   end;
+
+   FTemprList := TxlStrList.Create;
+   FTemprList.Separator := #9;
+
+   CommandMan.AddExecutor (self);
+   OptionMan.AddObserver(self);
+end;
+
+destructor TListClient.Destroy ();
+begin
+	OptionMan.RemoveObserver(self);
+   CommandMan.RemoveExecutor (self);
+
+   FListView.free;
+   FTemprList.Free;
+   inherited;
+end;
+
+function TListClient.Control (): TxlControl;
+begin
+	result := FListView;
+end;
+
+procedure TListClient.OptionChanged ();
+begin
+	FListView.Font := OptionMan.Options.ListFont;
+   FListView.Color := OptionMan.Options.ListColor;
+end;
+
+function TListClient.Page (index: integer): TPageSuper;
+begin
+	result := PageStore[FListView.Items[index].data];
+end;
+
+//-----------------------
+
+procedure TListClient.Load (value: TPageSuper);
+   function f_ListStyle (value: TListProperty): TListViewStyle;
+   begin
+      with result do
+      begin
+         ViewStyle := TViewType(Ord(value.View));
+         MultiSelect := true;
+         FullRowSelect := value.FullRowSelect;
+         GridLines := value.GridLines;
+         CheckBoxes := value.CheckBoxes;
+         EditLabels := ViewStyle <> lvsReport;
+         ShowHeader := true;
+         HeaderDragDrop := true;
+      end;
+   end;
+var o_list: TxlIntList;
+	o_list2: TxlStrList;
+	i: integer;
+   o_item: TListViewItem;
+begin
+	if value = nil then exit;
+   inherited Load (value);
+
+	// initialize and add columns, 并缓存记忆
+   FPList := value.ListProperty;
+   o_list2 := TxlStrList.Create;
+   FPList.Save (o_list2);
+   if (o_list2.Text <> FSettings) then
+   begin
+      FListView.Clear;
+      FListView.Style := f_ListStyle(FPList);
+      for i := FPList.ColList.Low to FPList.ColList.High do
+         FListView.Cols.Add (LangMan.GetItem(FPList.ColList[i]), FPList.widthlist[i]);
+      FSettings := o_list2.Text;
+   end;
+   o_list2.free;
+
+   // add items
+   FListView.items.Clear;
+	o_list := TxlIntList.Create;
+	value.GetChildList (o_list);
+   for i := o_list.Low to o_list.High do
+   begin
+   	o_item := f_GetListItem (PageStore[o_list[i]]);
+      FListView.Items.Add (o_item);
+   end;
+   o_list.Free;
+end;
+
+procedure TListClient.Save ();
+var i, i_col, n: integer;
+   o_list, o_list2: TxlIntList;
+begin
+   o_list := TxlIntList.Create;
+   o_list2 := TxlIntLIst.Create();
+
+   FListView.Cols.GetHeaderOrder (o_list);     // 记忆列头拖放的效果
+   for i := FPList.ColList.Low to FPList.ColList.High do
+   	o_list2.Add (FPList.ColList[i]);
+   for i := FPList.ColList.Low to FPList.ColList.High do
+   begin
+   	i_col := o_list[i];
+   	FPList.ColList[i] := o_list2[i_col];
+   	FPList.WidthList[i] := FListView.Cols.Width[i_col];
+   end;
+
+//   for i := FListView.Items.Low to FListView.Items.High do
+//   	Page(i).Checked := FListView.Items.Checked[i];
+
+   o_list.Free;
+   o_list2.Free;
+end;
+
+function TListClient.f_GetListItem (o_page: TPageSuper): TListViewItem;
+var j: integer;
+begin
+   FTemprList.Clear;
+   for j := FPList.collist.Low to FPList.collist.High do
+      FTemprList.Add (o_page.GetColText(FPList.collist[j]));
+   with result do
+   begin
+      text := FTemprList.Text;
+      data := o_page.id;
+      image := o_page.ImageIndex;
+      state := 0;
+//      checked := o_page.Checked;
+      selected := false;
+   end;
+end;
+
+procedure TListClient.OnPageEvent (pct: TPageEvent; id, id2: integer);
+var o_item: TListViewItem;
+	o_list: TxlStrList;
+   i, j: integer;
+   o_page: TPageSuper;
+begin
+   case pct of
+      pctRenamed, pctIcon:
+      	begin
+         	i := FListView.Items.FindByData (id);
+            if i >= 0 then
+					FListView.Items[i] := f_GetListItem (PageStore[id]);
+         end;
+      pctAddChild:
+      	begin
+         	if not (id = FPage.id) then exit;
+         	o_page := PageStore[id2];
+            o_item := f_GetListItem (o_page);
+            i := FPage.Childs.FindChild (id2);
+				if i < FListView.Items.High then
+               FListView.Items.Insert (i, o_item)
+            else
+               FListView.Items.Add (o_item);
+            for j := FListView.Items.Low to FListView.Items.High do
+               FListView.Items.Select (j, j = i);
+         end;
+      pctRemoveChild:
+      	begin
+         	i := FListView.Items.FindByData (o_page.id);
+            if i >= 0 then
+					FListView.Items.Delete (i);
+         end;
+      pctListProperty:
+      	Refresh;
+   else
+      inherited OnPageEvent (pct, id, id2);
+   end
+end;
+
+//---------------
+
+function TListClient.CheckCommand (opr: word): boolean;
+var i, i_sel, i_selcount: integer;
+   b_orderedstyle: boolean;
+begin
+   i_sel := FListView.Items.SelIndex;
+   i_selcount := FListView.Items.SelCount;
+   b_orderedstyle := FListView.ViewStyle in [lvsList, lvsReport];
+
+	case opr of
+      m_clear, m_selectall:
+         result := FListView.Items.Count > 0;
+      m_undo, m_redo, m_cut, m_copy, m_paste:
+      	result := false;
+//      m_delete:
+//      	begin
+//         	result := false;
+////            if FReadOnly or FProtected or (i_selcount = 0) then exit;
+////            with FListView do
+////               for i := ItemLow to ItemHIgh do
+////                  if Items[i].selected and (not FListStore.CanDelete(Items[i].data)) then exit;
+////            result := true;
+//			end;
+      m_wordwrap, m_find, m_inserttemplate, m_insertcliptext:
+      	result := false;
+      m_export, m_sendmail:
+         result := not FListView.Items.IsEmpty;
+      else
+         result := true;
+   end;
+end;
+
+procedure TListClient.ExecuteCommand (opr: word);
+begin
+	if not CheckCommand (opr) then exit;
+	case opr of
+		m_clear: ;
+   //   with FListView do
+   //      for i := ItemHigh downto ItemLow do
+   //      begin
+   //         if not (FpageType in [ptGroup, ptTemplate, ptFastLink]) then
+   //            FListStore.DeleteItem (Items[i].data);
+   //         DeleteItem (i);
+   //      end;
+      m_selectall: ;
+//      m_delete: ;
+   end;
+end;
+
+//--------------------------
+
+function TListClient.DropFiles (const s_file: widestring): boolean;
+var id: integer;
+	o_item: TListViewItem;
+begin
+//	result := FListView.Visible and FListView.CursorInWindow and (FPageType = ptLink);
+//   if result then
+//   begin
+//   	id := TLinkList.GetInstance.AddLink (s_file);
+//      FListStore.Retrieve (id, o_item);
+//      FListView.AddItem (o_item);
+//	end;
+end;
+
+procedure TListClient.f_OnDropEvent (o_dragsource: IDragSource; hidxTarget: integer; b_copy: boolean);
+var i_targetid: integer;
+begin
+   if hidxTarget < 0 then
+      hidxTarget := FListView.Items.High;
+   if (hidxTarget >= 0) and assigned (OnDropItems) then
+   begin
+   	i_targetid := FListView.Items[hidxTarget].data;
+   	OnDropItems (o_dragsource, i_targetid, FPage.id, b_copy);
+   end;
+end;
+
+function TListClient.f_OnEndLabelEdit (index: integer; const newtext: widestring): integer;
+begin
+   if newtext <> '' then
+   begin
+      result := 1;
+      Page(index).name := newtext;
+   end
+   else
+   	result := 0;
+end;
+
+function TListClient.f_ProcessListMessage (AMessage, wParam, lParam: DWORD): boolean;
+begin
+	if AMessage = WM_MOUSEWHEEL then
+   	result := ScrollMan.ExternalScroll(AMessage, wParam, lParam)
+   else
+   	result := false;
+end;
+
+procedure TListClient.f_OnListItemDblClick (idx: integer);
+var id: integer;
+	p: TPageSuper;
+begin
+	if idx < 0 then
+   begin
+   	if OptionMan.Options.GroupDblClick = lbLevelUp then
+   		CommandMan.ExecuteCommand(m_levelup)
+      else
+      	CommandMan.ExecuteCommand (m_newitem);
+   end
+   else
+      CommandMan.ExecuteCommand (m_edititem);
+end;
+
+procedure TListClient.f_OnContextMenu (index: integer);
+var i_demand: cardinal;
+begin
+	if index >= 0 then
+     	i_demand := ListContext
+   else
+   	i_demand := ListNoSelContext;
+   EventMan.EventNotify (e_ContextMenuDemand, i_demand);
+end;
+
+procedure TListClient.f_OnSelectItem (index: integer; sel: boolean);
+var id: integer;
+begin
+   id := FListView.Items[index].data;
+   if sel then
+   	PageCenter.EventNotify (pctSelect, id)
+   else
+   	PageCenter.EventNotify (pctDeSelect, id);
+end;
+
+procedure TListClient.f_OnColumnClick (index: integer);
+var b_asc: boolean;
+begin
+	if index = FSortCol then
+   begin
+   	b_asc := false;
+      FSortCol := -1;
+   end
+   else
+   begin
+   	b_asc := true;
+      FSortCol := index;
+   end;
+	FListView.Sort (index, b_asc);
+end;
+
+procedure TListClient.f_OnToolTipDemand (index: integer; const rt: TRect);
+begin
+end;
+
+end.
+
+
+
+
+
+
+
+
+
+
+
+

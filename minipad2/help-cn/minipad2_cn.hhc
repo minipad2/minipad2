@@ -1,0 +1,281 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="Background" value="0xfffefe">
+	<param name="Window Styles" value="0x800025">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="软件简介">
+		<param name="Local" value="Introduction.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+		
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="版本历史">
+		<param name="Local" value="Version History\Version History.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="3.2 版">
+			<param name="Local" value="Version History\v32.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="3.1 版">
+			<param name="Local" value="Version History\v31.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="3.0 版">
+			<param name="Local" value="Version History\v30.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="2.x 版">
+			<param name="Local" value="Version History\v2x.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="基本操作">
+		<param name="Local" value="Basic Use.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="特色功能">
+		<param name="Local" value="Featured Functions.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+		
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="扩展功能">
+		<param name="Local" value="Extensions\Extensions.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="计算页">
+			<param name="Local" value="Extensions\Ext_Calculator.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="备忘页">
+			<param name="Local" value="Extensions\Ext_Memo.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="词典页">
+			<param name="Local" value="Extensions\Ext_Dictionary.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="链接页">
+			<param name="Local" value="Extensions\Ext_Launcher.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="通讯页">
+			<param name="Local" value="Extensions\Ext_ContactList.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="文字模板">
+			<param name="Local" value="Extensions\Ext_Template.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="多重剪贴板">
+			<param name="Local" value="Extensions\Ext_MultiClipboard.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="菜单条目">
+		<param name="Local" value="Menus\Menus.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="文件">
+			<param name="Local" value="Menus\Menus_File.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="编辑">
+			<param name="Local" value="Menus\Menus_Edit.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="导航">
+			<param name="Local" value="Menus\Menus_Navigation.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="工具">
+			<param name="Local" value="Menus\Menus_Tools.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="帮助">
+			<param name="Local" value="Menus\Menus_Help.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="托盘菜单">
+			<param name="Local" value="Menus\Menus_Tray.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="快捷键设定">
+			<param name="Local" value="Menus\Accelerators.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="选项">
+		<param name="Local" value="Options\Options.html">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+		
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="程序设置">
+			<param name="Local" value="Options\Program Settings\Opt_ProgramSettings.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="编辑设置">
+				<param name="Local" value="Options\Program Settings\Opt_Edit.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="笔记摘录">
+				<param name="Local" value="Options\Program Settings\Opt_Notes.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="导入导出">
+				<param name="Local" value="Options\Program Settings\Opt_Import_Export.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作习惯">
+				<param name="Local" value="Options\Program Settings\Opt_Behavior.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="登录设置">
+				<param name="Local" value="Options\Program Settings\Opt_LogIn.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="保存与备份">
+				<param name="Local" value="Options\Program Settings\Opt_Backup.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="自动隐藏">
+				<param name="Local" value="Options\Program Settings\Opt_AutoHide.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+		</UL>
+
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="界面设置">
+			<param name="Local" value="Options\Appearance\Opt_Appearance.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="树窗口">
+				<param name="Local" value="Options\Appearance\Opt_TreeView.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="标签栏">
+				<param name="Local" value="Options\Appearance\Opt_TabBar.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="列表窗口">
+				<param name="Local" value="Options\Appearance\Opt_ListView.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="编辑器">
+				<param name="Local" value="Options\Appearance\Opt_Editor.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="其他">
+				<param name="Local" value="Options\Appearance\Opt_OtherControls.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+		</UL>
+
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="扩展功能">
+			<param name="Local" value="Options\Extensions\Opt_Extensions.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="计算页">
+				<param name="Local" value="Options\Extensions\Opt_Calculator.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="词典页">
+				<param name="Local" value="Options\Extensions\Opt_Dictionary.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="链接页">
+				<param name="Local" value="Options\Extensions\Opt_Launcher.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="文字模板">
+				<param name="Local" value="Options\Extensions\Opt_Template.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="多重剪贴板">
+				<param name="Local" value="Options\Extensions\Opt_Clipboard.html">
+				<param name="ImageNumber" value="39">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="未公开的选项">
+			<param name="Local" value="Options\Opt_HideOptions.html">
+			<param name="ImageNumber" value="39">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="技巧荟萃">
+		<param name="Local" value="FAQ.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="关于作者">
+		<param name="Local" value="About Author.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="捐助">
+		<param name="Local" value="Donate.html">
+		<param name="ImageNumber" value="39">
+		</OBJECT>
+</UL>
+</BODY></HTML>

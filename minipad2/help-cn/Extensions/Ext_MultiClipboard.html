@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>多重剪贴板</title>
+</head>
+
+<body>
+	<h1>多重剪贴板</h1>
+	<p>minipad2 集成了剪贴板增强功能。用户在任何 windows 程序中复制或剪切到剪贴板的文字均将在 minipad2 的剪贴历史队列中保存，方便在各类编辑场合粘贴与复用。</p>
+
+	<h2>基本操作</h2>
+
+	<p>在“工具”主菜单或托盘区菜单中点击<a href='Menus\Menus_Tools.html#m_watchclipboard'>“剪贴板监视”</a>，即可启用剪贴板监视。<br>
+	在剪贴板监视状态下，程序将跟踪与捕捉系统中发生的文字复制过程，将复制到系统剪贴板中的文字同步添加到 minipad2 的剪贴文字列表中。新加入的项目将出现在第一项，原先的项目依次下移。</p>
+
+	<p>在 minipad2 的编辑区中，点击“编辑”--><a href='Menus\Menus_Edit.html#m_insertcliptext'>“插入剪贴文字”</a>的下拉菜单条目可插入剪贴文字。<br>
+	在其他 windows 编辑器中，使用 minipad2 的托盘区右键菜单可进行相同操作，也可使用“选项”--><a href="Opt_Clipboard.html">“多重剪贴板”</a>中设定的全局热键呼出剪贴条目的弹出菜单进行插入操作。在弹出菜单中既可使用鼠标点击所需项目，也可按 1..9 数字键直接调用前九项。<br>
+	在弹出菜单中如按住 Shift 再点击某一项，则将一次性将该项与其上的所有项目同时贴入。<br>
+	如在“选项”-->“多重剪贴板”中勾选了<a href="..\Options\Extensions\Opt_Clipboard.html#enablesubkey">“子条目热键”</a>，则可使用相应的热键直接插入前 9 条文字。（若呼出剪贴板快捷菜单的全局热键为“Alt-D”，则直接插入第一至第九个条目的全局热键为 Alt-1 至 Alt-9。）</p>
+
+	<p>点击“工具”--><a href="Menus\Menus_Tools.html#m_clearcliplist">“清空剪贴条目”</a>，可清空当前的剪贴文字列表。<br>
+	点击“工具”--><a href="Menus\Menus_Tools.html#m_clipboard">“剪贴板管理”</a>，可打开剪贴项目列表，对剪贴项目进行查看、编辑与管理。</p>
+
+	<h2>相关选项</h2>
+
+	<p>在“选项”-->“多重剪贴板”中，提供了较丰富的相关设定，如条目数、最大字节数、弹出菜单的全局热键、子条目热键等。详见本帮助文档的“选项”--><a href="..\Options\Extensions\Opt_Clipboard.html">“多重剪贴板”</a>章节。</p><br>
+
+</body>
+</html>

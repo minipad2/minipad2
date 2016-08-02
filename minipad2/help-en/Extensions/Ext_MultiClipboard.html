@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Multi-Clipboard</title>
+</head>
+
+<body>
+	<h1>Multi-Clipboard</h1>
+
+	<p>minipad2 has integrated the function of multi-clipboard. Any text copied or cut in other windows programs will be sent to the queue of minipad2 clipboard, saved and for re-use in other text-edit circumstances.</p>
+
+	<h2>Basic Use</h2>
+	
+	<p>Check on <a href='..\Menus\Menus_Tools.html#m_watchclipboard'>"Watch clipboard"</a> in "Tools" or tray-menu, then the program starts to watch and capture clipboard.<br>
+	With clipboard-watching, the program will continuously capture every copy/cut operation in the system, append the copied text to the queue of minipad2 clipboard list. The newly added item will appear in the top of the list, all the old items will be "push down".</p>
+
+	<p>In the editor of minipad2, you can use "Edit"--><a href='..\Menus\Menus_Edit.html#m_insertcliptext'>"Insert ClipText"</a> to insert a clipItem into the current page.<br>
+	In other windows editors, you can use the tray-menu of minipad2 to insert a ClipText. You can also use the hotkey (which is defined in "Options"--><a href="..\Options\Extensions\Opt_Clipboard.html">"Clipboard"</a>) to launch the pop-up menu of clip list. You can use mouse-click to select the items in the popup menu, or press 1..9 to directly launch the first nine items.<br>
+	In the popup menu if you click an item while holding Shift, then all the items above this item (also including this item itself) will be simultaneously pasted.<br>
+	if <a href="..\Options\Extensions\Opt_Clipboard.html#enablesubkey">"SubItem hotkey key"</a> is checked in the "Options"-->"Clipboard", then you can directly use the subitem hotkeys to insert the first nine items. (e.g., if the hotkey for the clipboard popup is Alt+D, then the hotkeys for the first nine items will be Alt+1..9).</p>
+
+	<p>Use "Tools"--><a href="..\Menus\Menus_Tools.html#m_clearcliplist">"Clear Clipboard"</a> to clear the current clip list.<br>
+	Use "Tools"--><a href="..\Menus\Menus_Tools.html#m_clipboard">"Clipboard Manage"</a> to open the clipboard-manage page. You can view, edit and manage clip items in this page.</p>
+
+	<h2>Options</h2>
+	<p>In "Options"-->"Clipboard" there're many settings for the clipboard, including maximum items, size limit, hotkey, subitem hotkey, etc. Please refer to the chapter "Options"--><a href="..\Options\Extensions\Opt_Clipboard.html">"Clipboard"</a>.</p><br>
+</body>
+</html>

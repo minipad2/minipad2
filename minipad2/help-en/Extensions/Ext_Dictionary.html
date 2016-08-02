@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>Dictionary</title>
+</head>
+
+<body>
+	<h1>Dictionary</h1>
+
+	<p>Use "File"-->"New ExtPage"--><a href='..\Menus\Menus_File.html#m_newdict'>"New DictPage"</a> to create a new DictPage.</p>
+
+	<h2>Basic Use</h2>
+	<p>When the software is configured with suitable dictionaries, you can input the term to be queried, then press "Enter" to get the query result.<br>
+	If the program can't find this term in the dictionary, then a "not found!" message will appear. If you want to modify the term, correct it and press Enter again to re-query.</p>
+
+	<a name="configuredict"></a><h2>Dictionary configuration</h2>
+	<p>In the <a href="http://www.nebulasoft.cn/forum">forum</a> of minipad2 there're many dictionaries for download. Unzip the downloaded files, put it under minipad2\dict, then configure it in "Options"-->"Extensions"--><a href="..\Options\Extensions\Opt_Dictionary.html">"Dictionary"</a>.<br>
+	The software supports to search in multiple dictionaries. When there're more than one dictionaries configured, if set as "Show all search results", then the program will search in all the dictionaries and show all search results. Otherwise after the first match is found, the program will stop furthur searching and gives out the result immediately. (but in this case you can still use Ctrl_Enter to get the full search results)</p>
+
+	<a name="userdictionary"></a><h2>How to make your own dictionaries</h2>
+	
+	<p>There's no limit for the content of the dictionaries. It can be word-translation-for-different-languages, technical-terms-index, or even small encyclopedia. </p>
+	<p>The dictionaries of minipad2 are based on plain-text-files. You can create your own dictionary with a notepad, just follow this format:</p>
+	<ul class="list">
+		<li>First line: @Dictionary Name // Remark
+		<li>Next lines: Term \t Paraphrase
+		<li>Last line: empty line
+	</ul>
+	<p>i.e., the first line is the name of the dictionary (remark is optional), then each term occupies one line ( If the item itself is multi-line, use \n to replace the carrige-return), use a "tab" to separate the term and the paraphrase, and the last line must be an empty line. <br>
+	The entries must be in the alphabet order (It is recommended to download the "DictSorter" program from the minipad2 <a href="http://www.nebulasoft.cn/forum">forum</a> to do sort for the dictionary). <br>
+	After the dictionary edit is finished, save it as an *.dic file, with the encode UTF16LE (Unicode). Then you can add it to the dictionary list in "Options"-->"DictPage".</p>
+
+	<a name="embededquery"></a><h2>Embeded query</h2>
+	<p>The software supports to do embeded query in an normal NotePage. You can input the term in the NotePage and press Shift+Enter to get the result. </p>
+	<p>Remark: When the calculator and dictionary extensions are both enabled, if you press shift_enter in a normal notepage, the software will determine whether numbers are included in the line. If yes, then it is treated as embeded-calc, otherwise as embeded-query. In this case if your line contains numbers and would like the software to treat it as embeded-query, please add @ ( or $ if it's range query) before the term.</p>
+	
+	<a name="rangequery"></a><h2>Range query</h2>
+	<p>Besides the normal Match-query, minipad2 also supports another kind of query: Range-query. The format of Range-query dictionaries are as follows:
+	<ul class="list">
+		<li>First line: $Dictionary Name // Remark
+		<li>Next lines: Lower Range \t Upper Range \t Paraphrase
+		<li>Last line: empty line
+	</ul>
+	<p>Of course all the entries should also be in the alphabet order.</p>
+	<p>The following examples are taken from the IPBase</p>
+	<p>061.191.103.248&nbsp;&nbsp;061.191.103.255&nbsp;&nbsp;Liuan, Anhui<br>
+	061.191.104.000&nbsp;&nbsp;061.191.109.049&nbsp;&nbsp;Chaohu, Anhui</p>
+	<p>If you input $061.191.103.252 in the dictpage then press enter, you'll get:</p>
+	<p>$061.191.103.252: [IPBase] Liuan, Anhui</p>
+	
+	<a name="tipquery"></a><h2>Tip-query</h2>
+	<p>minipad2 supports Tip-query (Inplace query). Just select the target word in any software (Editor, Browser...) and press the hotkey which is defined in "Options"-->"Extensions"-->"Dictionary", then the query result (in Tooltip style) will be shown immediately. The query result are also copied to the system clipboard for other possible use (e.g., paste to other editors). </p><br>
+</body>
+</html>

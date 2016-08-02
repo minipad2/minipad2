@@ -1,0 +1,109 @@
+body {
+	font-family: "Arial";
+	font-size: 14px;
+	line-height: 20px;
+	margin-top: 9px;
+	margin-left: 18px;
+	margin-right: 18px;
+	margin-bottom: 9px;
+}
+h1 {
+	font-family: "Arial";
+	font-size: 20px;
+	font-weight: bold;
+	color: #009460;
+	line-height: 30px;
+	text-align: center;
+}
+h2 {
+	font-family: "Arial";
+	font-size: 16px;
+	font-weight: bold;
+	color: #5050FF;
+	line-height: 24px;
+}
+h3 {
+	font-family: "Arial";
+	font-size: 14px;
+	line-height: 20px;
+	font-weight: bold;
+	color: #009460;
+}
+b {
+	font-weight: bold;
+}
+i {
+	color: #FF0000;
+}
+
+ol {
+	line-height: 22px;
+}
+textarea {
+	border: 1px solid;
+}
+
+.list {
+	font-family: "Arial";
+	font-size: 14px;
+	list-style-image: url(images/greentriangle.gif);
+}
+.highol {
+	font-family: "Arial";
+	font-size: 16px;
+	font-weight: bold;
+	color: #5050FF;
+	line-height: 36px;
+}
+.pictext {
+	font-family: "Arial";
+	font-size: 14px;
+	font-style: italic;
+	color: #787775;
+}
+.picborder {
+	border: 1px solid #c0c0c0;
+}
+.emphasis {
+	color: #FF0000;
+}
+.author {
+	font-style: italic;
+	text-align: right;
+}
+.award {
+	font-family: "¡• È";
+	font-size: 14px;
+	font-weight: bold;
+	color: #FF0000;
+}
+.blank {
+	border-top: 0px; 
+	border-left: 0px; 
+	border-right: 0px; 
+	border-bottom: 1px solid;
+}
+
+.hiddendiv {
+	position: relative;
+	top: 0px;
+	left: 0px;
+	width: 0px;
+	height: 0px;
+	visibility: hidden;
+	overflow: hidden;
+}
+
+a:link {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a:active {			
+	text-decoration: none;
+}

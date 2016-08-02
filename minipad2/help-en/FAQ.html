@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="main.css" rel="stylesheet" type="text/css">
+	<title>Miscellaneous Skills</title>
+</head>
+
+<body>
+	<h1>Miscellaneous Skills</h1>
+	
+	<ol>
+		<li>If you select some text in the editor and press F10, the selected text will be the title of the current page.
+		<li>Press Ctrl+Tab to switch the focus between the navigation panel ( Treeview or Tab bar ) and the client panel ( Editor or Listview ).
+		<li>minipad2 supports internal links between nodes. Use "Edit"-->"Insert Link" to insert the link. You can view and copy the link of a certain node from "Property" dialog.
+		<li>Examples for internal links: \Group1\Node1 ( = Root\Group1\Node1 ); ..\Node3 ( Node3 under the same group ); @Node3 ( Node3 under the same group ).
+		<li>Under "Abstract" view, if you want to copy some text, just press middle-button on the target item, then you can select and copy text.
+		<li>In the separator bar between the tree panel and the editor you can see a small button. Left-click and right-click will all hide the tree panel, but a little bit different. With left-click, the editor will take the area of the tree panel; With right-click, the tree panel will hide while the area of the editor doesn't change. ( you can also use the shortcuts: Ctrl_Alt_Left & Ctrl_Alt_Right ).
+		<li>Ctrl-Scroll to zoom the text in the editor. Ctrl+MiddleButtonClick to zoom the text to the original size.
+		<li>"New Note" while pressing Ctrl will insert the new node before the current node.
+		<li>If the current node is a group, the "New Note" while pressing Shift create a sibling node instead of child node.
+		<li>If drag a node onto a group, then the node being dragged will be the child-node of the group by default. But if you press Shift during drag-drop, then the page being dragged will be the sibling node of the target group. If you press Ctrl during drag-drop, then the drag-source will be copied instead of moved to the target place.<br>
+		<li>Alt+Up, Alt+Down: Used to move the selected item up or down (when the list has focus. Only support single-select), or move the selected node up or down (When the tree or tab-control has focus).
+		<li>Shift+drag-in files means virtual import; Ctrl+drag-in files means import content. Direct drag-in also means import content by default, but it can be changed in "Options"-->"Import / Export".
+		<li>All the other root nodes except "Root" ( Recent Notes, Search, Favorite, Recycler... ) can be closed via "Close" in the context menu. After closed, you can still open these nodes via corresponding menu items under "Navigation". The position of the root nodes can be adjusted via drag drop.
+		<li>In "Property" dialog and many other dialogs ( New Contact, New Link... ), there is a small icon-button in the top-right corner of the dialog. Press this button will open a "Select Icon File" dialog for you to change the icon of the current item. Right-click this button to restore to the default icon.
+		<li>The principle of text highlight is actually inserting some special characters into both sides of the selected text block. The left character is always #28, while the right characters are #29, #30, #31, #127 for four schemes respectively. These characters are normally invisible under most common fonts, and is not possible to use keyboard to directly input them, but you can insert them use the %c(##) designator of the template extension. By this means you can directly input highlighted text blocks without even leaving your hands from keyboard.
+	</ol>
+</body>
+</html>

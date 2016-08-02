@@ -1,0 +1,853 @@
+unit UxlFunctions;
+
+interface
+
+uses Windows, CommCtrl, UxlStrUtils, ShellAPI, UxlWinControl, UxlList, UxlClasses, SysUtils;
+
+function AllocMem(Size: Cardinal): Pointer;
+function ExecNewProcess(const s_cmdline: WideString): boolean;
+procedure ExecuteLink (const s_link: widestring; const s_dir: widestring = ''; const s_param: widestring = ''; winstatus: TWindowStatus = wsNormal);
+function IsLocaleChinese (): boolean;
+procedure FreeAndNil(var Obj);
+procedure ShowError ();
+procedure ClearMemory ();
+
+function PathFileExists (const s_pathfile: widestring): boolean;
+function GetCurrentDir (): widestring;
+procedure SetCurrentDir (const s_dir: widestring);
+function CreateDir (const s_dir: widestring): boolean;
+function RemoveDirectory (const s_folder: widestring): boolean;
+function ExtractFilePath(const FileName: widestring): widestring;     // 返回值无最后的 '\'
+function ExtractFileName(const FileName: widestring; b_withext: boolean = true): widestring;
+function ExtractFileExt(const FileName: widestring): widestring;
+function IsFullFileName (const FileName: widestring): boolean;
+function FullToRelPath (const s_fullpath, s_dir: widestring): widestring;
+function RelToFullPath (const s_relpath, s_dir: widestring): widestring;
+function IsDirectory (const s_pathfile: widestring): boolean;
+function CopyFile (const s_source, s_dest: widestring; b_FailIfExists: boolean = true): boolean;
+function CopyFiles (const s_sourcepath, s_destpath: widestring; b_FailIfExists: boolean = true): boolean;  // 如果路径下的所有文件都复制成功，则返回true，否则返回false
+function DeleteFile (const FileName: widestring): boolean;
+procedure FindFiles (const s_findcrit: widestring; o_filelist: TxlStrList; b_withext: boolean = true);
+procedure FindSubDir (const s_dir: widestring; o_sublist: TxlStrList);
+function HasSubDir (const s_dir: widestring): boolean;
+function IsSubDir (s_sub, s_parent: widestring; b_directsub: boolean): boolean;
+function ResolveShortCut (h_wnd: HWND; const s_lnkfile: widestring; var s_file: widestring; var s_desc: widestring): boolean;
+
+function ProgDir(): widestring;
+function ProgExe(b_fullpath: boolean = true): widestring;
+function ProgName(b_withext: boolean = false): widestring;
+function ProgIni(): widestring;
+
+function IntToStr (i_val: Int64; i_digits: cardinal = 0): widestring;
+function StrToInt (s: widestring): Int64;
+function StrToIntDef (s: widestring; i_default: integer = 0): Int64;
+function FloatToStr (E: Extended; i_decimal: integer = -1; b_alwaysusedot: boolean = false): widestring;
+function StrToFloat (s: widestring; b_alwaysusedot: boolean = false): Extended;
+function StrToFloatDef (s: widestring; d_default: Extended = 0; b_alwaysusedot: boolean = false): Extended;
+function IsValidNumber (const s: widestring): boolean;
+function BoolToInt (b: boolean): integer;
+function IntToBool (i: integer): boolean;
+function BooltoStr (b: boolean): widestring;
+function StrToBool (const s: widestring): boolean;
+function BoolToCheckMark (b: boolean): widestring;
+
+function IfThen (b: boolean; const sTrue, sFalse: widestring): widestring; overload;
+function IfThen (b: boolean; const iTrue, iFalse: integer): integer; overload;
+
+procedure GetScreenRect (var rc: TRect; b_includetaskbar: boolean = true);
+procedure ValidateWindowPos (var o_pos: TPos; b_allowsize: boolean);
+
+function KeyPressed (i_key: integer): boolean;
+procedure SendKeyPress (key: byte; b_press: boolean = true; i_sleeptime: integer = 10); 
+procedure PressCombineKey (c_char: char; vk: byte);
+procedure ReleaseHotKey (hk: THotKey);
+function GetWheelDelta (wParam: DWord): integer;
+function ModKeyPressed (i_key: integer): boolean;
+
+procedure SplitHotkey (hk: THotkey; var modifier, virtualkey: cardinal);
+
+function LoadIconFromResource (id_icon: integer; i_width: integer = 0; i_height: integer = 0): HIcon;
+function LoadIconFromFile (const s_file: widestring; i_width: integer = 0; i_height: integer = 0): HIcon;
+
+implementation
+
+uses UxlMath, UxlCommDlgs, ShlObj, ActiveX, UxlWinDef;
+
+function PathFileExistsW( pszPath: pwidechar): boolean; stdcall; external 'shlwapi.dll' Name 'PathFileExistsW';
+
+function AllocMem(Size: Cardinal): Pointer;
+begin
+  GetMem(Result, Size);
+  FillChar(Result^, Size, 0);
+end;
+
+function ExecNewProcess(const s_cmdline: WideString): boolean;
+var
+   StartInfo: TStartupInfo;
+   ProcInfo: TProcessInformation;
+   CreateOK: Boolean;
+begin
+	result := false;
+   FillChar(StartInfo,SizeOf(TStartupInfo),#0);
+   FillChar(ProcInfo,SizeOf(TProcessInformation),#0);
+   StartInfo.cb := SizeOf(TStartupInfo);
+
+   CreateOK := CreateProcessW(nil, PWideChar(s_cmdline), nil, nil,False,
+              CREATE_NEW_PROCESS_GROUP+NORMAL_PRIORITY_CLASS,
+              nil, nil, StartInfo, ProcInfo);
+
+   if CreateOK then
+   begin
+    //may or may not be needed. Usually wait for child processes
+      WaitForSingleObject(ProcInfo.hProcess, INFINITE);
+      CloseHandle (ProcInfo.hProcess);
+      CloseHandle (ProcInfo.hThread);
+      result := true;
+   end;
+end;
+
+procedure ShowError ();
+begin
+	showmessage (IntToStr(GetLastError));
+end;
+
+function IsLocaleChinese (): boolean;
+var sdectmp: array[0..4] of widechar;
+begin
+	GetLocaleInfoW (LOCALE_SYSTEM_DEFAULT, LOCALE_ILANGUAGE, sdectmp, 5);
+   result := (sdectmp = '0804');
+end;
+
+procedure FreeAndNil(var Obj);
+var Temp: TObject;
+begin
+  Temp := TObject(Obj);
+  Pointer(Obj) := nil;
+  Temp.Free;
+end;
+
+procedure ClearMemory ();
+begin
+//   SetProcessWorkingSetSize (GetcurrentProcess, 102400, 204800);
+   SetProcessWorkingSetSize (GetcurrentProcess, dword(-1), dword(-1));
+end;
+
+//---------------------
+
+function PathFileExists(const s_pathfile: widestring): boolean;
+begin
+	if s_pathfile = '' then
+   	result := false
+   else
+		result := PathFileExistsW (pwidechar(s_pathfile));
+end;
+
+function GetCurrentDir (): widestring;
+var buffer: array[0..255] of WideChar;
+	i_count: integer;
+begin
+   i_count := GetCurrentDirectoryW (255, buffer);
+   buffer[i_count] := #0;
+   result := buffer;
+end;
+
+procedure SetCurrentDir (const s_dir: widestring);
+begin
+	SetCurrentDirectoryW (pwidechar(s_dir));
+end;
+
+function CreateDir (const s_dir: widestring): boolean;
+begin
+	Result := CreateDirectoryW (PWideChar(s_dir), nil);
+end;
+
+function CopyFile (const s_source, s_dest: widestring; b_FailIfExists: boolean = true): boolean;
+begin
+   result := CopyFileW (pwidechar(s_source), pwidechar(s_dest), b_FailIfExists);
+end;
+
+function CopyFiles (const s_sourcepath, s_destpath: widestring; b_FailIfExists: boolean = true): boolean;
+var o_list: TxlStrList;
+   i: integer;
+   s_sourcefile, s_destfile: widestring;
+begin
+   if not PathFileExists (s_destpath) then
+   	CreateDir (s_destpath);
+   o_list := TxlStrList.Create;
+   FindFiles (s_sourcepath + '*.*', o_list);
+   result := true;
+   with o_list do
+      for i := Low to High do
+      begin
+         s_sourcefile := s_sourcepath + Items[i];
+         s_destfile := s_destpath + Items[i];
+         if not CopyFile (s_sourcefile, s_destfile, b_FailIfExists) then
+            result := false;
+      end;
+end;
+
+function DeleteFile (const FileName: widestring): boolean;
+begin
+	Result := DeleteFileW (pwidechar(FileName));
+end;
+
+function RemoveDirectory (const s_folder: widestring): boolean;
+begin
+	result := RemoveDirectoryW (pwidechar(s_folder));
+end;
+
+function LastDelimiter(const Delimiters, S: widestring): Integer;
+var
+  P: PWideChar;
+begin
+  Result := Length(S);
+  P := PWideChar(Delimiters);
+  while Result > 0 do
+  begin
+    if (S[Result] <> #0) and (UxlStrUtils.StrScan(P, S[Result]) <> nil) then Exit;
+    Dec(Result);
+  end;
+end;
+
+function ExtractFilePath(const FileName: widestring): widestring;
+var I: Integer;
+begin
+  I := LastDelimiter('\:', FileName);
+  Result := Copy(FileName, 1, I);
+end;
+
+function ExtractFileName(const FileName: widestring; b_withext: boolean = true): widestring;
+var i: Integer;
+	c: widestring;
+begin
+	result := FileName;
+   c :=  RightStr(result, 1);
+   if (c = '\') or (c = ':') then
+   	result := LeftStr (result, Length(result) - 1);
+	i := LastDelimiter ('\:', result);
+   if i > 0 then result := MidStr (result, i + 1);
+   if not b_withext then
+   begin
+   	i := LastPos ('.', result);
+      if i > 0 then result := LeftStr (result, i - 1);
+   end;
+end;
+
+function ExtractFileExt(const FileName: widestring): widestring;
+var I: Integer;
+begin
+  I := LastDelimiter('\.:', FileName);
+  if (I > 0) and (FileName[I] = '.') then
+    Result := Copy(FileName, I + 1, MaxInt)
+  else
+    Result := '';
+end;
+
+function IsFullFileName (const FileName: widestring): boolean;
+begin
+	result := LastDelimiter('\:', FileName) > 0;
+end;
+
+function FullToRelPath (const s_fullpath, s_dir: widestring): widestring;
+begin
+	result := s_fullpath;
+	if FirstPos (lowercase(s_dir), LowerCase(s_fullpath)) = 1 then
+   begin
+   	result := MidStr (result, Length(s_dir) + 1);
+      if (result <> '') and (result[1] = '\') then result := MidStr (result, 2);
+      result := '.\' + result;
+   end;
+end;
+
+function RelToFullPath (const s_relpath, s_dir: widestring): widestring;
+var i: integer;
+   s: widestring;
+begin
+   i := FirstPos ('.\', s_relpath);
+   if i > 0 then
+   begin
+   	s := s_dir;
+   	if RightStr (s_dir, 1) <> '\' then
+      	s := s + '\';
+      result := LeftStr (s_relpath, i - 1) + s + MidStr (s_relpath, i + 2);
+   end
+   else
+   	result := s_relpath;
+end;
+
+function IsDirectory (const s_pathfile: widestring): boolean;
+begin
+	result := (FILE_ATTRIBUTE_DIRECTORY and GetFileAttributesW (pwidechar(s_pathfile))) <> 0;
+end;
+
+procedure FindSubDir (const s_dir: widestring; o_sublist: TxlStrList);
+var h: THandle;
+   s, s_crit: widestring;
+   fd: TWIN32FindDataW;
+begin
+	o_sublist.clear;
+   s_crit := s_dir + '*.*';
+   h := FindFirstFileW (pwidechar(s_crit), fd);
+   if h = INVALID_HANDLE_VALUE then exit;
+
+   repeat
+   	s := fd.cFileName;
+      if (s[1] <> '.') and ((FILE_ATTRIBUTE_DIRECTORY and fd.dwFileAttributes) <> 0) then
+         o_sublist.Add (ExtractFileName(s, false) + '\');
+   until not FindNextFileW (h, fd);
+   Windows.FindClose (h);
+end;
+
+procedure FindFiles (const s_findcrit: widestring; o_filelist: TxlStrList; b_withext: boolean = true);
+var h: THandle;
+   s: widestring;
+   fd: TWIN32FindDataW;
+begin
+	o_filelist.clear;
+   h := FindFirstFileW (pwidechar(s_findcrit), fd);
+   if h = INVALID_HANDLE_VALUE then exit;
+
+   repeat
+      s := fd.cFileName;
+      if s[1] <> '.' then
+      begin
+         if b_withext then
+            o_filelist.add (s)
+         else
+            o_filelist.Add (ExtractFileName(s, false));
+      end;
+   until not FindNextFileW (h, fd);
+   Windows.FindClose (h);
+end;
+
+function HasSubDir (const s_dir: widestring): boolean;
+var h: THandle;
+	fd: TWIN32FindDataW;
+   s: widestring;
+begin
+	result := false;
+   h := FindFirstFileW (pwidechar(s_dir + '*.*'), fd);
+   if h = INVALID_HANDLE_VALUE then exit;
+
+   repeat
+      s := fd.cFileName;
+      if (s[1] <> '.') and ((FILE_ATTRIBUTE_DIRECTORY and fd.dwFileAttributes) <> 0) then
+      begin
+         result := true;
+         break;
+      end;
+   until not FindNextFileW (h, fd);
+   Windows.FindClose (h);
+end;
+
+function IsSubDir (s_sub, s_parent: widestring; b_directsub: boolean): boolean;
+begin
+	s_sub := lowercase(s_sub);
+   s_parent := lowercase(s_parent);
+   result := (s_sub <> s_parent) and (FirstPos (s_parent, s_sub) = 1);
+   if result and b_directsub then
+   begin
+      s_sub := MidStr (s_sub, Length(s_parent));
+      if LeftStr (s_sub, 1) = '\' then s_sub := MidStr (s_sub, 2);
+      if RightStr (s_sub, 1) = '\' then s_sub := LeftStr (s_sub, Length(s_sub) - 1);
+      result := (s_sub <> '') and (not IsSubStr('\', s_sub));
+   end;
+end;
+
+function ResolveShortCut (h_wnd: HWND; const s_lnkfile: widestring; var s_file: widestring; var s_desc: widestring): boolean;
+var psl: IShellLinkW;
+    ppf: IPersistFile;
+    sz: array [0..MAX_PATH] of widechar;
+    wfd: WIN32_FIND_DATA;
+begin
+	result := false;
+	CoInitialize (nil);
+
+	if CoCreateInstance (CLSID_ShellLink, nil, CLSCTX_INPROC_SERVER, IID_IShellLinkW, psl) = S_OK then  // Get a pointer to the IShellLink interface.
+	begin
+		if psl.QueryInterface (IID_IPersistFile, ppf) = s_OK then  // Get a pointer to the IPersistFile interface.
+		begin
+		   if (ppf.Load (pwidechar(s_lnkfile), STGM_READ) = S_OK) and ( psl.Resolve(h_wnd, 0) = S_OK) then // Load the shortcut and Resolve the link.
+		   begin 
+				result := (psl.GetPath(sz, MAX_PATH, wfd, SLGP_RAWPATH) = NOERROR);  // Get the path to the link target.
+				if result then
+            	s_file := sz;
+            if psl.GetDescription(sz, MAX_PATH) = NOERROR then
+            	s_desc := sz;
+		   end; 
+		end;
+//		IUnknown(ppf).Release();
+	end;
+//	psl.Release();
+
+   CoUninitialize;
+end;
+
+//-------------------
+
+function ProgDir(): widestring;
+begin
+   result := extractfilepath(AnsiToUnicode(paramstr(0)));
+end;
+
+function ProgExe(b_fullpath: boolean = true): widestring;
+begin
+	result := paramstr(0);
+   if not b_fullpath then result := ExtractFileName (result, true);
+end;
+
+function ProgName(b_withext: boolean = false): widestring;
+begin
+	result := ExtractFileName (paramstr(0), b_withext);
+end;
+
+function ProgIni(): widestring;
+begin
+	result := ReplaceStr (paramstr(0), '.exe', '.ini');
+end;
+
+//-------------------
+
+function IntToStr (i_val: Int64; i_digits: cardinal = 0): widestring;
+var s: widestring;
+   i, n: integer;
+begin
+	s := '';
+	while abs(i_val div 10) <> 0 do
+   begin
+   	s := widechar(abs(i_val mod 10) + 48) + s;
+      i_val := i_val div 10;
+   end;
+   s := widechar(abs(i_val mod 10) + 48) + s;
+   n := i_digits - length(s);
+   for i := 1 to n do
+      s := '0' + s;
+   if i_val < 0 then s := '-' + s;
+   result := s;
+end;
+
+function StrToInt (s: widestring): Int64;
+var i, j, n: integer;
+	m: Int64;
+	b_minus: boolean;
+begin
+	result := 0;
+	s := trim (s);
+   if s = '' then raise Exception.create ('empty string cannot be converted to integer!');
+   b_minus := false;
+   if s[1] = '-' then
+   begin
+   	s := midstr (s, 2);
+      b_minus := true;
+   end;
+   n := length(s);
+   for i := 1 to n do
+   begin
+   	m := integer(s[i]) - 48;
+      if (m < 0) or (m > 9) then raise Exception.create (s + ' is not a valid integer!');
+      for j := i + 1 to n do
+      	m := m * 10;
+   	result := result + m;
+   end;
+   if b_minus then result := -1 * result;
+end;
+
+function StrToIntDef (s: widestring; i_default: integer = 0): Int64;
+begin
+	try
+   	result := StrToInt (s);
+   except
+   	on E: Exception do result := i_default;
+   end;
+end;
+
+function FloatToStr (E: Extended; i_decimal: integer = -1; b_alwaysusedot: boolean = false): widestring;
+	function UnpackFromBuf( const Buf: array of Byte; N: Integer; s_dot: widechar ): WideString;
+   var I, J, K: Integer;
+   	p: pwidechar;
+   begin
+      SetLength( Result, 16 );
+      J := 1;
+      for I := 7 downto 0 do
+      begin
+        K := Buf[ I ] shr 4;
+        Result[ J ] := WideChar(Ord('0') + K);
+        Inc( J );
+        K := Buf[ I ] and $F;
+        Result[ J ] := WideChar(Ord('0') + K);
+        Inc( J );
+      end;
+      Delete (Result, 1, 1 );
+
+      if N <= 0 then begin
+         while N < 0 do
+         begin
+            Result := '0' + Result;
+            Inc( N );
+         end;
+         Result := WideString('0') + s_dot + Result;
+      end else if N < Length( Result ) then begin
+        	Result := MidStr ( Result, 1, N ) + s_dot + MidStr ( Result, N + 1 );
+      end else begin
+         while N > Length( Result ) do
+          	Result := Result + '0';
+         Exit;
+      end;
+
+   //   if ((StrScan (pwidechar(Result), 'E') <> nil) or (StrScan (pwidechar(Result), 'e') <> nil)) then exit;
+      if (UxlStrUtils.StrScan (pwidechar(Result), s_dot) = nil) then exit;
+      p := @result[length(result)];
+      while p^ = '0' do
+      begin
+         p^ := #0;
+         dec (p);
+      end;
+      if p^ = s_dot then p^ := #0;
+   end;
+
+var
+   S: Boolean;
+   F: Extended;
+   N: Integer;
+   Buf1: array[ 0..9 ] of Byte;
+   i, I10, i_deccount, i_pos: Integer;
+   s_dot: widechar;
+begin
+   if b_alwaysusedot then
+   	s_dot := '.'
+   else
+   	s_dot := sDot;
+	if i_decimal >= 0 then E := SetDecimal(E, i_decimal);
+   Result := '0';
+   if E = 0 then Exit;
+   S := E < 0;
+   if S then E := -E;
+
+   N := 15;
+   F := 5E12;
+   I10 := 10;
+   while E < F do
+   begin
+      Dec( N );
+      E := E * I10;
+   end;
+   if N = 15 then
+   while E >= 1E13 do
+   begin
+      Inc( N );
+      E := E / I10;
+   end;
+
+   while TRUE do
+   begin
+      asm
+         FLD    [E]
+         FBSTP  [Buf1]
+      end;
+      if Buf1[ 7 ] <> 0 then break;
+      E := E * I10;
+      Dec( N );
+   end;
+
+   Result := pwidechar(UnpackFromBuf( Buf1, N, s_dot ));
+   if i_decimal >= 1 then
+   begin
+   	i_pos := FirstPos(s_dot, Result);
+      if i_pos > 0 then
+      begin
+         while (i_pos < Length(Result)) and (Result[i_pos + 1] = '0') do
+            inc (i_pos);
+         i_deccount := Length(Result) - i_pos;
+      end
+      else
+      begin
+         Result := Result + s_dot;
+      	i_deccount := 0;
+      end;
+      for i := i_deccount + 1 to i_decimal do
+      	Result := Result + '0';
+   end;
+   if S then Result := '-' + Result;
+end;
+
+function StrToFloat (s: WideString; b_alwaysusedot: boolean = false): Extended;
+var I: Integer;
+    M, Pt: Boolean;
+    D: Extended;
+    Ex: Integer;
+    s_dot: widechar;
+begin
+   if b_alwaysusedot then
+   	s_dot := '.'
+   else
+   	s_dot := sDot;
+   Result := 0.0;
+   s := trim(s);
+   if S = '' then Exit;
+   M := FALSE;
+   I := 1;
+   if S[ 1 ] = '-' then
+   begin
+      M := TRUE;
+      Inc( I );
+   end;
+   Pt := FALSE;
+   D := 1.0;
+   while I <= Length( S ) do
+   begin
+      if S[I] = s_dot then begin
+         if not Pt then
+            Pt := TRUE
+         else
+            raise Exception.create (s + ' is not a valid float number!');
+      end else begin
+         case s[I] of
+            '0'..'9': if not Pt then
+                       Result := Result * 10.0 + Integer( S[I] ) - Integer( '0' )
+                    else
+                    begin
+                      D := D * 0.1;
+                      Result := Result + (Integer( S[I] ) - Integer( '0' )) * D;
+                    end;
+            'e', 'E': begin
+                      Ex := StrToInt( MidStr ( S, I + 1 ) );
+                      Result := Result * IntPower( 10.0, Ex );
+                      break;
+                    end;
+            else
+            	raise Exception.create (s + ' is not a valid float number!');
+         end;
+		end;
+    	Inc( I );
+   end;
+   if M then Result := -Result;
+end;
+
+function StrToFloatDef (s: widestring; d_default: Extended = 0; b_alwaysusedot: boolean = false): Extended;
+begin
+	try
+   	result := StrToFloat (s, b_alwaysusedot);
+   except
+   	on E: Exception do result := d_default;
+   end;
+end;
+
+function IsValidNumber (const s: widestring): boolean;
+begin
+	result := false;
+	try
+   	StrToFloat (s);
+   except
+   	on E: Exception do exit;
+   end;
+   result := true;
+end;
+
+function BoolToInt (b: boolean): integer;
+begin
+	if b then
+   	result := 1
+   else
+   	result := 0;
+end;
+
+function IntToBool (i: integer): boolean;
+begin
+	result := i <> 0;
+end;
+
+function BooltoStr (b: boolean): widestring;
+begin
+	if b then
+   	result := '1'
+   else
+   	result := '0';
+end;
+
+function StrToBool (const s: widestring): boolean;
+begin
+	result := (StrToIntDef(s) <> 0);
+end;
+
+function BoolToCheckMark (b: boolean): widestring;
+begin
+	if b then
+   	result := IfThen (IsLocaleChinese, '√', 'Y')
+   else
+   	result := '';
+end;
+
+procedure ExecuteLink (const s_link: widestring; const s_dir: widestring = ''; const s_param: widestring = ''; winstatus: TWindowStatus = wsNormal);
+var i, ws: integer;
+   s: widestring;
+begin
+   case winstatus of
+      wsNormal: ws := sw_shownormal;
+      wsMinimize: ws := sw_showminimized;
+      wsMaximize: ws := sw_showmaximized;
+   end;
+   i := ShellExecuteW (0, 'open', pwidechar(s_link), pwidechar(s_param), pwidechar(s_dir), ws);
+   if i <= 32 then
+   begin
+      case i of
+         ERROR_FILE_NOT_FOUND: s := '文件不存在！';
+         ERROR_PATH_NOT_FOUND: s := '路径不存在！';
+         ERROR_BAD_FORMAT: s := '可执行文件无效！';
+         SE_ERR_ACCESSDENIED: s := '文件拒绝访问！';
+         SE_ERR_ASSOCINCOMPLETE: s := '文件关联无效！';
+         SE_ERR_NOASSOC: s := '无关联程序以打开该文件！';
+         SE_ERR_SHARE: s := '共享冲突！';
+         else s := '未知错误！';
+      end;
+      s := s_link + ' ' + s;
+      raise Exception.Create(s);
+   end;
+end;
+
+procedure GetScreenRect (var rc: TRect; b_includetaskbar: boolean = true);
+begin
+	rc.Left := 0;
+   rc.Top := 0;
+   rc.Right := GetSystemMetrics (SM_CXSCREEN);
+   if b_includetaskbar then
+      rc.Bottom := GetSystemMetrics (SM_CYSCREEN)
+   else
+      rc.Bottom := GetSystemMetrics (SM_CYFULLSCREEN) + GetSystemMetrics (SM_CYCAPTION); //(SM_CYMAXIMIZED);
+end;
+
+procedure ValidateWindowPos (var o_pos: TPos; b_allowsize: boolean);
+var rcs: TRect;
+begin
+   GetScreenRect (rcs);
+   with o_pos do
+   begin
+   	if b_allowsize then
+      begin
+         width := ConfineRange (width, 20, rcs.right);
+         height := ConfineRange (height, 20, rcs.Bottom);
+      end;
+      x := ConfineRange (x, 0, rcs.Right - width);
+      y := ConfineRange (y, 0, rcs.Bottom - height);
+   end;
+end;
+
+//--------------------
+
+function IfThen (b: boolean; const sTrue, sFalse: widestring): widestring;
+begin
+	if b then
+   	result := sTrue
+   else
+   	result := sFalse;
+end;
+
+function IfThen (b: boolean; const iTrue, iFalse: integer): integer;
+begin
+	if b then
+   	result := iTrue
+   else
+      result := iFalse;
+end;
+
+//--------------------
+
+function KeyPressed (i_key: integer): boolean;
+begin
+	result := (GetKeyState (i_key) shr 7) <> 0;
+end;
+
+function ModKeyPressed (i_key: integer): boolean;
+var i: integer;
+begin
+   result := KeyPressed (i_key);
+   if result then
+      for i := VK_PAUSE to VK_SCROLL do
+         if KeyPressed (i) then
+         begin
+            result := false;
+            exit;
+         end;
+end;
+
+procedure SendKeyPress (key: byte; b_press: boolean = true; i_sleeptime: integer = 10);   //KEYEVENTF_EXTENDEDKEY; 不能使用！
+var i_flags: dword;
+begin
+   i_flags := IfThen (b_press, 0, KEYEVENTF_KEYUP);
+//   sleep (i_sleeptime);
+   keybd_event (key, 0, i_flags, 0);
+   if i_sleeptime > 0 then
+      sleep (i_sleeptime);
+end;
+
+procedure PressCombineKey (c_char: char; vk: byte);
+begin
+   SendKeyPress (vk);
+   SendKeyPress (Ord(c_char));
+   SendKeyPress (Ord(c_char), false);
+   SendKeyPress (vk, false);
+end;
+
+procedure ReleaseHotKey (hk: THotKey);
+const a_modkey: array[0..2] of integer = (VK_MENU, VK_CONTROL, VK_SHIFT);
+var i: integer;
+begin
+	SendKeyPress (LoByte(hk), false);
+   for i := 0 to 2 do
+   begin
+//		if a_modkey[i] and HiByte(hk) <> 0 then
+		if KeyPressed (a_modkey[i]) then
+      	SendKeyPress (a_modkey[i], false);
+	end;
+end;
+
+function GetWheelDelta (wParam: DWord): integer;
+var w: smallint;
+begin
+	w := wParam shr 16;
+   result := sign (w) * (ABS(w) div 120);
+end;
+
+procedure SplitHotkey (hk: THotkey; var modifier, virtualkey: cardinal);
+	function f_getmodkey(hkm: byte): cardinal;    // HOTKEYF_EXT, HOTKEYF_ALT, HOTKEYF_CONTROL, HOTKEYF_SHIFT
+   begin
+   	result := 0;
+   	if (hkm and 1) <> 0 then
+         result := result or MOD_SHIFT;
+      if (hkm and 2) <> 0 then
+         result := result or MOD_CONTROL;
+      if (hkm and 4) <> 0 then
+         result := result or MOD_ALT;
+   end;
+begin
+   modifier := f_getmodkey (HiByte(hk));
+   virtualkey := LoByte (hk);
+end;
+
+//--------------------------
+
+function LoadIconFromResource (id_icon: integer; i_width: integer = 0; i_height: integer = 0): HIcon;
+begin
+	result := LoadImageW (system.mainInstance, MakeIntResourceW(id_icon), IMAGE_ICON, i_width, i_height, 0);
+end;
+
+function SHGetFileInfoW(pszPath: PWideChar; dwFileAttributes: DWORD;
+  var psfi: TSHFileInfoW; cbFileInfo, uFlags: cardinal): DWORD; stdcall; external shell32 name 'SHGetFileInfoW';
+
+function LoadIconFromFile (const s_file: widestring; i_width: integer = 0; i_height: integer = 0): HIcon;
+var o_info: TSHFileInfoW;
+	uFlags: DWORD;
+begin
+	result := LoadImageW (system.mainInstance, pwidechar(s_file), IMAGE_ICON, i_width, i_height, LR_LOADFROMFILE);
+   if result = 0 then
+   begin
+	   uFlags := SHGFI_ICON;
+   	if not IsDirectory (s_file) then
+      	uFlags := uFlags or SHGFI_USEFILEATTRIBUTES;
+      SHGetFileInfoW (pwidechar(s_file), FILE_ATTRIBUTE_NORMAL, o_info, sizeof(o_info), uFlags);
+      result := o_info.hicon;
+   end;
+end;
+
+end.
+
+

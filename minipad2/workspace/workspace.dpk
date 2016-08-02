@@ -1,0 +1,49 @@
+package workspace;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  XCL;
+
+contains
+  USpace in 'USpace.pas',
+  UEditor in 'UEditor.pas',
+  UList in 'UList.pas',
+  UTabNavigator in 'UTabNavigator.pas',
+  UTreeNavigator in 'UTreeNavigator.pas',
+  UWorkSpace in 'UWorkSpace.pas',
+  UBrowseHistory in 'UBrowseHistory.pas',
+  UClientSuper in 'UClientSuper.pas',
+  UNavigatorSuper in 'UNavigatorSuper.pas',
+  UBlog in 'UBlog.pas',
+  UFindHandler in 'UFindHandler.pas',
+  UPropertyBox in 'UPropertyBox.pas',
+  USysPageManager in 'USysPageManager.pas',
+  UIOHandler in 'UIOHandler.pas',
+  UNoteHandler in 'UNoteHandler.pas',
+  UStatisticsHandler in 'UStatisticsHandler.pas';
+
+end.

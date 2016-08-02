@@ -1,0 +1,52 @@
+#------------------------------------------------------------------------------
+VERSION = BWS.01
+#------------------------------------------------------------------------------
+!ifndef ROOT
+ROOT = $(MAKEDIR)\..
+!endif
+#------------------------------------------------------------------------------
+MAKE = $(ROOT)\bin\make.exe -$(MAKEFLAGS) -f$**
+DCC = $(ROOT)\bin\dcc32.exe $**
+BRCC = $(ROOT)\bin\brcc32.exe $**
+#------------------------------------------------------------------------------
+PROJECTS = XCL.bpl ExtLibrary.bpl dataupdater.bpl plugins.bpl workspace.bpl \
+  pages.bpl options.bpl DailyWord.exe minipad2.exe LangExtractor.exe \
+  LngUpdater.exe
+#------------------------------------------------------------------------------
+default: $(PROJECTS)
+#------------------------------------------------------------------------------
+
+XCL.bpl: ..\XCL\XCL.dpk
+  $(DCC)
+
+ExtLibrary.bpl: ..\ExtLibrary\ExtLibrary.dpk
+  $(DCC)
+
+dataupdater.bpl: dataupdater\dataupdater.dpk
+  $(DCC)
+
+plugins.bpl: plugins\plugins.dpk
+  $(DCC)
+
+workspace.bpl: workspace\workspace.dpk
+  $(DCC)
+
+pages.bpl: pages\pages.dpk
+  $(DCC)
+
+options.bpl: options\options.dpk
+  $(DCC)
+
+DailyWord.exe: ..\DailyWord\DailyWord.dpr
+  $(DCC)
+
+minipad2.exe: minipad2.dpr
+  $(DCC)
+
+LangExtractor.exe: LangExtractor.dpr
+  $(DCC)
+
+LngUpdater.exe: LngUpdater\LngUpdater.dpr
+  $(DCC)
+
+

@@ -1,0 +1,95 @@
+unit Resource;
+
+interface
+
+const
+   MainIcon = 1;
+   TrayMenu = 2;
+   PopMenu = 3;
+
+   m_start = 101;
+   m_testmode = 102;
+   m_fullscreen = 103;
+   m_trackmouse = 104;
+   m_newBox = 105;
+   m_exportBox = 106;
+   m_options = 107;
+   m_help = 108;
+   m_homepage = 109;
+   m_forum = 110;
+   m_donate = 111;
+   m_about = 112;
+   m_exit = 113;
+
+   m_Inclevel = 121;
+   m_Declevel = 122;
+   m_copy = 123;
+   m_delete = 124;
+   m_prior = 125;
+   m_next = 126;
+
+   cb_ok = 501;
+   cb_cancel = 502;
+
+   About_Box = 1000;
+      st_translator = 1001;
+      st_freeware = 1002;
+      st_copyrightinfo = 1003;
+      st_copyright = 1004;
+      st_forum = 1005;
+      st_forumlink = 1006;
+      st_homepagelink = 1007;
+      st_homepage = 1008;
+      st_email = 1009;
+      st_emaillink = 1010;
+      st_authorname = 1011;
+      st_author = 1012;
+      st_program = 1013;
+      ProgramIcon = 1014;
+	   st_donate	=	1015;
+      st_releasedate = 1017;
+      st_pleasedonate = 1018;
+
+   Option_Box = 1800;
+   	tab_Options = 1801;
+      st_placeholder = 1802;
+
+   Op_Program = 2000;
+      cmb_dictfile	=	2001;
+      cb_browse	=	2002;
+      chk_autostart	=	2003;
+      hk_start = 2004;
+		hk_fullscreen	=	2005;
+      hk_trackmouse	=	2006;
+
+   Op_Appearance = 2100;
+      rb_normal	=	2101;
+      rb_embed	=	2102;
+      cmb_transparency = 2103;
+      st_transparency = 2104;
+      cb_setcolor = 2105;
+      st_colordemo = 2106;
+		cb_setfont	=	2107;
+      sle_xspace	=	2007;
+      sle_yspace	=	2008;
+
+   Op_WordBox = 2200;
+      cmb_boxsize =	2201;
+      cmb_interval = 2202;
+      st_interval = 2203;
+      cmb_delay =	2204;
+      chk_autoswitch	=	2205;
+      chk_autotest	=	2206;
+		chk_randomword	=	2207;
+      ud_switchcycle	=	2208;
+      sle_switchcycle	=	2209;
+      sle_testcycle	=	2210;
+      ud_testcycle	=	2211;
+		chk_randombox	=	2212;
+		chk_twolines	=	2213;
+	cmb_testmode	=	2214;
+	chk_twolines	=	2213;
+implementation
+
+end.
+

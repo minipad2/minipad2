@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
+	<link href="main.css" rel="stylesheet" type="text/css">
+	<title>Basic Use</title>
+</head>
+
+<body>
+	<center><h1>Basic Use</h1></center>
+	
+	<p>minipad2 is mainly designed as a simple-text notebook. So it's basic use is to write notes and collect informations.</p>
+
+	<h2><a name="multipagestyle"></a>Multi-page style</h2>
+
+	<p>The first time minipad2 starts, it's in multi-tabpage style, and a notepage named "note1" is already created. In this page you can freely write anything, e.g., use it as to-do-list, write down some ideas, or copy something from the pages you're browsing. After edit you needn't save the content manually or as separate txt files, just minimize it to system tray, all contents are automatically saved after minimize.</p>
+
+	<p>You can create new notepages by <a href='Menus\Menus_File.html'>"File"</a>--><a href='Menus\Menus_File.html#m_newnote'>"New NotePage"</a>, and freely switch between different pages.</p>
+	<p>To rename the current page, use "File"--><a href='Menus\Menus_File.html#m_rename'>"Rename"</a>. Another way to rename the page is select some text in the page and press F10, then the selected text will be the name of this page.</p>
+	<p>To see or modify the property of the current page, use "File"--><a href='Menus\Menus_File.html#m_property'>"Property"</a>.</p>
+	<p>To change the page position, just drag it to the target position and drop it.</p>
+	<p>To delete the current page, use "File"--><a href='Menus\Menus_File.html#m_delete'>"Delete"</a>, or (under default settings) double-click the tab.</p>
+	<p>If you want to protect the current page from unintentially delete, lock it with "File"--><a href='Menus\Menus_File.html#m_switchlock'>"Switch Lock"</a>, or (under default settings) middle-click it.</p>
+
+	<p>The software supports multi-groups of pages. To create a new group, use "File"--><a href='Menus\Menus_File.html#m_newgroup'>"New Group"</a>.</p>
+	<p>To navigate between different pages and groups, use "File"--><a href='Menus\Menus_Navigation.html#m_goprior'>"Go Prior"</a>, <a href='Menus\Menus_Navigation.html#m_gonext'>"Go Next"</a> & <a href='Menus\Menus_Navigation.html#m_levelup'>"Level Up"</a>.</p>
+	<p>In "Options"--><a href='Options\Appearance\Opt_Appearance.html'>"Appearance"</a> there are many options for controlling the style of the TabControl, e.g., Tabs on top/bottom, single-line/multi-line style, fixed tab-width, show icons or not, highlight current tab, etc.</p>
+
+	<h2><a name="treeviewstyle"></a>TreeView style:</h2>
+
+	<p>click "Tools"--><a href='Menus\Menus_Tools.html#m_showtree'>"Show Tree"</a>, the program will switch to a notebook program with treeview in the left. Users can create groups (like folders in the Windows explorer) and Pages in the TreeView. Use Ctrl+Tab to switch the focus between Editor and TreeView / TabBar.</p>
+
+	<p>The program also supports to change the position of nodes with drag-drop in the treeview.</p>
+
+	<p>If you want to save the page content to a separate txt file, use "File"--><a href='Menus\Menus_File.html#m_export'>"Export"</a>. The software supports to export a whole group of notes (including all pages and sub-groups) into a folder while keeping the tree structure.</p>
+
+	<p>If you want to import the content of a txt file, use "File"--><a href='Menus\Menus_File.html#m_import'>"Import"</a>, or simply drag the file from Window Explorer into the window of minipad2. The software also supports to import all the files of a folder into a new group in minipad2, while keeping the tree structure.</p>
+
+	<p>If you want to send the page content via email, use "File"--><a href='Menus\Menus_File.html#m_sendmail'>"Send mail"</a>, the program will load the mail-client which is set in "Options"--><a href='Options\Program Settings\Opt_ProgramSettings.html'>"Program Settings"</a>(if no mail-client is set there, then use the system's default mail-client), create a new mail, use the page-title as the mail-subject, page-content as the mail-content.</p>
+
+	<p>Click the small button on the splitter between the tree-view and the editor, you can hide or show the tree panel. Left_Click and Right_Click has different effects, you can try it.</p>
+
+	<h2>Drag-drop of tabs and nodes</h2>
+
+	<p>The software supports to change the position or the belonging of the current tab/node via drag-drop, both under multi-page and tree-view style.<br>
+	With tree-view style, it is also possible to drag the page-items in the list-view rightside, just like drag-drop files in Windows Explorer.</p>
+
+	<p>If drag one page to another page, then the page being dragged will be the silbing of the target page.<br>
+	If drag a node onto a group, then the node being dragged will be the child-node of the group. But if you press Shift during drag-drop, then the page being dragged will be the sibling node of the target group.<br>
+	If you press Ctrl during drag-drop, then the drag-source will be copied instead of moved to the target place.<br>
+	If you want to cancel the drag-drop operation, press Esc.</p>
+
+	<h2>Text edit</h2>
+
+	<p>The editor supports to move/copy text blocks by select and drag-drop, no matter the dragdrop is inside of the Editor, or from/to another external Editor (Word, EmEditor...).<br>
+	It is possible to zoom in/out the text in the Editor by Ctrl-Scroll (scrolling the wheel while pressing Ctrl). If you want to restore the default font size after zoom in/out, middle-click the editor while pressing Ctrl.<br>
+	If you double-click (or Ctrl+click) on the highlighted url, the program will use the default browser of the system to open the link.</p>
+
+	<p>In the <a href='Menus\Menus_Edit.html'>"Edit"</a> menu there are many common functions for a text-editor, like <a href='Menus\Menus_Edit.html#m_clear'>Clear</a>, <a href='Menus\Menus_Edit.html#m_undo'>Undo</a> / <a href='Menus\Menus_Edit.html#m_redo'>Redo</a>, <a href='Menus\Menus_Edit.html#m_selectall'>SelectAll</a>, <a href='Menus\Menus_Edit.html#m_cut'>Cut</a> / <a href='Menus\Menus_Edit.html#m_copy'>Copy</a> / <a href='Menus\Menus_Edit.html#m_paste'>Paste</a>, <a href='Menus\Menus_Edit.html#m_find'>Find / Replace</a>, etc.</p>
+	
+	<p>There're also a series of <a href='Menus\Menus_Edit.html#m_texttools'>text tools</a> in the "Edit" menu, including highlight the selected text, ordered list, etc.</p>
+	<p>Use "Edit"--><a href='Menus\Menus_Edit.html#m_insertlink'>"Insert Link"</a> to insert links (url, file, node link...) in the editor. The links are highlighted in the editor, double click (or Ctrl+click) to execute the link.</p>
+
+	<p>Use "Options"-->"Program Settings"--><a href='Options\Program Settings\Opt_Edit.html'>"Edit"</a> to set the behaviors of the editor, including auto-indent, smooth scroll, tab width, etc.<br>
+	Use "Options"-->"Appearance"--><a href='Options\Appearance\Opt_Editor.html'>"Editor"</a> to set the UI specifications of the editor, including font, color, margins, line-number, etc.</p>
+
+	<h2>Use of the List-View</h2>
+
+	<p>Besides the normal note-page, the program also supports a few special Ext-Pages, among which the <a href='Extensions\Ext_Memo.html'>MemoPage</a>, <a href='Extensions\Ext_Launcher.html'>LinkPage</a>, <a href='Extensions\Ext_ContactList.html'>ContactPage</a> & <a href='Extensions\Ext_Template.html'>TemplatePage</a> are in List-Style instead of plain-edit style.</p>
+
+	<p>In the list-style pages, use <a href='Menus\Menus_Edit.html'>"List"</a>--><a href='Menus\Menus_Edit.html#m_newitem'>"New Item"</a> (or double-click on any empty part inside of the page) to create a new item.<br>
+	Double-click the current item, will popup the edit-item dialog, where you can modify the item content.<br>
+	Right-click an item, the corresponding context-menu will appear.<br>
+	If you want to delete an item, right-click the item, choose <a href='Menus\Menus_Edit.html#m_delete'>"Delete Item"</a> (supports multi-select and delete).<br>
+	If the title of an item is empty, or similar to "---", it will be treated as separator for different groups of items, and do not show it's icon and content in the list.</p>
+
+	<p>If you want to change the position of a certain item, just drag it to the target position. (supports multi-select by shift+click & ctrl+click).<br>
+	Use ctrl+dragdrop to copy an item.<br>
+	If you want to move/copy an item to another page with the same type (i.e., from one LinkPage to another LinkPage), use dragdrop/ctrl+dragdrop to the target page.</p>
+
+	<p>Clicking on the column headers will sort the items by ascending / descending.<br>
+	The software also supports to change the order of columns by header-dragdrop.</p>
+
+	<p>If you want to change the property of the current page, use "File"--><a href="Menus\Menus_File.html#m_property">"Property"</a>. In the "Define List" dialog you can set the columns, view style, whether to show checkbox or not, etc. You can also set the current style as the default style.<br>
+	Use "File"--><a href='Menus\Menus_File.html#m_view'>"View"</a>, you can switch between different view styles (Big icon, small icon, list, report, <a href='Featured Functions.html#abstract'>abstract</a>).<br></p>
+
+	<p>To save the page-content of list-style-pages to external files is just like to save normal text-pages, but supports the following two formats:</p>
+	<ol>
+		<li>Save as *.txt file. Use plain-text to save the contents currently shown on the page.
+		<li>Save as *.mep file. This will save all the contents (including the columns not shown on the current page) and all the settings (styles, column widths...) to an external file. This can be used to export and re-import the pages (e.g., export the pages from minipad2 on one computer, and import the pages to minipad2 on another computer).
+	</ol>
+
+	<h2>Context-menus</h2>
+
+	<p>The software supports context-menus everywhere, including Tree-View, List-View, Tab-Bar, Abstract View, Editor, ToolBar...</p><br>
+</body>
+</html>

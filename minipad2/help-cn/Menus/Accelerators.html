@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>快捷键设定</title>
+</head>
+
+<body>
+	<a name="accelerators"><h1>快捷键设定</h1>
+	
+	<p>minipad2 支持对菜单项目（以及个别纯使用快捷键、而无对应菜单条目的功能）进行快捷键的自定义。设定方法如下：
+	<p>在minipad2\路径下创建一个名为 accel.txt 的纯文本文件。在其中用“项目ID=快捷键”的方式写入重定义内容。例如如下重定义：</p>
+
+	<p>1010=Alt+W<br>
+	1130=F7<br>
+	1160=Shift+Ctrl+P<br>
+	1720=</p>
+	
+	<p>将把“新建笔记页”（ID=1010）的快捷键重定义为 Alt+W，“加锁切换”（1130）重定义为 F7，“属性”（1160）设定为 Shift+Ctrl+P，并取消“总在最前”（1720）的快捷键。</p>
+	
+	<p>各菜单项目的 ID 及其默认快捷键列表如下：</p>
+	<ul class="list">
+		<li>新建笔记页：1010（Ctrl+N）
+		<li>新建功能页：1020
+		<li>新建计算页：1030
+		<li>新建备忘页：1040
+		<li>新建词典页：1050
+		<li>新建链接页：1060
+		<li>新建通讯页：1070
+		<li>新建组：1110（Ctrl+G）
+	</ul>
+	<ul class="list">
+		<li>重命名：1120（F2）
+		<li>加锁切换：1130（F6）
+		<li>删除节点：1140（Shift+Del）
+		<li>保存：1150（Ctrl+S）
+	</ul>
+	<ul class="list">
+		<li>属性：1160
+		<li>视图：1170
+	</ul>
+	<ul class="list">
+		<li>导入：1180
+		<li>导出：1190
+		<li>发送邮件：1200
+		<li>退出：1210
+	</ul>
+	<ul class="list">
+		<li>清空：1310（Ctrl+L）
+		<li>撤销：1320（Ctrl+Z）
+		<li>重做：1330（Ctrl+Y）
+		<li>全选：1340（Ctrl+A）
+	</ul>
+	<ul class="list">
+		<li>剪切：1350（Ctrl+X）
+		<li>复制：1360（Ctrl+C）
+		<li>粘贴：1370（Ctrl+V）
+		<li>删除／删除项目／移除项目：1400（Del）
+	</ul>
+	<ul class="list">
+		<li>新建项目：1410（Ctrl+I）
+		<li>插入项目：1420;
+		<li>编辑项目：1430;
+	</ul>
+	<ul class="list">
+		<li>自动换行：1440;
+		<li>文字工具：1380;
+		<li>高亮1：1381;
+		<li>高亮2：1382;
+		<li>高亮3：1383;
+		<li>高亮4：1384;
+		<li>移除高亮效果：1385;
+		<li>无序列表1：1386;
+		<li>无序列表2：1387;
+		<li>有序列表：1388;
+		<li>移除列表：1389;
+		<li>删除空行：1390;
+		<li>只空一行：1391;
+	</ul>
+	<ul class="list">
+		<li>查找／替换：1450（Ctrl+F）
+		<li>后续查找：1460
+		<li>查找下一个：1462（F3）
+		<li>查找上一个：1464（Shift+F3）
+		<li>替换并查找下一个：1466（F4）
+		<li>替换并查找上一个：1468（Shift+F4）
+		<li>全部替换：1470（Ctrl+F4）
+		<li>高亮查找结果：1480;
+	</ul>
+	<ul class="list">
+		<li>插入链接：1490（Ctrl+K）
+		<li>插入剪贴文字：4000
+		<li>插入模板文字：5000
+	</ul>
+	<ul class="list">
+		<li>后退：1560（Alt+Left）
+		<li>前进：1570（Alt+Right）
+		<li>上一层：1580（Alt+U）
+		<li>最近的笔记：1590;
+		<li>最近创建：7000;
+		<li>最近修改：7500;
+		<li>最近访问：8000;
+		<li>管理最近的笔记：1600;
+		<li>收藏夹：6500
+		<li>添加至收藏夹／从收藏夹移除：1610;
+		<li>收藏家管理：1620;
+		<li>搜索：1630（Alt+F）
+		<li>回收站管理：1650;
+	</ul>
+	<ul class="list">
+		<li>显示目录树：1710（Ctrl+T）
+		<li>总在最前：1720（Ctrl+P）
+		<li>透明效果：1730（Ctrl+R）
+		<li>自动隐藏：1740（Ctrl+H）
+	</ul>
+	<ul class="list">
+		<li>文字模板管理：1750;
+		<li>快速链接管理：1760;
+	</ul>
+	<ul class="list">
+		<li>剪贴板监视1770;
+		<li>清空剪贴条目：1780;
+		<li>剪贴板管理：1790;
+	</ul>
+	<ul class="list">
+		<li>统计信息：1800;
+		<li>自定义工具栏：1810;
+		<li>选项：1820;
+	</ul>
+	<ul class="list">
+		<li>帮助主题：1910（F1）
+		<li>主页：1920;
+		<li>论坛：1930;
+		<li>关于：1940;
+		<li>捐助：1950;
+	</ul>
+	
+	<p>个别纯使用快捷键、无对应菜单条目的功能 ID 及其默认快捷键列表如下：</p>
+	<ul class="list">
+		<li>上移：1220（Alt+Up）
+		<li>下移：1230（Alt+Down）
+		<li>切换焦点：354（Ctrl+Tab)
+		<li>设为标题：355（F10)
+		<li>向左隐藏／恢复树窗口：356（Ctrl+Alt+Left)
+		<li>向右隐藏／恢复树窗口 ：347（Ctrl+Alt+Right)
+	</ul>
+</body>
+</html>

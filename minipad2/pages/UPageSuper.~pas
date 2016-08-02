@@ -1,0 +1,640 @@
+unit UPageSuper;
+
+interface
+
+uses Windows, UxlClasses, UxlList, UTypeDef, UPageProperty, Resource;
+
+type
+   TPageSuper = class
+   private
+   	Fid: integer;
+      FOwnerId: integer;
+      FName: widestring;
+      FCreateTime: TSystemTime;
+      FModifyTime: TSystemTime;
+   	FStatus: TPageStatus;
+      FProperties: array of TPropertySuper;
+      FIcon: widestring;
+      FColor: TColor;
+      FChecked: boolean;
+
+      procedure SetOwner (value: TPageSuper);
+      function GetOwner (): TPageSuper;
+      procedure SetName (const value: widestring);
+      procedure SetIcon (const value: widestring);
+      procedure SetColor (value: TColor);
+      procedure SetChecked (value: boolean);
+      function GetText (): widestring;
+      procedure TriggerChange (pct: TPageEvent);
+	protected
+   	procedure AddProperty (value: TPropertySuper);
+      procedure SetText (const value: widestring); virtual;
+      function f_GetText (i_maxchar: integer = -1): widestring; virtual;
+      procedure SetStatus (value: TPageStatus); virtual;
+   public
+      property Id: integer read FId;
+      property OwnerId: integer read FOwnerID write FOwnerID;
+      property Name: widestring read FName write SetName;
+      property CreateTime: TSystemTime read FCreateTime;
+      property ModifyTime: TSystemTime read FModifyTime write FModifyTime;
+      property Status: TPageStatus read FStatus write SetStatus;
+      property Icon: widestring read FIcon write SetIcon;
+      property Color: TColor read FColor write SetColor;
+      property Checked: boolean read FChecked write SetChecked;
+      property Text: widestring read GetText write SetText;
+
+      constructor Create (i_id: integer); virtual;
+      procedure Initialize (i_ownerid: integer); virtual;
+   	class function PageType(): TPageType; virtual; abstract;
+      function PageControl (): TPageControl; virtual; abstract;
+      function ImageIndex (): integer; virtual;
+
+      procedure Load (o_list: TxlStrList);
+      procedure Save (o_list: TxlStrList);
+		procedure Clone (p: TPageSuper); virtual;
+
+      function GetColText (id_col: integer): widestring; virtual;
+
+      class function CanSearch (): boolean; virtual;
+      class procedure GetSearchCols (o_list: TxlIntList); virtual;
+
+      property Owner: TPageSuper read GetOwner write SetOwner;
+   	function Nearest (): TPageSuper;
+      procedure GetChildList (o_list: TxlIntList); virtual;
+
+      function CanAddChild (ptChild: TPageType): boolean; virtual;
+      function CanOwnChild (ptChild: TPageType): boolean; virtual;
+      function DefChildType (): TPageType; virtual;
+		function ChildShowInTree (ptChild: TPageType): boolean; virtual;
+
+      function Childs (): TPageChilds; virtual;
+      function ListProperty (): TListProperty; virtual;
+      function PageProperty (): TTruePageProperty; virtual;
+		class procedure InitialListProperty (lp: TListProperty); virtual;
+
+   	function CanDelete (): boolean; virtual;
+      procedure Delete (); virtual;
+   end;
+   TPageClass = class of TPageSuper;
+
+   TTruePageSuper = class (TPageSuper)
+   private
+   	FPageProperty: TTruePageProperty;
+   protected
+      procedure SetText (const value: widestring); override;
+      function f_GetText (i_maxchar: integer = -1): widestring; override;
+   public
+      constructor Create (i_id: integer); override;
+      destructor Destroy (); override;
+      function PageProperty (): TTruePageProperty; override;
+
+      class procedure GetSearchCols (o_list: TxlIntList); override;
+      function GetColText (id_col: integer): widestring; override;
+   	function CanDelete (): boolean; override;
+   end;
+
+   TListPageSuper = class (TTruePageSuper)
+   private
+   	FListProperty: TListProperty;
+   protected
+	public
+   	constructor Create (i_id: integer); override;
+      destructor Destroy (); override;
+      procedure Initialize (i_ownerid: integer); override;
+      function PageControl (): TPageControl; override;
+      function ListProperty (): TListProperty; override;
+      class procedure GetListShowCols (o_list: TxlIntList); virtual;
+		class procedure InitialListProperty (lp: TListProperty); override;
+	end;
+
+	TPageContainer = class (TListPageSuper)
+   private
+   	FChilds: TPageChilds;
+   protected
+	public
+   	constructor Create (i_id: integer); override;
+      destructor Destroy (); override;
+      function Childs (): TPageChilds; override;
+      function CanDelete (): boolean; override;
+      procedure Delete (); override;
+      procedure SetStatus (value: TPageStatus); override;
+      procedure GetChildList (o_list: TxlIntList); override;
+	end;
+
+   TEditPageSuper = class (TTruePageSuper)
+   private
+   protected
+   public
+      function PageControl (): TPageControl; override;
+      procedure SetEditor (value: TxlEditControl); virtual;
+	end;
+
+   TChildItemSuper = class (TPageSuper)
+   public
+      function PageControl (): TPageControl; override;
+   end;
+
+implementation
+
+uses UPageStore, UGlobalObj, UxlFunctions, UxlMath, UxlListSuper, UxlDateTimeUtils, UxlFile, UxlListView, UPageFactory;
+
+constructor TPageSuper.Create (i_id: integer);
+begin
+	FId := i_id;
+end;
+
+procedure TPageSuper.Initialize (i_ownerid: integer);
+begin
+   FOwnerid := i_ownerid;
+   if Owner <> nil then
+      FName := Owner.Childs.GetNewChildName (PageType);
+   FCreateTime := Now;
+   FModifyTime := Now;
+   FStatus := psNormal;
+   FIcon := '';
+   FColor := -1;
+   FChecked := false;
+end;
+
+procedure TPageSuper.Load (o_list: TxlStrList);
+var i: integer;
+begin
+	FOwnerId := StrToInt (o_list[0]);
+   FName := o_list[1];
+   FCreateTime := StringToSystemTime (o_list[2]);
+   FModifyTime := StringToSystemTime (o_list[3]);
+	Fstatus := TPageStatus(StrToInt (o_list[4]));
+   FIcon := o_list[5];
+   FColor := TColor(StrToIntDef(o_list[6], -1));
+   FChecked := StrToBool (o_list[7]);
+	o_list.Delete (0, 8);
+   for i := Low(FProperties) to High(FProperties) do
+   	FProperties[i].Load (o_list);
+end;
+
+procedure TPageSuper.Save (o_list: TxlStrList);
+var i: integer;
+begin
+	with o_list do
+   begin
+      Add (IntToStr(OwnerId));
+      Add (Name);
+      Add (SystemTimeToString(CreateTime));
+      Add (SystemTimeToString(ModifyTime));
+      Add (IntToStr(Ord(FStatus)));
+      Add (FIcon);
+      Add (IntToStr(Ord(FColor)));
+      Add (BoolToStr(FChecked));
+   end;
+   for i := Low(FProperties) to High(FProperties) do
+   	FProperties[i].Save (o_list);
+end;
+
+procedure TPageSuper.Clone (p: TPageSuper);
+var i: integer;
+begin
+   Fname := p.name;
+   Fstatus := p.status;
+   FIcon := p.Icon;
+   FColor := p.Color;
+   FChecked := p.Checked;
+   for i := Low(FProperties) to High(FProperties) do
+   	FProperties[i].Clone (p.FProperties[i]);
+end;
+
+function TPageSuper.ImageIndex (): integer;
+begin
+   if (Icon <> '') then
+   	result := PageImageList.ImageFromFile (Icon);
+   if (Icon = '') or (result < 0) then
+		result := PageImageList.IndexOf (PageType) + Ord(Status);
+end;
+
+procedure TPageSuper.AddProperty (value: TPropertySuper);
+var n: integer;
+begin
+	n := Length(FProperties);
+	SetLength (FProperties, n + 1);
+   FProperties[n] := value;
+end;
+
+procedure TPageSuper.SetName (const value: widestring);
+begin
+	if value <> FName then
+   begin
+      FName := value;
+      TriggerChange (pctFieldModified);
+   end;
+end;
+
+procedure TPageSuper.SetStatus (value: TPageStatus);
+begin
+	if value <> FStatus then
+   begin
+      FStatus := value;
+      TriggerChange (pctSwitchStatus);
+   end;
+end;
+
+procedure TPageSuper.SetIcon (const value: widestring);
+begin
+	if value <> FIcon then
+   begin
+		FIcon := value;
+      TriggerChange (pctIcon);
+   end;
+end;
+
+procedure TPageSuper.SetColor (value: TColor);
+begin
+	if value <> FColor then
+   begin
+   	FColor := value;
+      TriggerChange (pctColor);
+   end;
+end;
+
+procedure TPageSuper.SetChecked (value: boolean);
+begin
+	if value <> FChecked then
+   begin
+   	FChecked := value;
+//      TriggerChange (pctChecked);
+   end;
+end;
+
+function TPageSuper.DefChildType (): TPageType;
+begin
+	result := ptNOne;
+end;
+
+procedure TPageSuper.TriggerChange (pct: TPageEvent);
+begin
+	PageCenter.EventNotify (pct, self.id);
+end;
+
+function TPageSuper.Childs (): TPageChilds;
+begin
+	result := nil;
+end;
+
+function TPageSuper.ListProperty (): TListProperty;
+begin
+	result := nil;
+end;
+
+function TPageSuper.PageProperty (): TTruePageProperty;
+begin
+	result := nil;
+end;
+
+class procedure TPageSuper.InitialListProperty (lp: TListProperty); 
+begin
+end;
+
+//-----------------------
+
+function TPageSuper.f_GetText (i_maxchar: integer = -1): widestring;
+begin
+	result := PageStore.RetrieveText (self.id, i_maxchar);
+end;
+
+function TPageSuper.GetText (): widestring;
+begin
+	result := f_GetText;
+end;
+
+procedure TPageSuper.SetText (const value: widestring);
+begin
+   if PageStore.SaveText (self.id, value) then
+     	ModifyTime := Now;
+end;
+
+//-------------------------
+
+class procedure TPageSuper.GetSearchCols (o_list: TxlIntList);
+const c_cols: array[0..2] of integer = (sr_Title, sr_CreateTime, sr_ModifyTime);
+begin
+	o_list.Populate (c_cols);
+end;
+
+class function TPageSuper.CanSearch (): boolean;
+begin
+	result := false;
+end;
+
+function TPageSuper.GetColText (id_col: integer): widestring;
+begin
+	case id_col of
+      sr_title:
+      	result := Name;
+      sr_createtime:
+      	result := SystemTimeToLocaleStr (CreateTime);
+      sr_modifytime:
+      	result := SystemTimeToLocaleStr (ModifyTime);
+      sr_Description:
+      	result := f_GetText (200);
+      sr_Text:
+      	result := Text;
+   end;
+end;
+
+//----------------------
+
+function TPageSuper.GetOwner (): TPageSuper;
+begin
+	result := PageStore.Pages [self.Ownerid];
+end;
+
+procedure TPageSuper.SetOwner (value: TPageSuper);
+begin
+	if value <> nil then
+		self.OwnerId := value.id
+   else
+   	self.OwnerId := -1;
+end;
+
+function TPageSuper.Nearest (): TPageSuper;
+var o_list: TxlIntList;
+	i: integer;
+begin
+	result := TPageSuper(Owner);
+   if result = nil then exit;
+   o_list := TxlIntList.Create;
+	Owner.Childs.GetChildList (o_list);
+   for i := o_list.Low to o_list.High do
+   	if o_list[i] = self.id then
+      begin
+      	if i < o_list.High then
+         	result := PageStore.Pages[o_list[i + 1]]
+         else if i > o_list.Low then
+         	result := PageStore.Pages[o_list[i - 1]];
+         break;
+      end;
+   o_list.free;
+end;
+
+function TPageSuper.CanAddChild (ptChild: TPageType): boolean;
+begin
+	result := CanOwnChild (ptChild);
+end;
+
+function TPageSuper.CanOwnChild (ptChild: TPageType): boolean;
+begin
+	result := ptChild = DefChildType;
+end;
+
+function TPageSuper.ChildShowInTree (ptChild: TPageType): boolean;
+begin
+	result := false;
+end;
+
+procedure TPageSuper.GetChildList (o_list: TxlIntList);
+begin
+end;
+
+function TPageSuper.CanDelete (): boolean;
+begin
+	result := true;
+end;
+
+procedure TPageSuper.Delete ();
+begin
+	PageStore.DeletePage (self.id);
+end;
+
+//-----------------------------
+
+constructor TTruePageSuper.Create (i_id: integer);
+begin
+	inherited Create (i_id);
+	FPageProperty := TTruePageProperty.Create (i_id);
+   AddProperty (FPageProperty);
+end;
+
+destructor TTruePageSuper.Destroy ();
+begin
+	FPageProperty.free;
+   inherited;
+end;
+
+function TTruePageSuper.PageProperty (): TTruePageProperty;
+begin
+	result := FPageProperty;
+end;
+
+class procedure TTruePageSuper.GetSearchCols (o_list: TxlIntList);
+begin
+	inherited GetSearchCols (o_list);
+   o_list.Add (sr_Text);
+   TTruePageProperty.GetShowCols (o_list);
+end;
+
+function TTruePageSuper.GetColText (id_col: integer): widestring;
+begin
+	if not FPageProperty.GetColText (id_col, result) then
+   	result := inherited GetColText (id_col);
+end;
+
+function TTruePageSuper.f_GetText (i_maxchar: integer = -1): widestring;
+var i_offset: integer;
+   o_file: TxlFile;
+begin
+	if FPageProperty.ExternalSave and (FPageProperty.ExportFile <> '') then
+   begin
+   	try
+         o_file := TxlFile.Create (FPageProperty.ExportFile, fmReadText);
+         o_file.ReadText (result, i_maxchar);
+         if not o_file.eof then
+            result := result + ' ...';
+         o_file.Free;
+      except
+      	result := inherited f_GetText (i_maxchar);
+      end;
+   end
+   else
+		result := inherited f_GetText (i_maxchar);
+end;
+
+procedure TTruePageSuper.SetText (const value: widestring);
+var o_file: TxlFile;
+   s_text: widestring;
+begin
+   if (FPageProperty.ExternalSave) then
+   begin
+   	try
+         o_file := TxlFile.Create (FPageProperty.ExportFile, fmReadText);
+         o_file.ReadText (s_text);
+         if (length(s_Text) <> length(value)) or (s_Text <> value) then
+         begin
+            o_file.Reset (fmWriteText);
+            o_file.WriteText (value);
+            ModifyTime := Now;
+         end;
+         o_file.Free;
+      except
+      	inherited SetText (value);
+      end;
+   end
+   else
+		inherited SetText (value);
+end;
+
+function TTruePageSuper.CanDelete (): boolean;
+begin
+  	result := Status = psNormal;
+end;
+
+//------------------------
+
+constructor TListPageSuper.Create (i_id: integer);
+begin
+	inherited Create (i_id);
+   FListProperty := TListProperty.Create (i_id);
+   AddProperty (FListProperty);
+end;
+
+destructor TListPageSuper.Destroy ();
+begin
+	FListProperty.free;
+   inherited;
+end;
+
+function TListPageSuper.PageControl (): TPageControl;
+begin
+	result := FListProperty.PageControl;
+end;
+
+procedure TListPageSuper.Initialize (i_ownerid: integer);
+begin
+	inherited Initialize (i_ownerid);
+   PageDefSettingsMan.LoadDefSettings (PageType, FListProperty);
+end;
+
+function TListPageSuper.ListProperty (): TListProperty;
+begin
+	result := FListProperty;
+end;
+
+class procedure TListPageSuper.GetListShowCols (o_list: TxlIntList);
+const c_cols: array[0..3] of integer = (sr_Title, sr_CreateTime, sr_ModifyTime, sr_Description);
+var i: integer;
+begin
+	for i := Low(c_cols) to High(c_cols) do
+		o_list.Add (c_cols[i]);
+   TTruePageProperty.GetShowCols (o_list);
+end;
+
+class procedure TListPageSuper.InitialListProperty (lp: TListProperty);
+const c_cols: array[0..2] of integer = (sr_Title, sr_Description, sr_ModifyTime);
+	c_widths: array[0..2] of integer = (100, 150, 80);
+begin
+	with lp do
+   begin
+		ColList.Populate (c_cols);
+		WidthList.Populate (c_widths);
+   	CheckBoxes := false;
+		View := lpvList;
+   	FullrowSelect := true;
+   	GridLines := false;
+   end;
+end;
+
+//------------------------------
+
+constructor TPageContainer.Create (i_id: integer);
+begin
+	inherited Create (i_id);
+   FChilds := TPageChilds.Create (i_id);
+   AddProperty (FChilds);
+end;
+
+destructor TPageContainer.Destroy ();
+begin
+	FChilds.free;
+   inherited;
+end;
+
+function TPageContainer.Childs (): TPageChilds;
+begin
+	result := FChilds;
+end;
+
+function TPageContainer.CanDelete (): boolean;
+begin
+   result := (inherited CanDelete) and FChilds.CanClear;
+end;
+
+procedure TPageContainer.Delete ();
+var i: integer;
+	o_list: TxlIntList;
+   p: TPageSuper;
+begin
+	o_list := TxlIntList.Create;
+	FChilds.GetChildList (o_list);
+   FChilds.Clear;
+   for i := o_list.Low to o_list.High do
+   begin
+   	p := PageStore[o_list[i]];
+   	if p.Owner = self then
+      	p.Delete;
+   end;
+   o_list.free;
+   inherited Delete;
+end;
+
+procedure TPageContainer.SetStatus (value: TPageStatus);
+var i: integer;
+	o_list: TxlIntList;
+   p: TPageSuper;
+begin
+	inherited SetStatus (value);
+   o_list := TxlIntList.Create;
+   GetChildList (o_list);
+   for i := o_list.Low to o_list.High do
+   begin
+   	p := PageStore[o_list[i]];
+   	if p.Owner = self then
+      	p.Status := self.Status;
+   end;
+   o_list.free;
+end;
+
+procedure TPageContainer.GetChildList (o_list: TxlIntList);
+begin
+	FChilds.GetChildList (o_list);
+end;
+
+//------------------------
+
+function TEditPageSuper.PageControl (): TPageControl;
+begin
+  	result := pcEdit;
+end;
+
+procedure TEditPageSuper.SetEditor (value: TxlEditControl);
+begin
+end;
+
+//--------------------------
+
+function TChildItemSuper.PageControl (): TPageControl;
+begin
+	result := pcNone;
+end;
+
+end.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

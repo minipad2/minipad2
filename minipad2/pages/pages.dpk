@@ -1,0 +1,47 @@
+package pages;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  XCL;
+
+contains
+  UPageSuper in 'UPageSuper.pas',
+  UPageStore in 'UPageStore.pas',
+  UNotePage in 'UNotePage.pas',
+  UGroupPage in 'UGroupPage.pas',
+  UPageFactory in 'UPageFactory.pas',
+  USearchPage in 'USearchPage.pas',
+  UFavoritePage in 'UFavoritePage.pas',
+  URecentPage in 'URecentPage.pas',
+  UTagPage in 'UTagPage.pas',
+  UPageProperty in 'UPageProperty.pas',
+  URecycleBin in 'URecycleBin.pas',
+  UEditBox in 'UEditBox.pas',
+  USysPageHandler in 'USysPageHandler.pas',
+  UDeleteHandler in 'UDeleteHandler.pas';
+
+end.

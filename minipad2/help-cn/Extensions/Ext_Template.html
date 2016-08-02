@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+	<link href="../main.css" rel="stylesheet" type="text/css">
+	<title>文字模板</title>
+</head>
+
+<body>
+	<h1>文字模板</h1>
+	<p>minipad2 集成了文字模板功能。用户可将平日常用的文字片段或符号添加到 minipad2 的文字模板列表中，方便在各类编辑场合粘贴与复用。</p>
+
+	<h2>基本操作</h2>
+
+	<p>点击“工具”--><a href='..\Menus\Menus_Tools.html#m_template'>“文字模板管理”</a>，可打开文字模板列表，对文字模板进行编辑与管理。<br>
+	点击“编辑”--><a href='..\Menus\Menus_Edit.html#m_newitem'>“新建项目”</a>（或在页面空白处直接双击），将弹出“新建文字模板”窗口，可以添加新的文字模板。<br>
+	（添加文字模板的另一种方式是在任意编辑器中选中目标文字，随后按下在“选项”--><a href='..\Options\Extensions\Opt_Template.html'>“文字模板”</a>中设定的“捕捉热键”，所选文字将自动添加到文字模板列表中。）<br>
+	双击现有的文字模板，将弹出“编辑文字模板”窗口，可对该条目进行编辑修改。<br>
+	如需删除某一文字模板，右键点击该条目，选择<a href='..\Menus\Menus_Edit.html#m_delete'>“删除项目”</a>。<br>
+	如需调整文字模板的排序，选择相应条目直接拖动到目标位置即可。</p>
+
+	<p>在 minipad2 的编辑区中，点击“编辑”--><a href='..\Menus\Menus_Edit.html#m_inserttemplate'>“插入模板文字”</a>的下拉菜单条目，可在当前页面中插入模板文字。<br>
+	在其他 windows 编辑器中，使用 minipad2 的托盘区右键菜单可进行相同操作，也可使用“选项”--><a href='..\Options\Extensions\Opt_Template.html'>“文字模板”</a>中设定的全局热键呼出文字模板的弹出菜单进行插入操作。在弹出菜单中既可使用鼠标点击所需项目，也可按 1..9 数字键直接调用前九项。<br>
+	在弹出菜单中如按住 Shift 再点击某一项，则将一次性将该项与其上的所有项目同时贴入。<br>
+	对于单条文字的直接插入，既可使用为该条目设立的独立热键，也可在勾选<a href='..\Options\Extensions\Opt_Template.html#enablesubkey'>“子条目热键”</a>的情况下使用相应的热键插入前 9 条文字。（若呼出文字模板快捷菜单的全局热键为“Ctrl-D”，则直接插入第一至第九个条目的全局热键为 Ctrl-1 至 Ctrl-9。）</p>
+
+	<h2>文字模板编辑对话框</h2>
+
+	<p><b>标题：</b>文字模板的标题。该标题仅用于列表中的条目显示，不作为实际使用时的插入文字。</p>
+	<p><b>文字：</b>模板正文，即实际使用时的插入文字。</p>
+	<p><b>热键：</b>用于直接插入该项文字模板的全局热键。</p>
+	<p><b>缩写：</b>输入用于在弹出菜单中快速存取该项目的缩写字母。</p>
+	
+	<a name="symbols"></a><h2>指代符</h2>
+	<p>文字模板的正文部分支持如下指代符号：</p>
+	
+	<p><a name="designator"></a><b>转义符：</b>
+	<ul class="list">
+		<li>%d: 当前日期（格式遵循系统区域选项中的短日期格式）
+		<li>%i: 当前时间（格式遵循系统区域选项中的时间格式）
+		<li>%u(###)：当前日期时间，### 代表自定义格式（如：yyyy-MM-dd HH:mm:ss）。详细格式可参考区域选项中的设置与说明。
+		<li>%t：制表符
+		<li>%n：回车符
+		<li>%s(n)：n个连续的"-"号
+		<li>%s(###,n): n个连续的###。
+		<li>%c(##)：任意ASCII字符（包括不可见字符）。##为ASCII码。如Tab为：%c(9)，回车为：%c(13)%c(10)
+	</ul></p>
+	
+	<p><a name="sendkey"></a><b>模拟按键：</b>
+	<ul class="list">
+		<li>~t：Tab
+		<li>~n：Enter
+		<li>~l：Left
+		<li>~r：Right
+		<li>~u：Up
+		<li>~d：Down
+		<li>~h：Home
+		<li>~e：End
+	</ul></p>
+	<p>模拟按键后可加(n)，如~l(5), 表示连按五次向左键。</p>
+	<p>软件支持常规文字与转义符、模拟按键等的混合书写。在文字插入时，转义符将被自动展开与替换为相应文字，模拟按键则将转化为按键操作（如用于自动填表）。</p>
+	
+	<b>其它特殊指代符：</b>
+	<ul>
+		<li>~c：插入文字模板后的光标所在位置。
+		<li>~s：指代所选区域的文字。
+	</ul>
+	<p>这两个特殊指代符比较适合于制作 Html 的 tag 模板。</p>
+	
+	<b>示例：</b>
+	<p><i>%d %i</i>：将被展开为类似“2009-06-09 22:10”的文字。</p>
+	
+	<p><i>%t第一项%n%s(*-,12)%n%t第二项</i>：将被展开为：<br>
+	&nbsp;&nbsp;&nbsp;第一项<br>
+	*-*-*-*-*-*-*-*-*-*-*-*-<br>
+	&nbsp;&nbsp;&nbsp;第二项</p>
+	
+	<p><i>username~tpassword~n</i>：将被展开为：<br>
+	username (Press Tab) password (Press Enter)</p>
+	
+	<p><i>&lt;p&gt;~c&lt;/p&gt;</i>：当粘贴时将为：<br>
+	&lt;p&gt;&lt;/p&gt; 同时光标处于&lt;p&gt;与&lt;/p&gt;之间。</p>
+	
+	<p><i>&lt;p&gt;~s&lt;/p&gt;</i>：当粘贴时将自动在选区文字左右分别加上&lt;p&gt;与&lt;/p&gt;（不替换选区文字）</p>
+
+	<p><i>&lt;a ref="~s"&gt;~c&lt;/a&gt;</i>：假设在某编辑器中选中 http://www.nebulasoft.cn 并粘贴此模板，则粘贴后的文字将成为：<br>
+	&lt;a ref="http://www.nebulasoft.cn"&gt;&lt;/a&gt;，同时光标插入点位于 &lt;/a&gt; 左侧。</p>
+	
+	<h2>相关选项</h2>
+
+	<p>在“选项”-->“文字模板”中，可设定弹出菜单的全局热键、是否使用子条目热键等。详见本帮助文档的“选项”-->“扩展功能”--><a href="..\Options\Extensions\Opt_Template.html">“文字模板”</a>章节。</p><br>
+
+</body>
+</html>
